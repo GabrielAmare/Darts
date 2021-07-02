@@ -1,36 +1,36 @@
 from text_engine import *
-from .commands import *
+from darts import commands as cmd
 
 lexer, parser, astb, engine_fr = base(
     # COMMANDS
-    [C_Quit, match("KW_QUIT")],
-    [C_SaveParty, match("KW_SAVE_PARTY")],
-    [C_MainMenu, match("KW_MAIN_MENU")],
-    [C_StartParty, match("KW_OK")],
-    [C_SelectPartyType, match("KW_GAME in *")],
-    [C_SetLang, match("KW_PASS_TO") & match("KW_LANG as lang_IETF")],
+    [cmd.C_Quit, match("KW_QUIT")],
+    [cmd.C_SaveParty, match("KW_SAVE_PARTY")],
+    [cmd.C_MainMenu, match("KW_MAIN_MENU")],
+    [cmd.C_StartParty, match("KW_OK")],
+    [cmd.C_SelectPartyType, match("KW_GAME in *")],
+    [cmd.C_SetLang, match("KW_PASS_TO") & match("KW_LANG as lang_IETF")],
     [
-        C_AdjustMic,
+        cmd.C_AdjustMic,
         match("KW_ADJUST_MIC") & match("KW_DURING") & match("*.value as seconds") & match("KW_SECONDS"),
         match("KW_ADJUST_MIC"),
     ],
-    [C_OpenSettings, match("KW_OPEN_SETTINGS")],
-    [C_Redo, match("KW_REDO") & (match("*.value in *") & match("KW_FOIS")).optional],
-    [C_Undo, match("KW_UNDO") & (match("*.value in *") & match("KW_FOIS")).optional],
-    [C_AddPlayers, match("O_Player in players").and_repeat & match("KW_ET") & (
+    [cmd.C_OpenSettings, match("KW_OPEN_SETTINGS")],
+    [cmd.C_Redo, match("KW_REDO") & (match("*.value in *") & match("KW_FOIS")).optional],
+    [cmd.C_Undo, match("KW_UNDO") & (match("*.value in *") & match("KW_FOIS")).optional],
+    [cmd.C_AddPlayers, match("O_Player in players").and_repeat & match("KW_ET") & (
             match("O_PlayerCP in players") | match("O_Player in players"))],
-    [C_AddPlayer, match("O_Player as player")],
+    [cmd.C_AddPlayer, match("O_Player as player")],
     [
-        C_AddScore,
+        cmd.C_AddScore,
         match("__scores__") & match("KW_POUR") & (match("O_PlayerCP as player") | match("O_Player as player")),
         (match("O_PlayerCP as player") | match("O_Player as player")) & match("KW_HAS_DONE") & match("__scores__"),
         match("__scores__"),
     ],
     # OBJECTS
-    [O_Player, match("VAR as name")],
-    [O_PlayerCP, match("VAR as name1") & match("VAR as name2")],
+    [cmd.O_Player, match("VAR as name")],
+    [cmd.O_PlayerCP, match("VAR as name1") & match("VAR as name2")],
     [
-        O_Score,
+        cmd.O_Score,
         match("*.value as factor") & match("KW_FOIS") & match("*.value as value") & match("KW_POINT").optional,
         match("*.value as value") & match("KW_POINT").optional,
         match("*.fact as factor") & match("*.value as value") & match("KW_POINT").optional,

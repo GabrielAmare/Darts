@@ -1,4 +1,4 @@
-from ...actions import Action
+from .base import Action
 
 
 class A_AddPlayer(Action):

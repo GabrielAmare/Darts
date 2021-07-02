@@ -1,13 +1,10 @@
-from typing import List
-from .Command import Command
-
 from text_engine import Engine, Identified
 from text_engine.core.Engine import InvalidASTError
 
+from darts.console import console
+from darts.vocal_errors import ListenError, TextNotFoundError, CommandNotFoundError
 from tools import VoiceInterface
-
-from ..console import console
-from ..vocal_errors import ListenError, TextNotFoundError, CommandNotFoundError
+from .Command import Command
 
 
 class CommandParser:

@@ -41,7 +41,7 @@ class Party_Cricket(Party):
     def is_closed(self, door):
         return self.closer(door) is not None
 
-    def on_add_score(self, command: C_AddScore):
+    def on_add_score(self, command: cmd.C_AddScore):
         player_and_score = self.on_add_score_before(command)
         if not player_and_score:
             return

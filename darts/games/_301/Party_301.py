@@ -12,7 +12,7 @@ class Party_301(Party):
             if player.scores and player.scores[-1].score == 0:
                 return self.set_winner(player)
 
-    def on_add_score(self, command: C_AddScore):
+    def on_add_score(self, command: cmd.C_AddScore):
         marks = command.total
         if marks > 180:
             raise InvalidScoreError(marks)

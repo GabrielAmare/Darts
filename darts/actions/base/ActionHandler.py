@@ -1,7 +1,7 @@
 from .Action import Action
 from .ActionList import ActionList
 
-from ..console import console
+from darts.console import console
 
 
 class   ActionHandler:

@@ -7,8 +7,9 @@ from tools37 import JsonLoader
 from darts.actions import ActionHandler, ActionList
 from darts.commands import CommandHandler
 from darts.functions import translate
-from darts.game_engine.actions import *
-from darts.game_engine.commands import *
+
+from darts import actions as act, commands as cmd
+
 from darts.vocal_errors import *
 
 
@@ -28,7 +29,7 @@ class Score(Model):
     def party(self):
         return self.player.party
 
-    def update(self, scores: List[O_Score]):
+    def update(self, scores: List[cmd.O_Score]):
         raise NotImplementedError
 
 
@@ -38,27 +39,27 @@ class Party_ActionHandler(ActionHandler):
         self.party = party
 
     def _start_party(self):
-        return A_StartParty(party=self.party)
+        return act.A_StartParty(party=self.party)
 
     def _add_score(self, player, score):
         actions = ActionList()
 
         for skip in self.party.players_to(player):
             empty_score = skip.scores[-1].update([])
-            actions.append(A_AddScore(party=self.party, player=skip, score=empty_score))
-            actions.append(A_SetLastPlayer(party=self.party, name=skip.name))
+            actions.append(act.A_AddScore(party=self.party, player=skip, score=empty_score))
+            actions.append(act.A_SetLastPlayer(party=self.party, name=skip.name))
 
-        actions.append(A_AddScore(party=self.party, player=player, score=score))
-        actions.append(A_SetLastPlayer(party=self.party, name=player.name))
+        actions.append(act.A_AddScore(party=self.party, player=player, score=score))
+        actions.append(act.A_SetLastPlayer(party=self.party, name=player.name))
 
         return actions
 
     def _add_player(self, name):
         # name = parse_player_name(name)
         return ActionList(
-            A_AddPlayer(party=self.party, name=name),
-            A_InitScore(party=self.party, name=name, score_cls=self.party.Score),
-            A_SetLastPlayer(party=self.party, name=name)
+            act.A_AddPlayer(party=self.party, name=name),
+            act.A_InitScore(party=self.party, name=name, score_cls=self.party.Score),
+            act.A_SetLastPlayer(party=self.party, name=name)
         )
 
     def _add_players(self, names):
@@ -71,8 +72,8 @@ class Party_ActionHandler(ActionHandler):
 
     def _set_winner(self, winner: Player):
         return ActionList(
-            A_SetWinner(party=self.party, winner=winner),
-            A_EndParty(party=self.party)
+            act.A_SetWinner(party=self.party, winner=winner),
+            act.A_EndParty(party=self.party)
         )
 
     def start_party(self):
@@ -105,13 +106,13 @@ class Party(Model, CommandHandler):
 
     STATES = ["__PRE_GAME__", "__IN_GAME__", "__POST_GAME__"]
     COMMAND_HANDLERS = {
-        C_AddPlayers: "add_players",
-        C_AddPlayer: "add_player",
-        C_StartParty: "start_party",
-        C_AddScore: "on_add_score",
-        C_Undo: "undo",
-        C_Redo: "redo",
-        C_SetWinner: "on_set_winner"
+        cmd.C_AddPlayers: "add_players",
+        cmd.C_AddPlayer: "add_player",
+        cmd.C_StartParty: "start_party",
+        cmd.C_AddScore: "on_add_score",
+        cmd.C_Undo: "undo",
+        cmd.C_Redo: "redo",
+        cmd.C_SetWinner: "on_set_winner"
     }
 
     def __init__(self, vi, **config):
@@ -124,10 +125,10 @@ class Party(Model, CommandHandler):
     def do(self, *actions):
         self.ah.do(*actions)
 
-    def undo(self, command: C_Undo):
+    def undo(self, command: cmd.C_Undo):
         self.ah.undo(command.times)
 
-    def redo(self, command: C_Redo):
+    def redo(self, command: cmd.C_Redo):
         self.ah.redo(command.times)
 
     def players_to(self, player):
@@ -146,7 +147,7 @@ class Party(Model, CommandHandler):
     # ENGINE METHODS
     ####################################################################################################################
 
-    def add_players(self, command: C_AddPlayers):
+    def add_players(self, command: cmd.C_AddPlayers):
         if self.started:
             raise PartyAlreadyStartedError()
 
@@ -157,7 +158,7 @@ class Party(Model, CommandHandler):
 
         self.vocal_feedback("GAME_START")
 
-    def add_player(self, command: C_AddPlayer):
+    def add_player(self, command: cmd.C_AddPlayer):
         if self.started:
             raise PartyAlreadyStartedError()
 
@@ -166,7 +167,7 @@ class Party(Model, CommandHandler):
 
         self.ah.add_player(command.player.name)
 
-    def start_party(self, _command: C_StartParty):
+    def start_party(self, _command: cmd.C_StartParty):
         if self.started:
             raise PartyAlreadyStartedError()
 
@@ -250,10 +251,10 @@ class Party(Model, CommandHandler):
         else:
             print(f"No message found for : {repr(code)}", file=sys.stderr)
 
-    def on_add_score(self, command: C_AddScore):
+    def on_add_score(self, command: cmd.C_AddScore):
         raise NotImplementedError
 
-    def on_add_score_before(self, command: C_AddScore):
+    def on_add_score_before(self, command: cmd.C_AddScore):
         if not self.started:
             raise PartyNotStartedError()
 
@@ -296,4 +297,3 @@ class Party(Model, CommandHandler):
 
     def on_next_player(self, player):
         pass
-
