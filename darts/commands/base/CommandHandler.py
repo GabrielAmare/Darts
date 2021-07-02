@@ -1,16 +1,16 @@
-from typing import List
+from typing import List, Tuple, Union
 from .errors import InvalidCommandType
 
 
 class CommandMethod:
-    def __init__(self, type_: type, method: callable):
-        self.type: type_ = type_
+    def __init__(self, types: Tuple[type], method: callable):
+        self.type: Union[type, Tuple[type]] = types[0] if len(types) == 1 else types
         self.method: callable = method
 
     @classmethod
-    def decorator(cls, type_: type):
+    def decorator(cls, *types: type):
         def wrapper(method: callable):
-            return cls(type_, method)
+            return cls(types, method)
 
         return wrapper
 
