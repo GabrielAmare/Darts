@@ -1,7 +1,7 @@
 from .base import Action
 
 
-class A_SetWinner(Action):
+class SetWinner(Action):
     def __init__(self, party, winner):
         self.party = party
         self.winner = winner

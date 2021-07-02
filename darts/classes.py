@@ -39,27 +39,27 @@ class Party_ActionHandler(ActionHandler):
         self.party = party
 
     def _start_party(self):
-        return act.A_StartParty(party=self.party)
+        return act.StartParty(party=self.party)
 
     def _add_score(self, player, score):
         actions = ActionList()
 
         for skip in self.party.players_to(player):
             empty_score = skip.scores[-1].update([])
-            actions.append(act.A_AddScore(party=self.party, player=skip, score=empty_score))
-            actions.append(act.A_SetLastPlayer(party=self.party, name=skip.name))
+            actions.append(act.AddScore(party=self.party, player=skip, score=empty_score))
+            actions.append(act.SetLastPlayer(party=self.party, name=skip.name))
 
-        actions.append(act.A_AddScore(party=self.party, player=player, score=score))
-        actions.append(act.A_SetLastPlayer(party=self.party, name=player.name))
+        actions.append(act.AddScore(party=self.party, player=player, score=score))
+        actions.append(act.SetLastPlayer(party=self.party, name=player.name))
 
         return actions
 
     def _add_player(self, name):
         # name = parse_player_name(name)
         return ActionList(
-            act.A_AddPlayer(party=self.party, name=name),
-            act.A_InitScore(party=self.party, name=name, score_cls=self.party.Score),
-            act.A_SetLastPlayer(party=self.party, name=name)
+            act.AddPlayer(party=self.party, name=name),
+            act.InitScore(party=self.party, name=name, score_cls=self.party.Score),
+            act.SetLastPlayer(party=self.party, name=name)
         )
 
     def _add_players(self, names):
@@ -72,8 +72,8 @@ class Party_ActionHandler(ActionHandler):
 
     def _set_winner(self, winner: Player):
         return ActionList(
-            act.A_SetWinner(party=self.party, winner=winner),
-            act.A_EndParty(party=self.party)
+            act.SetWinner(party=self.party, winner=winner),
+            act.EndParty(party=self.party)
         )
 
     def start_party(self):

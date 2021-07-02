@@ -1,2 +1,6 @@
 
 <class 'darts.game_engine.commands.C_SelectPartyType.C_SelectPartyType'>
+
+ERROR : ListenError
+>>> occured_at : datetime.datetime(2021, 7, 2, 19, 20, 12, 953856)
+>>> command : None

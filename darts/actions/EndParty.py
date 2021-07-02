@@ -1,7 +1,7 @@
 from .base import Action
 
 
-class A_EndParty(Action):
+class EndParty(Action):
     def __init__(self, party):
         self.party = party
 

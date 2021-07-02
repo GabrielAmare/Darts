@@ -1,7 +1,7 @@
 from .base import Action
 
 
-class A_InitScore(Action):
+class InitScore(Action):
     def __init__(self, party, name, score_cls=None):
         self.party = party
         self.name = name

@@ -1,22 +1,24 @@
 from .base import Action
 
 
-class A_AddPlayer(Action):
+class SetLastPlayer(Action):
     def __init__(self, party, name):
         self.party = party
         self.name = name
 
         self.player = None
+        self.last = None
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.party.uid}, {repr(self.name)})"
 
     def do(self):
-        self.player = self.party.Player(party=self.party, name=self.name)
-        self.party.players.append(self.player)
+        self.last = self.party.last
+        self.player = self.party.get_player(self.name)
+        self.party.last = self.player
 
     def undo(self):
-        self.party.players.remove(self.player)
+        self.party.last = self.last
 
     def redo(self):
-        self.party.players.append(self.player)
+        self.party.last = self.player
