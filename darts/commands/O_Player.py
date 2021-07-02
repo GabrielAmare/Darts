@@ -1,6 +1,8 @@
-from darts.commands import Command
+from dataclasses import dataclass
+
+from .base import Command
 
 
+@dataclass
 class O_Player(Command):
-    def __init__(self, name: str):
-        self.name = name
+    name: str

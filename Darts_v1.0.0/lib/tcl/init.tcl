@@ -210,7 +210,7 @@ if {[namespace which -command tclLog] eq ""} {
 # command available:
 #
 #	1. See if the autoload facility can locate the command in a
-#	   Tcl script file.  If so, load it and execute it.
+#	   Tcl script file.  If so, load it and execute_command it.
 #	2. If the command was invoked interactively at top-level:
 #	    (a) see if the command exists as an executable UNIX program.
 #		If so, "exec" the command.
@@ -612,7 +612,7 @@ proc auto_import {pattern} {
 
 # auto_execok --
 #
-# Returns string that indicates name of program to execute if
+# Returns string that indicates name of program to execute_command if
 # name corresponds to a shell builtin or an executable in the
 # Windows search path, or "" otherwise.  Builds an associative
 # array auto_execs that caches information about previous checks,

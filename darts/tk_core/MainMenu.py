@@ -1,7 +1,7 @@
 from tkinter import *
 
-from darts.game_engine import SelectPartyType
 from ..app_config import STYLE, APP_CFG
+from darts import commands as cmd
 
 
 class MainMenu(Frame):
@@ -21,7 +21,7 @@ class MainMenu(Frame):
         button = Button(
             self,
             text=name,
-            command=lambda: self.app.on_select_party_type(SelectPartyType(key)),
+            command=lambda: self.app.on_select_party_type(cmd.SelectPartyType(key)),
             **STYLE.MAIN_MENU.BTN_CFG
         )
         button.pack(side=TOP, pady=30)

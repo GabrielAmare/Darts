@@ -1,6 +1,8 @@
-from darts.commands import Command
+from dataclasses import dataclass
+
+from .base import Command
 
 
+@dataclass
 class AdjustMic(Command):
-    def __init__(self, seconds: int = 1):
-        self.seconds = seconds
+    seconds: int = 1

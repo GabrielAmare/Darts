@@ -113,7 +113,7 @@ proc ::tcl::HistAdd {event {exec {}}} {
     set history([incr history(nextid)]) $event
     unset -nocomplain history([incr history(oldest)])
 
-    # Only execute if 'exec' (or non-empty prefix of it) given
+    # Only execute_command if 'exec' (or non-empty prefix of it) given
     if {$exec eq ""} {
 	return ""
     }
@@ -206,7 +206,7 @@ proc ::tcl::HistInfo {{count {}}} {
 
 # tcl::HistRedo --
 #
-#	Fetch the previous or specified event, execute it, and then replace
+#	Fetch the previous or specified event, execute_command it, and then replace
 #	the current history item with that event.
 #
 # Parameters:

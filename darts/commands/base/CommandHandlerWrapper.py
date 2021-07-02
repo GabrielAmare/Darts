@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .CommandHandler import CommandHandler
+from .CommandHandler_ import CommandHandler
 from .Command import Command
 
 

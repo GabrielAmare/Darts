@@ -3,12 +3,12 @@ from typing import List
 from models37 import *
 
 from darts.classes import Score, InvalidScoreError
-from darts.game_engine import O_Score
+from darts import commands as cmd
 
 
 @Field.rpy("!score[int]", default=0, values=[*range(0, 21), 25])
 class Score_RTC(Score):
-    def update(self, scores: List[O_Score]):
+    def update(self, scores: List[cmd.O_Score]):
         assert len(scores) == 1, scores
         score = scores[0]
         new_goal = score.value

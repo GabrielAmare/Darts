@@ -2,7 +2,7 @@ from typing import List
 from models37 import *
 
 from darts.classes import Score
-from darts.game_engine import O_Score
+from darts import commands as cmd
 
 KILLER_RULES = ["no-killer", "killer", "auto-killer", "kamikaze"]
 DROP_DOWN_RULES = ["level-0", "level-25"]
@@ -56,7 +56,7 @@ class Score_Molkky(Score):
             errors=errors
         )
 
-    def update(self, scores: List[O_Score]):
+    def update(self, scores: List[cmd.O_Score]):
         delta = sum(score.factor * score.value for score in scores)
         new_score = self.score + delta
 

@@ -3,7 +3,7 @@ from typing import List
 from models37 import *
 
 from darts.classes import Score, InvalidScoreError
-from darts.game_engine import O_Score
+from darts import commands as cmd
 
 
 @Field.rpy("!score[int]", default=0)
@@ -27,7 +27,7 @@ class Score_Cricket(Score):
         assert door in self.party.DOORS
         return door * (self.get_marks(door) - self.OPEN_DOOR)
 
-    def update(self, scores: List[O_Score]):
+    def update(self, scores: List[cmd.O_Score]):
         items = [(score.value, score.factor) for score in scores]
 
         data = dict(

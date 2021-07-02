@@ -1,7 +1,9 @@
-from darts.commands import Command
+from dataclasses import dataclass
+
+from .base import Command
 
 
+@dataclass
 class O_Score(Command):
-    def __init__(self, value: int, factor: int = 1):
-        self.value = value
-        self.factor = factor
+    value: int
+    factor: int = 1

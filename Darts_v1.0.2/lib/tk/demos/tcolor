@@ -27,7 +27,7 @@ wm title . "Color Editor"
 #				program:  this would make an infinite loop.
 # command -			Holds the command that has been typed
 #				into the "Command" entry.
-# autoUpdate -			1 means execute the update command
+# autoUpdate -			1 means execute_command the update command
 #				automatically whenever the color changes.
 # name -			Name for new color, typed into entry.
 

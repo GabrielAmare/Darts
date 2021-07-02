@@ -90,7 +90,7 @@ proc ::tk::dialog::error::ReturnInDetails w {
 # ::tk::dialog::error::bgerror --
 #
 #	This is the default version of bgerror.
-#	It tries to execute tkerror, if that fails it posts a dialog box
+#	It tries to execute_command tkerror, if that fails it posts a dialog box
 #	containing the error message and gives the user a chance to ask
 #	to see a stack trace.
 #

@@ -1,10 +1,10 @@
 from tkinter import *
 
 from darts.app_config import APP_CFG, set_lang
-from darts.commands import *
+from darts import commands as cmd
 from darts.constants import STYLE
 from darts.functions import translate, auto_translate, log
-from darts.game_engine import *
+
 from darts.games import *
 from darts.vocal_errors import *
 from tools import VoiceInterface
@@ -15,24 +15,17 @@ from .SettingsMenu import SettingsMenu
 from .base import Interface, NoteBook
 
 
-class AppInterface(Interface, CommandHandlerWrapper):
+class AppInterface(Interface, cmd.CommandManager):
     DEBUG = False
 
     vi: VoiceInterface
-    command_parser: CommandParser
+    command_parser: cmd.CommandParser
     STATES = ["__GLOBAL__", "__MAIN_MENU__", "__SETTINGS__"]
-    COMMAND_HANDLERS = {
-        MainMenu: "on_main_menu",
-        Quit: "on_quit",
-        SelectPartyType: "on_select_party_type",
-        AdjustMic: "on_adjust_mic",
-        OpenSettings: "on_open_settings",
-        SetLang: "on_set_lang"
-    }
 
     def __init__(self, root, **cfg):
         Interface.__init__(self, root, **cfg)
-        CommandHandlerWrapper.__init__(self, "__GLOBAL__")
+        cmd.CommandManager.__init__(self, vi=APP_CFG['vi'], engine=APP_CFG['engine'])
+        self.identifier: str = "__GLOBAL__"
 
         self.PARTY_TYPES = {
             "301": (Party_301, 3),
@@ -47,7 +40,8 @@ class AppInterface(Interface, CommandHandlerWrapper):
         }
 
         self.vi = APP_CFG["vi"]
-        self.command_parser = CommandParser(vi=self.vi, engine=APP_CFG["engine"])
+
+        # self.command_parser = cmd.CommandParser(vi=self.vi, engine=APP_CFG["engine"])
 
         self.header = AppHeader(self, **STYLE.APP_HEADER.CFG)
         self.header.pack(side=TOP, fill=X)
@@ -125,16 +119,16 @@ class AppInterface(Interface, CommandHandlerWrapper):
     def on_active(self, key: str):
         if key == "main_menu":
             self.vi.time_limit = 2
-            self.state = "__MAIN_MENU__"
-            self.set_command_handler(None)
+            self.identifier = "__MAIN_MENU__"
+            # self.set_command_handler(None)
         elif key == "settings":
             self.vi.time_limit = 2
-            self.state = "__SETTINGS__"
-            self.set_command_handler(None)
+            self.identifier = "__SETTINGS__"
+            # self.set_command_handler(None)
         elif key == "party":
             self.vi.time_limit = 5
-            self.state = "__GLOBAL__"
-            self.set_command_handler(self.party)
+            self.identifier = "__GLOBAL__"
+            # self.set_command_handler(self.party)
             # self.nb.disable("main_menu")
         else:
             raise ValueError(key)
@@ -149,23 +143,25 @@ class AppInterface(Interface, CommandHandlerWrapper):
         if isinstance(error, VocalError):
             error.command = command
             error.vocalize()
-        
+
         log(error)
 
     def on_control(self, _=None):
-        if self.command_handler is None:
-            identifier = self.state
-        else:
-            identifier = self.command_handler.state
+        self.listen(self.identifier)
 
-        command = None
-        try:
-            text, command = self.command_parser.listen(identifier=identifier)
-            self.display_success_for(text, 1000)
-            self.handle(command)
-
-        except Exception as error:
-            self.handle_error(error, command)
+        # if self.command_handler is None:
+        #     identifier = self.state
+        # else:
+        #     identifier = self.command_handler.state
+        #
+        # command = None
+        # try:
+        #     text, command = self.command_parser.listen(identifier=identifier)
+        #     self.display_success_for(text, 1000)
+        #     self.execute_command(command)
+        #
+        # except Exception as error:
+        #     self.handle_error(error, command)
 
     def _display_text(self, text: str, ms: int, **cfg):
         key = self.header.append_text(text, **cfg)
@@ -187,13 +183,16 @@ class AppInterface(Interface, CommandHandlerWrapper):
 
     # COMMANDS METHODS
 
-    def on_main_menu(self, _command: MainMenu = None):
+    @cmd.handler(cmd.MainMenu)
+    def on_main_menu(self, _command: cmd.MainMenu = None):
         self.nb.active("main_menu")
 
-    def on_open_settings(self, _command: OpenSettings = None):
+    @cmd.handler(cmd.OpenSettings)
+    def on_open_settings(self, _command: cmd.OpenSettings = None):
         self.nb.active("settings")
 
-    def on_select_party_type(self, command: SelectPartyType):
+    @cmd.handler(cmd.SelectPartyType)
+    def on_select_party_type(self, command: cmd.SelectPartyType):
         if command.name not in self.PARTY_TYPES:
             self.display_error_for(command.name, 1000)
             self.say("APP.UNRECOGNIZED_GAME")
@@ -207,12 +206,15 @@ class AppInterface(Interface, CommandHandlerWrapper):
         self.nb.enable("party")
         self.nb.active("party")
 
-    def on_set_lang(self, command: SetLang):
+    @cmd.handler(cmd.SetLang)
+    def on_set_lang(self, command: cmd.SetLang):
         set_lang(command.lang_IETF)
         self.command_parser.engine = APP_CFG["engine"]
 
-    def on_quit(self, _command: Quit = None):
+    @cmd.handler(cmd.Quit)
+    def on_quit(self, _command: cmd.Quit = None):
         self.master.on_quit()
 
-    def on_adjust_mic(self, command: AdjustMic):
+    @cmd.handler(cmd.AdjustMic)
+    def on_adjust_mic(self, command: cmd.AdjustMic):
         self.vi.adjust_mic(command.seconds)

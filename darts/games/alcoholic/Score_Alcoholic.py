@@ -2,7 +2,7 @@ from typing import List
 from models37 import *
 
 from darts.classes import Score
-from darts.game_engine import O_Score
+from darts import commands as cmd
 
 
 def score_data(value: int, factor: int) -> dict:
@@ -47,7 +47,7 @@ def score_data(value: int, factor: int) -> dict:
 @Field.rpy("!sips_given[int]", default=0)
 @Field.rpy("!score[int]", default=0)
 class Score_Alcoholic(Score):
-    def update(self, scores: List[O_Score]):
+    def update(self, scores: List[cmd.O_Score]):
         assert len(scores) == 1
         score = scores[0]
         data = score_data(score.value, score.factor)
@@ -58,5 +58,6 @@ class Score_Alcoholic(Score):
             shots_took=self.shots_took + data["take"]["shot"],
             sips_took=self.sips_took + data["take"]["sips"] + data["everyone"],
             shots_given=self.shots_given + data["give"]["shot"] + data["elie"]["shot"],
-            sips_given=self.sips_given + data["give"]["sips"] + data["elie"]["sips"] + data["everyone"] * len(self.party.players),
+            sips_given=self.sips_given + data["give"]["sips"] + data["elie"]["sips"] + data["everyone"] * len(
+                self.party.players),
         )

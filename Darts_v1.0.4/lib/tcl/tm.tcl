@@ -62,7 +62,7 @@ namespace eval ::tcl::tm {
 #	Public API to the module path. See specification.
 #
 # Arguments
-#	cmd -	The subcommand to execute
+#	cmd -	The subcommand to execute_command
 #	args -	The paths to add/remove. Must not appear querying the
 #		path with 'list'.
 #

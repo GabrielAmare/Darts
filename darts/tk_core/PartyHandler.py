@@ -3,6 +3,7 @@ from darts.classes import Party
 
 from ..app_config import STYLE
 
+
 class PartyHandler(Frame):
     def __init__(self, root, **cfg):
         super().__init__(root, **cfg)

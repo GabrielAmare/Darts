@@ -682,7 +682,7 @@ proc printCode {w file} {
 # Taken from the Wiki page by Keith Vetter, "Printing text files under
 # Windows".
 # Note:
-# Do not execute the command in the background: that way we can dispose of the
+# Do not execute_command the command in the background: that way we can dispose of the
 # file smoothly.
 #
 proc PrintTextWin32 {filename} {

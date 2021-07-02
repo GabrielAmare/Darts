@@ -1,8 +1,10 @@
+from dataclasses import dataclass
 from typing import List
-from darts.commands import Command
+
+from .base import Command
 from .O_Player import O_Player
 
 
+@dataclass
 class AddPlayers(Command):
-    def __init__(self, players: List[O_Player]):
-        self.players = players
+    players: List[O_Player]

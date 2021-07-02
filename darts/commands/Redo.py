@@ -1,6 +1,8 @@
-from darts.commands import Command
+from dataclasses import dataclass
+
+from .base import Command
 
 
+@dataclass
 class Redo(Command):
-    def __init__(self, times: int = 1):
-        self.times = times
+    times: int = 1

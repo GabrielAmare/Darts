@@ -1,37 +1,38 @@
-from typing import List, Dict
+from typing import List
+from .errors import InvalidCommandType
 
-from .Command import Command
+
+class CommandMethod:
+    def __init__(self, type_: type, method: callable):
+        self.type: type_ = type_
+        self.method: callable = method
+
+    @classmethod
+    def decorator(cls, type_: type):
+        def wrapper(method: callable):
+            return cls(type_, method)
+
+        return wrapper
 
 
 class CommandHandler:
-    class UnhandledCommandType(Exception):
-        def __init__(self, command_type):
-            self.command_type = command_type
+    """A command manager can bind object types to methods"""
+    _handlers: List[CommandMethod]
 
-    STATES: List[str]
-    COMMAND_HANDLERS: Dict[type, callable]
+    def __init_subclass__(cls, **kwargs):
+        cls._handlers: List[CommandMethod] = []
 
-    def __init__(self, state: str):
-        self.state = state
+        for key, val in cls.__dict__.items():
+            if isinstance(val, CommandMethod):
+                cls._handlers.append(val)
+                setattr(cls, key, val.method)
 
-    @property
-    def state(self):
-        return self._state
+    def execute_command(self, command: object):
+        for handler_ in self._handlers:
+            if isinstance(command, handler_.type):
+                return handler_.method(self, command)
+        else:
+            raise InvalidCommandType(command, type(command))
 
-    @state.setter
-    def state(self, value):
-        if value not in self.STATES:
-            raise ValueError(value)
-        self._state = value
 
-    def handle(self, command: Command):
-        command_type = type(command)
-
-        if command_type not in self.COMMAND_HANDLERS:
-            raise CommandHandler.UnhandledCommandType(type(command))
-
-        method_name = self.COMMAND_HANDLERS[command_type]
-
-        method = getattr(self, method_name)
-
-        return method(command)
+handler = CommandMethod.decorator

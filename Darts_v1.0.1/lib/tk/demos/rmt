@@ -14,7 +14,7 @@ wm iconname . "Tk Remote"
 wm minsize . 1 1
 
 # The global variable below keeps track of the remote application
-# that we're sending to.  If it's an empty string then we execute
+# that we're sending to.  If it's an empty string then we execute_command
 # the commands locally.
 
 set app "local"

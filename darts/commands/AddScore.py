@@ -1,13 +1,15 @@
-from typing import List
-from darts.commands import Command
-from .O_Score import O_Score
+from dataclasses import dataclass
+from typing import List, Optional
+
+from .base import Command
 from .O_Player import O_Player
+from .O_Score import O_Score
 
 
+@dataclass
 class AddScore(Command):
-    def __init__(self, scores: List[O_Score], player: O_Player = None):
-        self.player = player
-        self.scores = scores
+    scores: List[O_Score]
+    player: Optional[O_Player] = None
 
     @property
     def total(self):

@@ -1,6 +1,8 @@
-from darts.commands import Command
+from dataclasses import dataclass
+
+from .base import Command
 
 
+@dataclass
 class SetLang(Command):
-    def __init__(self, lang_IETF):
-        self.lang_IETF = lang_IETF
+    lang_IETF: str

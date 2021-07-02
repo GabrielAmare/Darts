@@ -62,9 +62,9 @@ proc textSearch {w string tag} {
 # deleted) then it doesn't reschedule itself.
 #
 # Arguments:
-# cmd1 -	Command to execute when procedure is called.
+# cmd1 -	Command to execute_command when procedure is called.
 # sleep1 -	Ms to sleep after executing cmd1 before executing cmd2.
-# cmd2 -	Command to execute in the *next* invocation of this
+# cmd2 -	Command to execute_command in the *next* invocation of this
 #		procedure.
 # sleep2 -	Ms to sleep after executing cmd2 before executing cmd1 again.
 

@@ -406,7 +406,7 @@ proc auto_mkindex_parser::slavehook {cmd} {
 #
 # Registers a new command with the "auto_mkindex_parser" interpreter that
 # parses Tcl files.  These commands are fake versions of things like the
-# "proc" command.  When you execute them, they simply write out an entry to a
+# "proc" command.  When you execute_command them, they simply write out an entry to a
 # "tclIndex" file for auto-loading.
 #
 # This procedure allows extensions to register their own commands with the

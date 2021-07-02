@@ -1,6 +1,9 @@
-from darts.commands import Command
+from dataclasses import dataclass
+
+from .O_Player import O_Player
+from .base import Command
 
 
+@dataclass
 class SetWinner(Command):
-    def __init__(self, player):
-        self.player = player
+    player: O_Player
