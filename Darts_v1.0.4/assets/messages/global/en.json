@@ -1,0 +1,67 @@
+{
+  "GAME_START": [
+    "and here we go",
+    "the game can start",
+    "may the best win"
+  ],
+  "GAME_WON_BY": [
+    "<name> won. congratulations !",
+    "well done to <name>",
+    "congratulations to <name> who wins the game"
+  ],
+  "GAME_OVER_NO_WINNER": [
+    "the game is over",
+    "well done everyone, the game is over"
+  ],
+  "ANNOUNCE_NEXT_PLAYER": [
+    "it's <name> turn",
+    "it's <name> to play"
+  ],
+  "PARTY_NOT_STARTED": [
+    "the game hasn't started yet",
+    "you have to start the game first",
+    "oops, the game has not started"
+  ],
+  "PARTY_ALREADY_STARTED": [
+    "the game has already started",
+    "oops, the game has already started"
+  ],
+  "PARTY_ALREADY_OVER": [
+    "the game is already over",
+    "the game is over"
+  ],
+  "INVALID_SCORE": [
+    "this score is not valid",
+    "this score is invalid"
+  ],
+  "PLAYER_MARKED_POORLY": [
+    "really not terrible",
+    "can do better",
+    "think about the fundamentals",
+    "even the best make mistakes",
+    "you have to start one day"
+  ],
+  "PLAYER_MARKED_PERFECT": [
+    "perfect score",
+    "I think we know who will win",
+    "you can consider the championship"
+  ],
+  "PLAYER_MARKED_GOOD": [
+    "awesome",
+    "stunning",
+    "not bad at all",
+    "fantastic",
+    "really very good"
+  ],
+  "INVALID_SCORE": [
+    "are you sure it's not a mistake?",
+    "it must be a mistake",
+    "this score does not seem valid to me\n\n"
+  ],
+  "PLAYER_MARKED": [
+    "<name> has done <marks>",
+    "<name> marked <marks>",
+    "<marks> for <name>"
+  ],
+  "PLAYER_NOT_FOUND": "who is <name> ?"
+}

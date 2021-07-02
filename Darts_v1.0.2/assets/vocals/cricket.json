@@ -1,0 +1,18 @@
+{
+  "fr": {
+    "CRICKET": {
+      "DOOR_OPENED": [
+        "le <door> a été ouvert"
+      ],
+      "DOORS_OPENED": [
+        "<doors> ont été ouverts"
+      ],
+      "DOOR_CLOSED": [
+        "le <door> a été fermé"
+      ],
+      "DOORS_CLOSED": [
+        "<doors> ont été fermés"
+      ]
+    }
+  }
+}

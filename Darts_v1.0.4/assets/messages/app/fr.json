@@ -1,0 +1,12 @@
+{
+  "QUIT": "Quitter",
+  "MAIN_MENU": "Menu Principal",
+  "SETTINGS": "Paramètres",
+  "NO_PARTY": "Pas de partie en cours",
+  "PARTY_OF": "Partie de <game>",
+  "DID_NOT_HEAR": "Je n'ai pas entendu !",
+  "INVALID_COMMAND": "Je n'ai pas compris !",
+  "UNHANDLED_COMMAND": "Cette commande n'est pas encore gérée",
+  "UNRECOGNIZED_GAME": "Ce jeu n'est pas reconnu !",
+  "THIS_PLAYER": "ce joueur"
+}

@@ -1,0 +1,12 @@
+{
+  "QUIT": "Quit",
+  "MAIN_MENU": "Main Menu",
+  "SETTINGS": "Settings",
+  "NO_PARTY": "No game in progress",
+  "PARTY_OF": "Game of <game>",
+  "DID_NOT_HEAR": "I didn't hear you !",
+  "INVALID_COMMAND": "I didn't understood !",
+  "UNHANDLED_COMMAND": "this order isn't yet managed",
+  "UNRECOGNIZED_GAME": "this game isn't recognized!",
+  "THIS_PLAYER": "this player"
+}

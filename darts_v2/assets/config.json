@@ -1,0 +1,18 @@
+{
+  "app_name": "Darts",
+  "version": {
+    "major": "D",
+    "minor": "E",
+    "patch": "V"
+  },
+  "lang_IETF": "fr-FR",
+  "production": false,
+  "images_fp": "assets/images/",
+  "styles_fp": "assets/styles/",
+  "logs_fp": "logs/",
+  "styles": {
+    "default": "default.json",
+    "bloom": "bloom.json"
+  },
+  "style": "default"
+}

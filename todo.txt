@@ -1,0 +1,9 @@
+[FEATURES]
+Ajouter les profils joueurs
+Sélection du prochain joueur par clic
+Concevoir le menu des paramètres
+    Changement de langue
+Paramètrer les variantes des jeux
+
+[BUG FIXES]
+annuler en fin de partie

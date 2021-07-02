@@ -1,0 +1,9 @@
+client_config_backend: file
+client_config_file: client_secrets.json
+
+save_credentials: False
+
+get_refresh_token: False
+
+oauth_scope:
+  - https://www.googleapis.com/auth/drive

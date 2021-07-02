@@ -1,0 +1,65 @@
+{
+  "ANNOUNCE_TARGET": [
+    "vous visez le <target>",
+    "on reprend au <target>"
+  ],
+  "PLAYER_GIVE_SHOT": [
+    "<name> distribue un shot",
+    "<name> donnes un shot"
+  ],
+  "PLAYER_GIVE_SIPS": [
+    "<name> distribue <number> gorgées",
+    "<name> donnes <number> gorgées"
+  ],
+  "EVERYBODY_DRINKS": [
+    "tout le monde boit <number> gorgées",
+    "chaque joueur boit <number> gorgées",
+    "<number> gorgées pour chaque joueur",
+    "<number> gorgées pour tout le monde"
+  ],
+  "PLAYER_TAKE_SHOT": [
+    "<name> se prends un shot",
+    "un shot pour <name>"
+  ],
+  "PLAYER_TAKE_SIPS": [
+    "<name> se prends <number> gorgées",
+    "<number> gorgées pour <name>"
+  ],
+  "ELIE_TAKE_SHOT": [
+    "élie prends un shot",
+    "un shot pour élie",
+    "élie ? un shot !",
+    "tout le monde boit. non je rigoles ! elie prends un shot"
+  ],
+  "ELIE_TAKE_SIP": [
+    "élie prends une gorgée",
+    "une gorgée pour élie",
+    "élie ? une gorgée !",
+    "tout le monde boit. non je rigoles ! elie prends une gorgée"
+  ],
+  "PLAY_AS": [
+    "la meilleure parmi 3",
+    "au choix parmi 3",
+    "la pire parmi 3",
+    "la meilleure parmi 2",
+    "la pire parmi 2",
+    "au choix parmi 2",
+    "une seule fléchette"
+  ],
+  "GAME_START": [
+    "que la beuverie commence",
+    "la picole peut commencer",
+    "que le meilleur tombe en dernier"
+  ],
+  "INVALID_SCORE": [
+    "vous avez trop bu, le score n'est pas valide",
+    "ce score est invalide, comme votre ébriété",
+    "tournez deux fois sur vous-même et redites moi un score valide"
+  ],
+  "PLAYER_NOT_FOUND": [
+    "qui est <name> ?",
+    "je ne connais pas <name> et pourtant je n'ai pas bu",
+    "je ne me souviens pas, qui-est <name> ?",
+    "<name> ? je ne connais pas ce Pokémon"
+  ]
+}

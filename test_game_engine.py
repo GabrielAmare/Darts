@@ -1,0 +1,22 @@
+from darts.game_engine import engine_fr as engine
+
+if __name__ == '__main__':
+    print(engine.read("quitter"))
+    print(engine.read("ok"))
+    print(engine.read("menu principal"))
+    print(engine.read("_301"))
+    print(engine.read("cricket"))
+    print(engine.read("around the clock"))
+    print(engine.read("annuler"))
+    print(engine.read("annuler 2 fois"))
+    print(engine.read("refaire"))
+    print(engine.read("refaire huit fois"))
+    print(engine.read("julien"))
+    print(engine.read("jean-pierre"))
+    print(engine.read("jean-pierre et jean-gabriel"))
+    print(engine.read("1 pour jean-pierre"))
+    print(engine.read("17"))
+    print(engine.read("20 points"))
+    print(engine.read("X 7"))
+    print(engine.read("triple 18 pour julien"))
+    print(engine.read("double bull et quadruple 3 pour jean-pierre"))

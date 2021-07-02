@@ -1,0 +1,14 @@
+{
+  "DOOR_OPENED": [
+    "the <door> has been opened"
+  ],
+  "DOORS_OPENED": [
+    "<doors> have been opened"
+  ],
+  "DOOR_CLOSED": [
+    "the <door> has been closed"
+  ],
+  "DOORS_CLOSED": [
+    "<doors> have been closed"
+  ]
+}

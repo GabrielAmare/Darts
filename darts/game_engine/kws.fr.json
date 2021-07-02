@@ -1,0 +1,18 @@
+{
+  "KW_ET": "et",
+  "KW_OK": "ok",
+  "KW_FOR": "pour",
+  "KW_DOT": "points?|\\.",
+  "KW_TIMES": "fois|x",
+  "KW_PLUS": "plus|\\+",
+  "KW_HAS_DONE": "a fait|marques?",
+  "KW_ADJUST_MIC": "ajuster? le micro|ajuster? le microphone|ajuster? le bruit|ajuster",
+  "KW_DURING": "pendant|durant",
+  "KW_SECONDS": "secondes?",
+  "KW_OPEN_SETTINGS": "paramètres|ouvrir les paramètres|changer les paramètres",
+  "KW_PASS_TO": "passe[rs]? en",
+  "KW_QUIT": "quitter",
+  "KW_MAIN_MENU": "menu principal",
+  "KW_UNDO": "annuler|oups|oops",
+  "KW_REDO": "restaurer|refaire"
+}

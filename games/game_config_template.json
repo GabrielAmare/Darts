@@ -1,0 +1,16 @@
+{
+  "NAME": "",
+  "AUTHOR": "",
+  "OPTIONS": {
+    "<OPTION_NAME>": [
+      "<OPTION_VALUE>"
+    ]
+  },
+  "CODE": "",
+  "TEXT": {
+    "<CODE>": {
+      "<LANG:1>": "<MESSAGE>",
+      "<LANG:2>": ["<MESSAGE>"],
+    }
+  }
+}
