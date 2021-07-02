@@ -106,13 +106,13 @@ class Party(Model, CommandHandler):
 
     STATES = ["__PRE_GAME__", "__IN_GAME__", "__POST_GAME__"]
     COMMAND_HANDLERS = {
-        cmd.C_AddPlayers: "add_players",
-        cmd.C_AddPlayer: "add_player",
-        cmd.C_StartParty: "start_party",
-        cmd.C_AddScore: "on_add_score",
-        cmd.C_Undo: "undo",
-        cmd.C_Redo: "redo",
-        cmd.C_SetWinner: "on_set_winner"
+        cmd.AddPlayers: "add_players",
+        cmd.AddPlayer: "add_player",
+        cmd.StartParty: "start_party",
+        cmd.AddScore: "on_add_score",
+        cmd.Undo: "undo",
+        cmd.Redo: "redo",
+        cmd.SetWinner: "on_set_winner"
     }
 
     def __init__(self, vi, **config):
@@ -125,10 +125,10 @@ class Party(Model, CommandHandler):
     def do(self, *actions):
         self.ah.do(*actions)
 
-    def undo(self, command: cmd.C_Undo):
+    def undo(self, command: cmd.Undo):
         self.ah.undo(command.times)
 
-    def redo(self, command: cmd.C_Redo):
+    def redo(self, command: cmd.Redo):
         self.ah.redo(command.times)
 
     def players_to(self, player):
@@ -147,7 +147,7 @@ class Party(Model, CommandHandler):
     # ENGINE METHODS
     ####################################################################################################################
 
-    def add_players(self, command: cmd.C_AddPlayers):
+    def add_players(self, command: cmd.AddPlayers):
         if self.started:
             raise PartyAlreadyStartedError()
 
@@ -158,7 +158,7 @@ class Party(Model, CommandHandler):
 
         self.vocal_feedback("GAME_START")
 
-    def add_player(self, command: cmd.C_AddPlayer):
+    def add_player(self, command: cmd.AddPlayer):
         if self.started:
             raise PartyAlreadyStartedError()
 
@@ -167,7 +167,7 @@ class Party(Model, CommandHandler):
 
         self.ah.add_player(command.player.name)
 
-    def start_party(self, _command: cmd.C_StartParty):
+    def start_party(self, _command: cmd.StartParty):
         if self.started:
             raise PartyAlreadyStartedError()
 
@@ -251,10 +251,10 @@ class Party(Model, CommandHandler):
         else:
             print(f"No message found for : {repr(code)}", file=sys.stderr)
 
-    def on_add_score(self, command: cmd.C_AddScore):
+    def on_add_score(self, command: cmd.AddScore):
         raise NotImplementedError
 
-    def on_add_score_before(self, command: cmd.C_AddScore):
+    def on_add_score_before(self, command: cmd.AddScore):
         if not self.started:
             raise PartyNotStartedError()
 

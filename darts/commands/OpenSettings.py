@@ -1,5 +1,5 @@
 from darts.commands import Command
 
 
-class C_Quit(Command):
+class OpenSettings(Command):
     pass

@@ -1,5 +1,5 @@
 from darts.commands import Command
 
 
-class C_OpenSettings(Command):
+class MainMenu(Command):
     pass

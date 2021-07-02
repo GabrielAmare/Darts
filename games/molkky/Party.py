@@ -20,7 +20,7 @@ class Party(BaseParty):
             if player.scores and player.scores[-1].score == 50:
                 return self.set_winner(player)
 
-    def on_add_score(self, command: C_AddScore):
+    def on_add_score(self, command: AddScore):
         marks = command.total
 
         player_and_score = self.on_add_score_before(command)

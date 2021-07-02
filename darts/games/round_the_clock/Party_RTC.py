@@ -11,7 +11,7 @@ class Party_RTC(Party):
             if player.scores and player.scores[-1].score == 25:
                 return self.set_winner(player)
 
-    def on_add_score(self, command: cmd.C_AddScore):
+    def on_add_score(self, command: cmd.AddScore):
         try:
             player_and_score = self.on_add_score_before(command)
         except InvalidScoreError:

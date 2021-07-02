@@ -12,7 +12,7 @@ class Party(BaseParty):
             if player.scores and player.scores[-1].score == 0:
                 return self.set_winner(player)
 
-    def on_add_score(self, command: C_AddScore):
+    def on_add_score(self, command: AddScore):
         marks = command.total
         if marks > 180:
             return self.vocal_feedback("INVALID_SCORE")

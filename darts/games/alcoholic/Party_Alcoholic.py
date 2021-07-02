@@ -12,7 +12,7 @@ class Party_Alcoholic(Party):
     def update_winner(self):
         pass
 
-    def on_add_score(self, command: cmd.C_AddScore):
+    def on_add_score(self, command: cmd.AddScore):
         if len(command.scores) != 1:
             return self.vocal_feedback("INVALID_SCORE")
 

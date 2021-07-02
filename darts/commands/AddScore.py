@@ -4,7 +4,7 @@ from .O_Score import O_Score
 from .O_Player import O_Player
 
 
-class C_AddScore(Command):
+class AddScore(Command):
     def __init__(self, scores: List[O_Score], player: O_Player = None):
         self.player = player
         self.scores = scores

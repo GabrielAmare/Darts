@@ -3,29 +3,29 @@ from darts import commands as cmd
 
 lexer, parser, astb, engine_en = base(
     # COMMANDS
-    [cmd.C_Quit, match("KW_QUIT")],
-    [cmd.C_MainMenu, match("KW_MAIN_MENU")],
-    [cmd.C_StartParty, match("KW_OK")],
-    [cmd.C_SelectPartyType, match("KW_GAME in *")],
+    [cmd.Quit, match("KW_QUIT")],
+    [cmd.MainMenu, match("KW_MAIN_MENU")],
+    [cmd.StartParty, match("KW_OK")],
+    [cmd.SelectPartyType, match("KW_GAME in *")],
     [
-        cmd.C_AdjustMic,
+        cmd.AdjustMic,
         match("KW_ADJUST_MIC") & match("KW_DURING") & match("*.value as seconds") & match("KW_SECONDS"),
         match("KW_ADJUST_MIC"),
     ],
     [
-        cmd.C_Redo,
+        cmd.Redo,
         match("KW_REDO") & match("*.value.mod in *"),
         match("KW_REDO") & (match("*.value in *") & match("KW_FOIS")).optional
     ],
     [
-        cmd.C_Undo,
+        cmd.Undo,
         match("KW_UNDO") & match("*.value.mod in *"),
         match("KW_UNDO") & (match("*.value in *") & match("KW_FOIS")).optional
     ],
-    [cmd.C_AddPlayers, match("O_Player in players").and_repeat & match("KW_ET") & (match("O_PlayerCP in players") | match("O_Player in players"))],
-    [cmd.C_AddPlayer, match("O_Player as player")],
+    [cmd.AddPlayers, match("O_Player in players").and_repeat & match("KW_ET") & (match("O_PlayerCP in players") | match("O_Player in players"))],
+    [cmd.AddPlayer, match("O_Player as player")],
     [
-        cmd.C_AddScore,
+        cmd.AddScore,
         match("__scores__") & match("KW_POUR") & (match("O_PlayerCP as player") | match("O_Player as player")),
         (match("O_PlayerCP as player") | match("O_Player as player")) & match("KW_HAS_DONE") & match("__scores__"),
         match("__scores__"),

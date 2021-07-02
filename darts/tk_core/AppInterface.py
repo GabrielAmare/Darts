@@ -22,12 +22,12 @@ class AppInterface(Interface, CommandHandlerWrapper):
     command_parser: CommandParser
     STATES = ["__GLOBAL__", "__MAIN_MENU__", "__SETTINGS__"]
     COMMAND_HANDLERS = {
-        C_MainMenu: "on_main_menu",
-        C_Quit: "on_quit",
-        C_SelectPartyType: "on_select_party_type",
-        C_AdjustMic: "on_adjust_mic",
-        C_OpenSettings: "on_open_settings",
-        C_SetLang: "on_set_lang"
+        MainMenu: "on_main_menu",
+        Quit: "on_quit",
+        SelectPartyType: "on_select_party_type",
+        AdjustMic: "on_adjust_mic",
+        OpenSettings: "on_open_settings",
+        SetLang: "on_set_lang"
     }
 
     def __init__(self, root, **cfg):
@@ -187,13 +187,13 @@ class AppInterface(Interface, CommandHandlerWrapper):
 
     # COMMANDS METHODS
 
-    def on_main_menu(self, _command: C_MainMenu = None):
+    def on_main_menu(self, _command: MainMenu = None):
         self.nb.active("main_menu")
 
-    def on_open_settings(self, _command: C_OpenSettings = None):
+    def on_open_settings(self, _command: OpenSettings = None):
         self.nb.active("settings")
 
-    def on_select_party_type(self, command: C_SelectPartyType):
+    def on_select_party_type(self, command: SelectPartyType):
         if command.name not in self.PARTY_TYPES:
             self.display_error_for(command.name, 1000)
             self.say("APP.UNRECOGNIZED_GAME")
@@ -207,12 +207,12 @@ class AppInterface(Interface, CommandHandlerWrapper):
         self.nb.enable("party")
         self.nb.active("party")
 
-    def on_set_lang(self, command: C_SetLang):
+    def on_set_lang(self, command: SetLang):
         set_lang(command.lang_IETF)
         self.command_parser.engine = APP_CFG["engine"]
 
-    def on_quit(self, _command: C_Quit = None):
+    def on_quit(self, _command: Quit = None):
         self.master.on_quit()
 
-    def on_adjust_mic(self, command: C_AdjustMic):
+    def on_adjust_mic(self, command: AdjustMic):
         self.vi.adjust_mic(command.seconds)
