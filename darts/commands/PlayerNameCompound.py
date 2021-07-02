@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from .O_Player import O_Player
+from .PlayerName import PlayerName
 
 
 @dataclass
-class O_PlayerCP(O_Player):
+class PlayerNameCompound(PlayerName):
     def __init__(self, name1: str, name2: str):
         super().__init__(name1 + " " + name2)

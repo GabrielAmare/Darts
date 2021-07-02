@@ -2,14 +2,14 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 from .base import Command
-from .O_Player import O_Player
-from .O_Score import O_Score
+from .PlayerName import PlayerName
+from .ScoreValue import ScoreValue
 
 
 @dataclass
 class AddScore(Command):
-    scores: List[O_Score]
-    player: Optional[O_Player] = None
+    scores: List[ScoreValue]
+    player: Optional[PlayerName] = None
 
     @property
     def total(self):

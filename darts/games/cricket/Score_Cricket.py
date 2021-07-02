@@ -27,7 +27,7 @@ class Score_Cricket(Score):
         assert door in self.party.DOORS
         return door * (self.get_marks(door) - self.OPEN_DOOR)
 
-    def update(self, scores: List[cmd.O_Score]):
+    def update(self, scores: List[cmd.ScoreValue]):
         items = [(score.value, score.factor) for score in scores]
 
         data = dict(

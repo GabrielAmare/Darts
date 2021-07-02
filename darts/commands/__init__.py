@@ -21,6 +21,6 @@ from .AddScore import AddScore
 
 from .SetWinner import SetWinner
 
-from .O_Player import O_Player
-from .O_PlayerCP import O_PlayerCP
-from .O_Score import O_Score
+from .PlayerName import PlayerName
+from .PlayerNameCompound import PlayerNameCompound
+from .ScoreValue import ScoreValue

@@ -56,7 +56,7 @@ class Score_Molkky(Score):
             errors=errors
         )
 
-    def update(self, scores: List[cmd.O_Score]):
+    def update(self, scores: List[cmd.ScoreValue]):
         delta = sum(score.factor * score.value for score in scores)
         new_score = self.score + delta
 

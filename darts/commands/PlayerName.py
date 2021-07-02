@@ -4,5 +4,5 @@ from .base import Command
 
 
 @dataclass
-class O_Player(Command):
+class PlayerName(Command):
     name: str

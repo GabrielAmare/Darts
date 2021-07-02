@@ -47,7 +47,7 @@ def score_data(value: int, factor: int) -> dict:
 @Field.rpy("!sips_given[int]", default=0)
 @Field.rpy("!score[int]", default=0)
 class Score_Alcoholic(Score):
-    def update(self, scores: List[cmd.O_Score]):
+    def update(self, scores: List[cmd.ScoreValue]):
         assert len(scores) == 1
         score = scores[0]
         data = score_data(score.value, score.factor)

@@ -29,7 +29,7 @@ class Score(Model):
     def party(self):
         return self.player.party
 
-    def update(self, scores: List[cmd.O_Score]):
+    def update(self, scores: List[cmd.ScoreValue]):
         raise NotImplementedError
 
 

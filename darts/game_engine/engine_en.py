@@ -31,10 +31,10 @@ lexer, parser, astb, engine_en = base(
         match("__scores__"),
     ],
     # OBJECTS
-    [cmd.O_Player, match("VAR as name")],
-    [cmd.O_PlayerCP, match("VAR as name1") & match("VAR as name2")],
+    [cmd.PlayerName, match("VAR as name")],
+    [cmd.PlayerNameCompound, match("VAR as name1") & match("VAR as name2")],
     [
-        cmd.O_Score,
+        cmd.ScoreValue,
         match("*.value as factor") & match("KW_FOIS") & match("*.value as value") & match("KW_POINT").optional,
         match("*.value as value") & match("KW_POINT").optional,
         match("*.fact as factor") & match("*.value as value") & match("KW_POINT").optional,

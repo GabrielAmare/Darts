@@ -1,148 +1,185 @@
 from text_engine import *
 from darts import commands as cmd
 
+PNC = cmd.PlayerNameCompound.__name__
+PN = cmd.PlayerName.__name__
+
+__GLOBAL__ = "__GLOBAL__"
+__SETTINGS__ = "__SETTINGS__"
+__MAIN_MENU__ = "__MAIN_MENU__"
+__GAME__ = "__GAME__"
+__PRE_GAME__ = "__PRE_GAME__"
+__IN_GAME__ = "__IN_GAME__"
+__POST_GAME__ = "__POST_GAME__"
+
+
+class KW:
+    OK = "KW_OK"
+    FOR = "KW_FOR"
+    AND = "KW_AND"
+    QUIT = "KW_QUIT"
+    REDO = "KW_REDO"
+    UNDO = "KW_UNDO"
+    PLUS = "KW_PLUS"
+    LANG = "KW_LANG"
+    GAME = "KW_GAME"
+    POINT = "KW_POINT"
+    TIMES = "KW_TIMES"
+    DURING = "KW_DURING"
+    PASS_TO = "KW_PASS_TO"
+    SECONDS = "KW_SECONDS"
+    HAS_DONE = "KW_HAS_DONE"
+    MAIN_MENU = "KW_MAIN_MENU"
+    SAVE_PARTY = "KW_SAVE_PARTY"
+    ADJUST_MIC = "KW_ADJUST_MIC"
+    OPEN_SETTINGS = "KW_OPEN_SETTINGS"
+
+
 lexer, parser, astb, engine_fr = base(
     # COMMANDS
-    [cmd.Quit, match("KW_QUIT")],
-    [cmd.SaveParty, match("KW_SAVE_PARTY")],
-    [cmd.MainMenu, match("KW_MAIN_MENU")],
-    [cmd.StartParty, match("KW_OK")],
-    [cmd.SelectPartyType, match("KW_GAME in *")],
-    [cmd.SetLang, match("KW_PASS_TO") & match("KW_LANG as lang_IETF")],
+    [cmd.Quit, match(KW.QUIT)],
+    [cmd.SaveParty, match(KW.SAVE_PARTY)],
+    [cmd.MainMenu, match(KW.MAIN_MENU)],
+    [cmd.StartParty, match(KW.OK)],
+    [cmd.SelectPartyType, match(f"{KW.GAME} in *")],
+    [cmd.SetLang, match(KW.PASS_TO) & match(f"{KW.LANG} as lang_IETF")],
     [
         cmd.AdjustMic,
-        match("KW_ADJUST_MIC") & match("KW_DURING") & match("*.value as seconds") & match("KW_SECONDS"),
-        match("KW_ADJUST_MIC"),
+        match(KW.ADJUST_MIC) & match(KW.DURING) & match("*.value as seconds") & match(KW.SECONDS),
+        match(KW.ADJUST_MIC),
     ],
-    [cmd.OpenSettings, match("KW_OPEN_SETTINGS")],
-    [cmd.Redo, match("KW_REDO") & (match("*.value in *") & match("KW_FOIS")).optional],
-    [cmd.Undo, match("KW_UNDO") & (match("*.value in *") & match("KW_FOIS")).optional],
-    [cmd.AddPlayers, match("O_Player in players").and_repeat & match("KW_ET") & (
-            match("O_PlayerCP in players") | match("O_Player in players"))],
-    [cmd.AddPlayer, match("O_Player as player")],
+    [cmd.OpenSettings, match(KW.OPEN_SETTINGS)],
+    [cmd.Redo, match(KW.REDO) & (match("*.value in *") & match(KW.TIMES)).optional],
+    [cmd.Undo, match(KW.UNDO) & (match("*.value in *") & match(KW.TIMES)).optional],
+    [cmd.AddPlayers, match(f"{PN} in players").and_repeat & match(KW.AND) & (
+            match(f"{PNC} in players") | match(f"{PN} in players"))],
+    [cmd.AddPlayer, match(f"{PN} as player")],
     [
         cmd.AddScore,
-        match("__scores__") & match("KW_POUR") & (match("O_PlayerCP as player") | match("O_Player as player")),
-        (match("O_PlayerCP as player") | match("O_Player as player")) & match("KW_HAS_DONE") & match("__scores__"),
+        match("__scores__") & match(KW.FOR) & (match(f"{PNC} as player") | match(f"{PN} as player")),
+        (match(f"{PNC} as player") | match(f"{PN} as player")) & match(KW.HAS_DONE) & match("__scores__"),
         match("__scores__"),
     ],
     # OBJECTS
-    [cmd.O_Player, match("VAR as name")],
-    [cmd.O_PlayerCP, match("VAR as name1") & match("VAR as name2")],
+    [cmd.PlayerName, match("VAR as name")],
+    [cmd.PlayerNameCompound, match("VAR as name1") & match("VAR as name2")],
     [
-        cmd.O_Score,
-        match("*.value as factor") & match("KW_FOIS") & match("*.value as value") & match("KW_POINT").optional,
-        match("*.value as value") & match("KW_POINT").optional,
-        match("*.fact as factor") & match("*.value as value") & match("KW_POINT").optional,
+        cmd.ScoreValue,
+        match("*.value as factor") & match(KW.TIMES) & match("*.value as value") & match(KW.POINT).optional,
+        match("*.value as value") & match(KW.POINT).optional,
+        match("*.fact as factor") & match("*.value as value") & match(KW.POINT).optional,
     ],
     pattern_libs=[]
 )
 parser.add_routine(
-    "__GLOBAL__",
-    match("C_Quit")
-    | match("C_MainMenu")
-    | match("C_AdjustMic")
-    | match("C_OpenSettings")
+    __GLOBAL__,
+    match(cmd.Quit.__name__)
+    | match(cmd.MainMenu.__name__)
+    | match(cmd.AdjustMic.__name__)
+    | match(cmd.OpenSettings.__name__)
 )
 parser.add_routine(
-    "__SETTINGS__",
-    match("C_SetLang")
-    | match("__GLOBAL__")
+    __SETTINGS__,
+    match(cmd.SetLang.__name__)
+    | match(__GLOBAL__)
 )
 parser.add_routine(
-    "__MAIN_MENU__",
-    match("C_SelectPartyType")
-    | match("__GLOBAL__")
+    __MAIN_MENU__,
+    match(cmd.SelectPartyType.__name__)
+    | match(__GLOBAL__)
 )
 parser.add_routine(
-    "__GAME__",
-    match("C_Redo")
-    | match("C_Undo")
-    | match("C_SaveParty")
-    | match("__GLOBAL__")
+    __GAME__,
+    match(cmd.Redo.__name__)
+    | match(cmd.Undo.__name__)
+    | match(cmd.SaveParty.__name__)
+    | match(__GLOBAL__)
 )
 parser.add_routine(
-    "__PRE_GAME__",
-    match("C_AddPlayers")
-    | match("C_AddPlayer")
-    | match("C_StartParty")
-    | match("__GAME__")
+    __PRE_GAME__,
+    match(cmd.AddPlayers.__name__)
+    | match(cmd.AddPlayer.__name__)
+    | match(cmd.StartParty.__name__)
+    | match(__GAME__)
 )
 parser.add_routine(
-    "__IN_GAME__",
-    match("C_AddScore")
-    | match("__GAME__")
+    __IN_GAME__,
+    match(cmd.AddScore.__name__)
+    | match(__GAME__)
 )
 parser.add_routine(
-    "__POST_GAME__",
-    match("__GAME__")
+    __POST_GAME__,
+    match(__GAME__)
 )
 
 parser.add_routine(
     "__scores__",
-    match("O_Score in scores").and_repeat & match("KW_ET") & match("O_Score in scores")
+    match(f"{cmd.ScoreValue.__name__} in scores").and_repeat
+    & match(KW.AND)
+    & match(f"{cmd.ScoreValue.__name__} in scores")
 )
 parser.add_routine(
     "__scores__",
-    match("O_Score in scores") & (match("KW_PLUS") & match("O_Score in scores")).and_repeat
+    match(f"{cmd.ScoreValue.__name__} in scores")
+    & (match(KW.PLUS) & match(f"{cmd.ScoreValue.__name__} in scores")).and_repeat
 )
 parser.add_routine(
     "__scores__",
-    match("O_Score in scores")
+    match(f"{cmd.ScoreValue.__name__} in scores")
 )
 
 # KWS
-lexer.add_pattern("KW_ET", mode="kw", expr="et")
-lexer.add_pattern("KW_OK", mode="kw", expr="ok")
-lexer.add_pattern("KW_POUR", mode="kw", expr="pour")
+lexer.add_pattern(KW.AND, mode="kw", expr="et")
+lexer.add_pattern(KW.OK, mode="kw", expr="ok")
+lexer.add_pattern(KW.FOR, mode="kw", expr="pour")
 
-lexer.add_pattern("KW_POINT", mode="kw", expr=r"points?|"
-                                              r"\.")
-lexer.add_pattern("KW_FOIS", mode="kw", expr="fois|"
-                                             "x")
-lexer.add_pattern("KW_PLUS", mode="kw", expr=r"plus|"
-                                             r"\+")
+lexer.add_pattern(KW.POINT, mode="kw", expr=r"points?|"
+                                            r"\.")
+lexer.add_pattern(KW.TIMES, mode="kw", expr="fois|"
+                                            "x")
+lexer.add_pattern(KW.PLUS, mode="kw", expr=r"plus|"
+                                           r"\+")
 
-lexer.add_pattern("KW_HAS_DONE", mode="kw", expr="a fait|marques?")
-lexer.add_pattern("KW_ADJUST_MIC", mode="kw", expr="ajuster? le micro|"
-                                                   "ajuster? le microphone|"
-                                                   "ajuster? le bruit|"
-                                                   "ajuster")
-lexer.add_pattern("KW_DURING", mode="kw", expr="pendant|"
-                                               "durant")
-lexer.add_pattern("KW_SECONDS", mode="kw", expr="secondes?")
-lexer.add_pattern("KW_OPEN_SETTINGS", mode="kw", expr="paramètres|"
-                                                      "ouvrir les paramètres|"
-                                                      "changer les paramètres")
-lexer.add_pattern("KW_PASS_TO", mode="kw", expr="passe[rs]? en")
+lexer.add_pattern(KW.HAS_DONE, mode="kw", expr="a fait|marques?")
+lexer.add_pattern(KW.ADJUST_MIC, mode="kw", expr="ajuster? le micro|"
+                                                 "ajuster? le microphone|"
+                                                 "ajuster? le bruit|"
+                                                 "ajuster")
+lexer.add_pattern(KW.DURING, mode="kw", expr="pendant|"
+                                             "durant")
+lexer.add_pattern(KW.SECONDS, mode="kw", expr="secondes?")
+lexer.add_pattern(KW.OPEN_SETTINGS, mode="kw", expr="paramètres|"
+                                                    "ouvrir les paramètres|"
+                                                    "changer les paramètres")
+lexer.add_pattern(KW.PASS_TO, mode="kw", expr="passe[rs]? en")
 
-lexer.add_pattern("KW_SAVE_PARTY", mode="kw", expr="sauvegarder la partie|"
-                                                   "enregistrer la partie|"
-                                                   "sauvegarder|"
-                                                   "enregistrer")
+lexer.add_pattern(KW.SAVE_PARTY, mode="kw", expr="sauvegarder la partie|"
+                                                 "enregistrer la partie|"
+                                                 "sauvegarder|"
+                                                 "enregistrer")
 
-lexer.add_pattern("KW_LANG", mode="kw", expr="français", value="fr-FR")
-lexer.add_pattern("KW_LANG", mode="kw", expr="anglais", value="en-US")
+lexer.add_pattern(KW.LANG, mode="kw", expr="français", value="fr-FR")
+lexer.add_pattern(KW.LANG, mode="kw", expr="anglais", value="en-US")
 
 # QUITTER / MENU PRINCIPAL
-lexer.add_pattern("KW_QUIT", mode="kw", expr="quitter")
-lexer.add_pattern("KW_MAIN_MENU", mode="kw", expr="menu principal")
+lexer.add_pattern(KW.QUIT, mode="kw", expr="quitter")
+lexer.add_pattern(KW.MAIN_MENU, mode="kw", expr="menu principal")
 
 # LANCER UNE PARTIE
-lexer.add_pattern("KW_GAME", mode="kw", expr="301")
-lexer.add_pattern("KW_GAME", mode="kw", expr="501")  # _301 variant
-lexer.add_pattern("KW_GAME", mode="kw", expr="801")  # _301 variant
-lexer.add_pattern("KW_GAME", mode="kw", expr="cricket")
-lexer.add_pattern("KW_GAME", mode="kw", expr="around the clock")
-lexer.add_pattern("KW_GAME", mode="kw", expr="alcooliques?")
-lexer.add_pattern("KW_GAME", mode="kw", expr="[mM]olkky")
+lexer.add_pattern(KW.GAME, mode="kw", expr="301")
+lexer.add_pattern(KW.GAME, mode="kw", expr="501")  # _301 variant
+lexer.add_pattern(KW.GAME, mode="kw", expr="801")  # _301 variant
+lexer.add_pattern(KW.GAME, mode="kw", expr="cricket")
+lexer.add_pattern(KW.GAME, mode="kw", expr="around the clock")
+lexer.add_pattern(KW.GAME, mode="kw", expr="alcooliques?")
+lexer.add_pattern(KW.GAME, mode="kw", expr="[mM]olkky")
 
 # ANNULER REFAIRE
-lexer.add_pattern("KW_UNDO", mode="kw", expr="annuler|"
-                                             "oups|"
-                                             "oops")
-lexer.add_pattern("KW_REDO", mode="kw", expr="restaurer|"
-                                             "refaire")
+lexer.add_pattern(KW.UNDO, mode="kw", expr="annuler|"
+                                           "oups|"
+                                           "oops")
+lexer.add_pattern(KW.REDO, mode="kw", expr="restaurer|"
+                                           "refaire")
 
 # FACTEURS
 lexer.add_pattern("KW_1.value.fact", mode="kw", expr="1|"

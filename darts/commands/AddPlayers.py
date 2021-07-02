@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import List
 
 from .base import Command
-from .O_Player import O_Player
+from .PlayerName import PlayerName
 
 
 @dataclass
 class AddPlayers(Command):
-    players: List[O_Player]
+    players: List[PlayerName]

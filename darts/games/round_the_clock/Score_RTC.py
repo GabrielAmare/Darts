@@ -8,7 +8,7 @@ from darts import commands as cmd
 
 @Field.rpy("!score[int]", default=0, values=[*range(0, 21), 25])
 class Score_RTC(Score):
-    def update(self, scores: List[cmd.O_Score]):
+    def update(self, scores: List[cmd.ScoreValue]):
         assert len(scores) == 1, scores
         score = scores[0]
         new_goal = score.value

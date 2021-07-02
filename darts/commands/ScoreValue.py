@@ -4,6 +4,6 @@ from .base import Command
 
 
 @dataclass
-class O_Score(Command):
+class ScoreValue(Command):
     value: int
     factor: int = 1
