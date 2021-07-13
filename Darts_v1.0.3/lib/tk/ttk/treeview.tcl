@@ -15,7 +15,7 @@ namespace eval ttk::treeview {
     set State(pressMode) 	none
     set State(pressX)		0
 
-    # For pressMode == "resize"
+    # For pressMode == "_resize"
     set State(resizeColumn)	#0
 
     # For pressmode == "heading"
@@ -158,7 +158,7 @@ proc ttk::treeview::Press {w x y} {
     switch -- [$w identify region $x $y] {
 	nothing { }
 	heading { heading.press $w $x $y }
-	separator { resize.press $w $x $y }
+	separator { _resize.press $w $x $y }
 	tree -
 	cell {
 	    set item [$w identify item $x $y]
@@ -176,7 +176,7 @@ proc ttk::treeview::Press {w x y} {
 proc ttk::treeview::Drag {w x y} {
     variable State
     switch $State(pressMode) {
-	resize	{ resize.drag $w $x }
+	_resize	{ _resize.drag $w $x }
 	heading	{ heading.drag $w $x $y }
     }
 }
@@ -184,7 +184,7 @@ proc ttk::treeview::Drag {w x y} {
 proc ttk::treeview::Release {w x y} {
     variable State
     switch $State(pressMode) {
-	resize	{ resize.release $w $x }
+	_resize	{ _resize.release $w $x }
 	heading	{ heading.release $w }
     }
     set State(pressMode) none
@@ -193,18 +193,18 @@ proc ttk::treeview::Release {w x y} {
 
 ### Interactive column resizing.
 #
-proc ttk::treeview::resize.press {w x y} {
+proc ttk::treeview::_resize.press {w x y} {
     variable State
-    set State(pressMode) "resize"
+    set State(pressMode) "_resize"
     set State(resizeColumn) [$w identify column $x $y]
 }
 
-proc ttk::treeview::resize.drag {w x} {
+proc ttk::treeview::_resize.drag {w x} {
     variable State
     $w drag $State(resizeColumn) $x
 }
 
-proc ttk::treeview::resize.release {w x} {
+proc ttk::treeview::_resize.release {w x} {
     # no-op
 }
 

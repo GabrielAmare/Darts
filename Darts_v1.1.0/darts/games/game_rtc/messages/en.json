@@ -1,0 +1,10 @@
+{
+  "INFO": {
+    "NAME": "Round The Clock",
+    "DESCRIPTION": "Darts game where you need to reach each sector from  1 to 20\nwithout forgetting the BULL"
+  },
+  "ANNOUNCE_TARGET": [
+    "you aim for <target>",
+    "we resume at <target>"
+  ]
+}

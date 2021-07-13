@@ -1,0 +1,29 @@
+{
+  "INFO": {
+    "NAME": "301",
+    "DESCRIPTION": "Darts game where you start with 301 points\nthe first to reach 0 points wins"
+  },
+  "SETTINGS": {
+    "DEFAULT_SCORE": "Default score",
+    "DOUBLE_IN": "Double-In",
+    "DOUBLE_OUT": "Double-Out"
+  },
+  "ANNOUNCE_REMAINING_SCORE": [
+    "you have <score> left",
+    "you only have <score>",
+    "only <score> left",
+    "still <score>"
+  ],
+  "ANNOUNCE_42": [
+    "the universal answer",
+    "unfortunately the double 21 does not exist"
+  ],
+  "ANNOUNCE_50": [
+    "a double bull to win",
+    "a double bull and it's over"
+  ],
+  "ANNOUNCE_DOUBLE_TO_WIN": [
+    "a double <half_score> before the victory",
+    "double <half_score> and it's won"
+  ]
+}

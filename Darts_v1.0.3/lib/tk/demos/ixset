@@ -293,7 +293,7 @@ proc createwindows {} {
 	    -padx 1m -pady 1m
 
     #
-    # Let the user resize our window
+    # Let the user _resize our window
     #
     wm minsize . 10 10
 }

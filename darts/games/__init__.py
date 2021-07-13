@@ -1,5 +1,1 @@
-from .cricket import *
-from ._301 import *
-from .round_the_clock import *
-from .alcoholic import *
-from .molkky import *
+from . import game_301, game_cricket, game_rtc

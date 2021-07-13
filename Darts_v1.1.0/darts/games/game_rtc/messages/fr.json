@@ -1,0 +1,10 @@
+{
+  "INFO": {
+    "NAME": "Round The Clock",
+    "DESCRIPTION": "Jeu de fléchettes où il faut toucher tous les secteurs de 1 à 20\nsans oublier le BULL"
+  },
+  "ANNOUNCE_TARGET": [
+    "vous visez le <target>",
+    "on reprend au <target>"
+  ]
+}

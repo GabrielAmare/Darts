@@ -16,15 +16,15 @@
 #	hresize		-- horizontal resizing
 #	vresize		-- vertical resizing
 #
-# Also resize cursors for each of the compass points,
-# {nw,n,ne,w,e,sw,s,se}resize.
+# Also _resize cursors for each of the compass points,
+# {nw,n,ne,w,e,sw,s,se}_resize.
 #
 # Platform notes:
 #
 # Windows doesn't distinguish resizing at the 8 compass points,
 # only horizontal, vertical, and the two diagonals.
 #
-# OSX doesn't have resize cursors for nw, ne, sw, or se corners.
+# OSX doesn't have _resize cursors for nw, ne, sw, or se corners.
 # We use the Tk-defined X11 fallbacks for these.
 #
 # X11 doesn't have a "forbidden" cursor (usually a slashed circle);

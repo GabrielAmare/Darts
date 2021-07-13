@@ -16,7 +16,7 @@ wm title $w "Vertical Paned Window Demonstration"
 wm iconname $w "paned2"
 positionWindow $w
 
-label $w.msg -font $font -wraplength 4i -justify left -text "The sash between the two scrolled windows below can be used to divide the area between them.  Use the left mouse button to resize without redrawing by just moving the sash, and use the middle mouse button to resize opaquely (always redrawing the windows in each position.)"
+label $w.msg -font $font -wraplength 4i -justify left -text "The sash between the two scrolled windows below can be used to divide the area between them.  Use the left mouse button to _resize without redrawing by just moving the sash, and use the middle mouse button to _resize opaquely (always redrawing the windows in each position.)"
 pack $w.msg -side top
 
 ## See Code / Dismiss buttons

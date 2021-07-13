@@ -226,7 +226,7 @@ proc ::tcl::OptKeyDelete {key} {
         set OptDesc($descKey)
     }
 
-# Parse entry point for ppl who don't want to register with a key,
+# Parse entry point for ppl who don't want to _register with a key,
 # for instance because the description changes dynamically.
 #  (otherwise one should really use OptKeyRegister once + OptKeyParse
 #   as it is way faster or simply OptProc which does it all)
@@ -239,7 +239,7 @@ proc ::tcl::OptParse {desc arglist} {
 }
 
 # Helper function, replacement for proc that both
-# register the description under a key which is the name of the proc
+# _register the description under a key which is the name of the proc
 # (and thus unique to that code)
 # and add a first line to the code to call the OptKeyParse proc
 # Stores the list of variables that have been actually given by the user

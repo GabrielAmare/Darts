@@ -1,0 +1,22 @@
+{
+  "INFO": {
+    "NAME": "Cricket",
+    "DESCRIPTION": "Jeu de fléchettes où il faut viser 15, 16, ..., 20 et BULL\npour ouvrir les portes et marquer des points"
+  },
+  "DOOR_OPENED": [
+    "le <door> a été ouvert"
+  ],
+  "DOORS_OPENED": [
+    "<doors> ont été ouverts"
+  ],
+  "DOOR_CLOSED": [
+    "le <door> a été fermé"
+  ],
+  "DOORS_CLOSED": [
+    "<doors> ont été fermés"
+  ],
+  "SCOREBOARD": {
+    "DOORS": "Portes",
+    "TOTAL": "Total"
+  }
+}

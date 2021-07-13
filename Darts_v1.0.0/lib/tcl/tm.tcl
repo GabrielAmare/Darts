@@ -7,7 +7,7 @@
 # Locates all possible packages in a directory via a less restricted glob. The
 # targeted directory is derived from the name of the requested package, i.e.
 # the TM scan will look only at directories which can contain the requested
-# package. It will register all packages it found in the directory so that
+# package. It will _register all packages it found in the directory so that
 # future requests have a higher chance of being fulfilled by the ifneeded
 # database without having to come to us again.
 #

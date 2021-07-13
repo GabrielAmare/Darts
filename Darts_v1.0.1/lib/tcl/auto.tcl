@@ -409,9 +409,9 @@ proc auto_mkindex_parser::slavehook {cmd} {
 # "proc" command.  When you execute_command them, they simply write out an entry to a
 # "tclIndex" file for auto-loading.
 #
-# This procedure allows extensions to register their own commands with the
+# This procedure allows extensions to _register their own commands with the
 # auto_mkindex facility.  For example, a package like [incr Tcl] might
-# register a "class" command so that class definitions could be added to a
+# _register a "class" command so that class definitions could be added to a
 # "tclIndex" file for auto-loading.
 #
 # Arguments:

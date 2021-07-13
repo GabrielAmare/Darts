@@ -1,34 +1,56 @@
-import random
-
-from .constants import VI, MESSAGES, LOG_FP
-
-
-def log(obj):
-    with open(LOG_FP, mode='a', encoding='utf-8') as file:
-        file.write(f"\n{obj}")
+import difflib
+from tkinter import PhotoImage
+from typing import List, TypeVar, Callable, Tuple, Iterator
 
 
-def translate(code, rand=False, config=None):
-    data = MESSAGES.get(code)
-    if isinstance(data, list):
-        assert rand
-        text = random.choice(data)
-    elif isinstance(data, str):
-        text = data
-    else:
-        raise TypeError(type(data))
-
-    if config:
-        for key, val in config.items():
-            text = text.replace(f"<{key}>", str(val))
-
-    return text
+def expr_match_ratio(expr1: str, expr2: str) -> float:
+    return difflib.SequenceMatcher(isjunk=None, a=expr1, b=expr2).ratio()
 
 
-def auto_translate(code: str, setter: callable, **config):
-    MESSAGES.subscribe(lambda: setter(translate(code, **config)))
+E = TypeVar('E')
+V = TypeVar('V')
 
 
-def vocalize(code: str, **config):
-    message = translate(code, rand=True, config=config)
-    VI.speak(message)
+def maximums_by(elements: Iterator[E], criteria: Callable[[E], V]) -> Tuple[V, List[E]]:
+    max_elements = []
+    max_value = None
+
+    for element in elements:
+        value = criteria(element)
+        if max_value is None or value > max_value:
+            max_value, max_elements = value, [element]
+        elif value == max_value:
+            max_elements.append(element)
+
+    return max_value, max_elements
+
+
+def is_int(o):
+    return isinstance(o, int)
+
+
+def is_str(o):
+    return isinstance(o, str)
+
+
+def resize_image(photo: PhotoImage, width: int, height: int) -> PhotoImage:
+    return photo.subsample(photo.width() // width, photo.height() // height)
+
+
+def rescale_image(photo: PhotoImage, scale: float) -> PhotoImage:
+    return resize_image(photo, int(scale * photo.width()), int(scale * photo.height()))
+
+
+def memorize(function):
+    memory = {}
+
+    def wrapped(*args, **kwargs):
+        key = args, *kwargs.items()
+        if key in memory:
+            result = memory[key]
+        else:
+            result = memory[key] = function(*args, **kwargs)
+
+        return result
+
+    return wrapped

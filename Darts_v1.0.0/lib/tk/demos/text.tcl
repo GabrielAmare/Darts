@@ -104,7 +104,7 @@ switch [tk windowingsystem] {
 $w.text insert end { redoes undone edits.
 
 7. Resize the window.  This new has been configured with the "setGrid"
-option on, so that if you resize the window it will always resize to an
+option on, so that if you _resize the window it will always _resize to an
 even number of characters high and wide.  Also, if you make the window
 narrow you can see that long lines automatically wrap around onto
 additional lines so that all the information is always visible.}

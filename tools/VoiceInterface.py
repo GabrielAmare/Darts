@@ -1,13 +1,11 @@
-import sys
-
-import speech_recognition as sr
-import gtts
 import os
-import playsound
 import random
+import sys
 from typing import Union, List
 
-from .EventManager import EventManager
+import gtts
+import playsound
+import speech_recognition as sr
 
 
 def method_emitter(name):
@@ -31,30 +29,36 @@ class VoiceInterface:
     class TextToAudioError(Exception):
         pass
 
-    def emit(self, event):
-        if self.event_manager:
-            self.event_manager.emit_from(self, event)
-
     def on(self, event, callback):
-        if self.event_manager:
-            self.event_manager.on_from(self, event, callback)
+        self.events.setdefault(event, [])
+        self.events[event].append(callback)
+        return lambda: callback in self.events[event] and self.events[event].remove(callback)
 
-    def __init__(self, time_limit=5, temp_file="temp.mp3", lang_IETF="fr-FR", event_manager: EventManager = None):
+    def emit(self, event, *args, **kwargs):
+        for callback in self.events.get(event, []):
+            callback(*args, **kwargs)
 
-        super().__init__()
+    def __init__(self, time_limit=5, temp_file="/tmp/temp.mp3", lang_IETF="fr-FR"):
+        self.events = {}
+
         self.listener: sr = sr.Recognizer()
 
         self.time_limit: float = time_limit
         self.temp_file: str = temp_file
 
         self.lang_IETF = lang_IETF
-        self.lang_ISO_639_1 = self.lang_IETF.split('-', 1)[0]
 
-        self.event_manager = event_manager
+    @property
+    def lang_IETF(self):
+        return self._lang_IETF
 
-    def set_lang(self, lang_IETF: str):
-        self.lang_IETF = lang_IETF
-        self.lang_ISO_639_1 = self.lang_IETF.split('-', 1)[0]
+    @lang_IETF.setter
+    def lang_IETF(self, value):
+        self._lang_IETF = value
+
+    @property
+    def lang_ISO_639_1(self):
+        return self.lang_IETF.split('-', 1)[0]
 
     @method_emitter("audio_to_text")
     def audio_to_text(self, parsed_audio, show_all: bool = False) -> Union[str, List[str]]:

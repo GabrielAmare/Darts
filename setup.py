@@ -18,11 +18,22 @@ def images():
     return [os.path.join(root, fn) for fn in os.listdir(root)]
 
 
+def sounds():
+    root = os.path.abspath(ASSETS_PATH + "sounds")
+    return [os.path.join(root, fn) for fn in os.listdir(root)]
+
+
 def all_vocals():
     root = ASSETS_PATH + "messages"
     for dn in os.listdir(root):
         base = os.path.join(root, dn)
         yield base, [os.path.join(base, fn) for fn in os.listdir(base)]
+
+    root = 'darts\\games\\'
+    for game in os.listdir(root):
+        if game.startswith('game_'):
+            path = root + game + '\\messages'
+            yield path, [os.path.join(path, fn) for fn in os.listdir(path)]
 
 
 def exes():
@@ -32,6 +43,7 @@ def exes():
 
 data_files = [
     (ASSETS_PATH + 'images', images()),
+    (ASSETS_PATH + 'sounds', sounds()),
     *all_vocals(),
     (ASSETS_PATH + 'exes', exes())
 ]

@@ -1,0 +1,12 @@
+
+2021-07-13T09:24:33.834589,info,creating session
+2021-07-13T09:24:33.930592,success,AppImages successfully loaded : 'app-logo'
+2021-07-13T09:24:33.955217,success,AppImages successfully loaded : 'neutral' -> 48 x 48
+2021-07-13T09:24:33.967217,success,AppImages successfully loaded : 'game-settings' -> 24 x 24
+2021-07-13T09:24:33.967217,success,AppImages successfully loaded : 'game-start' -> 48 x 48
+2021-07-13T09:24:33.979219,success,AppImages successfully loaded : 'flag-FR' -> x0.75
+2021-07-13T09:24:33.979219,success,AppImages successfully loaded : 'flag-GB' -> x0.75
+2021-07-13T09:24:33.983243,success,AppImages successfully loaded : 'flag-US' -> x0.75
+2021-07-13T09:24:33.988176,info,lang set to 'fr-FR'
+2021-07-13T09:24:33.990682,info,starting session
+2021-07-13T09:24:37.185428,info,quitting session

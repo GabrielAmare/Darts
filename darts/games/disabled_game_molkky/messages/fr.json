@@ -1,0 +1,23 @@
+{
+  "INFO": {
+    "NAME": "Molkky",
+    "DESCRIPTION": ""
+  },
+  "ANNOUNCE_TOTAL_SCORE": [
+    "Vous êtes à <score>"
+  ],
+  "ANNOUNCE_DROPDOWN": [
+    "Vous êtes redescendu à <score>",
+    "Retour à <score>",
+    "Et on chute vers <score>"
+  ],
+  "ANNOUNCE_KILL": [
+    "<name> est redescendu à <score>",
+    "<name> retombes à <score>",
+    "<name> est retombé à <score>",
+    "<name> se retrouve à <score>",
+    "<name> redescend <score>"
+  ],
+  "ZINEDINE": "pas comme ça zinedine, pas après tout ce que tu as fait",
+  "NO_PRESSURE": "je ne veux pas te mettre la pression, mais si tu rates encore, tu meures !"
+}
