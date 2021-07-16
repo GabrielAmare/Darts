@@ -3,6 +3,7 @@ from __future__ import annotations
 from tkinter import *
 from typing import Optional, List, Dict, Tuple
 
+from darts.app_messages import app_messages
 from darts.app_styles import app_styles
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, IntegerOption, StringOption
 from darts.base_gui.Label import Label
@@ -148,14 +149,16 @@ class Party(BaseParty[Config, Player, Score]):
                 self.announce("CRICKET.DOOR_OPENED", door=self.door_to_text(score.has_opened[0]))
             else:
                 doors, last = self.doors_to_text(score.has_opened)
-                self.announce("CRICKET.DOORS_OPENED", doors=doors + " et " + last)  # TODO : INCLUDE AND KW
+                text = app_messages.translate('APP.UTILS.AND', left=doors, right=last)
+                self.announce("CRICKET.DOORS_OPENED", doors=text)
 
         if score.has_closed:
             if len(score.has_closed) == 1:
                 self.announce("CRICKET.DOOR_CLOSED", door=self.door_to_text(score.has_closed[0]))
             else:
                 doors, last = self.doors_to_text(score.has_closed)
-                self.announce("CRICKET.DOORS_CLOSED", doors=doors + " et " + last)  # TODO : INCLUDE AND KW
+                text = app_messages.translate('APP.UTILS.AND', left=doors, right=last)
+                self.announce("CRICKET.DOORS_CLOSED", doors=text)
 
     def create_player(self, name: str) -> Player:
         return Player(name=name)
