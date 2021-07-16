@@ -4,16 +4,6 @@
     "la partie peut commencer",
     "que le meilleur gagne"
   ],
-  "GAME_WON_BY": [
-    "<name> a gagné. bravo !",
-    "bien joué à <name>",
-    "félicitations à <name> qui gagne la partie"
-  ],
-  "GAME_OVER_NO_WINNER": [
-    "la partie est terminée",
-    "la partie est finie",
-    "bien joué à tous, la partie est finie"
-  ],
   "ANNOUNCE_NEXT_PLAYER": [
     "c'est à <name>",
     "à <name> de jouer"

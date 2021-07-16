@@ -30,5 +30,24 @@
     "SIMPLE": "simple",
     "DOUBLE": "double",
     "TRIPLE": "triple"
+  },
+  "ANNOUNCES": {
+    "WINNERS": [
+      "<names> won. congratulations !",
+      "bien joué à <names>",
+      "félicitations à <names> qui gagnent la partie"
+    ],
+    "WINNER": [
+      "<name> won. congratulations !",
+      "well done to <names>",
+      "congratulations to <names> who wins the game"
+    ],
+    "NO_WINNER": [
+      "the game is over",
+      "well done everyone, the game is over"
+    ]
+  },
+  "UTILS": {
+    "AND": "<left> and <right>"
   }
 }

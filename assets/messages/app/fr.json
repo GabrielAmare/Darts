@@ -34,5 +34,25 @@
   "ERRORS": {
     "INVALID_VALUE": "<value> n'est pas autorisé.",
     "INVALID_FACTOR_VALUE": "<factor> fois <value> n'est pas autorisé."
+  },
+  "ANNOUNCES": {
+    "WINNERS": [
+      "<names> ont gagné. bravo !",
+      "bien joué à <names>",
+      "félicitations à <names> qui gagnent la partie"
+    ],
+    "WINNER": [
+      "<name> a gagné. bravo !",
+      "bien joué à <name>",
+      "félicitations à <name> qui gagne la partie"
+    ],
+    "NO_WINNER": [
+      "la partie est terminée",
+      "la partie est finie",
+      "bien joué à tous, la partie est finie"
+    ]
+  },
+  "UTILS": {
+    "AND": "<left> et <right>"
   }
 }

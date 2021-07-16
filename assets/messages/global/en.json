@@ -4,15 +4,6 @@
     "the game can start",
     "may the best win"
   ],
-  "GAME_WON_BY": [
-    "<name> won. congratulations !",
-    "well done to <name>",
-    "congratulations to <name> who wins the game"
-  ],
-  "GAME_OVER_NO_WINNER": [
-    "the game is over",
-    "well done everyone, the game is over"
-  ],
   "ANNOUNCE_NEXT_PLAYER": [
     "it's <name> turn",
     "it's <name> to play"

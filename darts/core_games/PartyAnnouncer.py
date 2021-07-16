@@ -5,6 +5,7 @@ from darts.app_logger import app_logger
 from darts.base_games import BaseConfig, BaseScore, BasePlayer
 from darts.core_actions import PlaySound
 from .PartyActions import PartyActions
+from ..app_messages import app_messages
 
 C = TypeVar('C', bound=BaseConfig)
 P = TypeVar('P', bound=BasePlayer)
@@ -23,13 +24,18 @@ class PartyAnnouncer(Generic[C, P, S], PartyActions[C, P, S], ABC):
 
     def announce_end(self) -> None:
         if len(self.winners) == 0:
-            self.announce('GLOBAL.GAME_OVER_NO_WINNER')
-            self.stack.append(PlaySound(party=self, sound='applause'))
+            self.announce('APP.ANNOUNCES.NO_WINNER')
         elif len(self.winners) == 1:
-            self.announce('GLOBAL.GAME_WON_BY', name=self.winners[0].name)
+            self.announce('APP.ANNOUNCES.WINNER', name=self.winners[0].name)
             self.stack.append(PlaySound(party=self, sound='applause'))
         else:
-            raise NotImplementedError  # TODO : implement end message with multiple winners
+            names = app_messages.translate(
+                'APP.UTILS.AND',
+                left=', '.join(player.name for player in self.winners[:-1]),
+                right=self.winners[-1].name
+            )
+            self.announce('APP.ANNOUNCES.WINNERS', names=names)
+            self.stack.append(PlaySound(party=self, sound='applause'))
 
     def announce_invalid_score(self, code: str = '', **config) -> None:
         self.announce(code or 'GLOBAL.INVALID_SCORE', **config)
