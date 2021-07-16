@@ -11,15 +11,19 @@ class PartyBuilder:
     def __init__(self, game: Game, scoreboard_cls: Type[Widget]):
         self.game: Game = game
         self.scoreboard_cls: Type[Widget] = scoreboard_cls
+        self.fp: str = ''
         self.config: Optional[BaseConfig] = None
 
     def load_config(self, fp: str) -> None:
         """Load a configuration from a json file."""
         self.config = self.game.config_cls.load(fp)
+        self.fp = fp
 
     def save_config(self, fp: str = '') -> None:
         """Save the configuration to a json file."""
+        fp = fp or self.fp
         self.config.save(fp)
+        self.fp = fp
 
     def create_party(self) -> BaseParty:
         """Create a new party using the current configuration."""
