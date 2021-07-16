@@ -1,17 +1,18 @@
 import yagmail
 import random
 
+from tools37 import JsonFile
+from pathlib import Path
+import os
+
 
 def send_email(zip_url: str, major: int, minor: int, patch: int):
     port = 465  # For SSL
-    origin_email = "gabriel.amare.dev@gmail.com"
-    password = "ccmbmowqmstadcwg"  # TODO : password uncrypted VERY UNSECURE (DO NOT SCALE THE APP WITH THIS INSIDE)
-    TOKEN_CHARS = "abcdefghijklmnopqrstuvwxyzABDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
 
-    EMAILS_LIST = [
-        "gabriel.amare.31@gmail.com",
-        "jppbbc@gmail.com"
-    ]
+    sender = JsonFile.load(os.path.join(str(Path.home()), 'gmail_api_auth_infos.json'))
+    targets = JsonFile.load(os.path.join(str(Path.home()), 'darts_email_receivers.json'))
+
+    TOKEN_CHARS = "abcdefghijklmnopqrstuvwxyzABDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
 
     def generate_token(token_length=10):
         return "".join(random.choice(TOKEN_CHARS) for _ in range(token_length))
@@ -28,16 +29,15 @@ def send_email(zip_url: str, major: int, minor: int, patch: int):
         f"",
         f"Ce mail est un mail automatique, mais vous pouvez nous répondre à cette adresse: gabriel.amare.dev@gmail.com",
     ]
-    yag = yagmail.SMTP(user=origin_email, password=password)
-    for target_email in EMAILS_LIST:
+    yag = yagmail.SMTP(user=sender['email'], password=sender['password'])
+    for target_email in targets:
         yag.send(
             to=target_email,
             subject=subject,
             contents=contents
         )
 
-    print("\nSuccessfully sent the emails to :\n", "\n".join("  - " + mail for mail in EMAILS_LIST))
-
+    print("\nSuccessfully sent the emails to :\n", "\n".join("  - " + mail for mail in targets))
 
 # if __name__ == '__main__':
 #     send_email("https://drive.google.com/file/d/1NE9yej6mNcBJMAOSPIv91ZG6FzH9HyBx/view?usp=sharing", 1, 0, 3)
