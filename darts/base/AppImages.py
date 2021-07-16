@@ -22,10 +22,10 @@ class AppImages:
             return None
 
         photo = PngFile.load(rfp)
+        self.logger.loaded(PngFile._parse_fp(fp))
 
         if scale:
             photo = rescale_image(photo, scale)
-            self.logger.success(f'{self.__class__.__name__} successfully loaded : {fp!r} -> x{scale!r}')
 
         elif size:
             if isinstance(size, int):
@@ -36,9 +36,5 @@ class AppImages:
                 raise ValueError(size)
 
             photo = resize_image(photo, width, height)
-            self.logger.success(f'{self.__class__.__name__} successfully loaded : {fp!r} -> {width!r} x {height!r}')
-
-        else:
-            self.logger.success(f'{self.__class__.__name__} successfully loaded : {fp!r}')
 
         return photo
