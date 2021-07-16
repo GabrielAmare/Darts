@@ -1,3 +1,5 @@
+import os
+
 from tools37.colors import BLACK, RED, GREEN, CYAN, YELLOW
 from tools37.logger import Log
 
@@ -15,6 +17,9 @@ class AppLogger:
     REDO = 'redo'
     METHOD = 'method'
     EXECUTE = 'execute'
+    SAVED = 'saved'
+    LOADED = 'loaded'
+    CREATED = 'created'
 
     def __init__(self, fp: str):
         self.logger = Log(
@@ -26,6 +31,9 @@ class AppLogger:
                 self.DEBUG: Log.Console.Style(bg=BLACK, fg=CYAN),
                 self.WARNING: Log.Console.Style(bg=BLACK, fg=YELLOW),
                 self.SUCCESS: Log.Console.Style(bg=BLACK, fg=GREEN),
+                self.SAVED: Log.Console.Style(bg=BLACK, fg=GREEN, bold=True, italic=True),
+                self.LOADED: Log.Console.Style(bg=BLACK, fg=GREEN, bold=True, italic=True),
+                self.CREATED: Log.Console.Style(bg=BLACK, fg=GREEN, bold=True, italic=True),
                 self.INFO: Log.Console.Style(bg=BLACK, fg=CYAN),
                 self.DO: Log.Console.Style(bg=BLACK, fg='#4ba91f'),
                 self.UNDO: Log.Console.Style(bg=BLACK, fg='#a93c1f'),
@@ -61,6 +69,15 @@ class AppLogger:
 
     def execute(self, action: object):
         return self.logger.new(self.EXECUTE, str(action))
+
+    def saved(self, fp: str):
+        return self.logger.new(self.SAVED, os.path.abspath(fp).replace('\\', '/'))
+
+    def loaded(self, fp: str):
+        return self.logger.new(self.LOADED, os.path.abspath(fp).replace('\\', '/'))
+
+    def created(self, fp: str):
+        return self.logger.new(self.CREATED, os.path.abspath(fp).replace('\\', '/'))
 
     def method_info(self, method):
         def wrapped(self_, *args, **kwargs):
