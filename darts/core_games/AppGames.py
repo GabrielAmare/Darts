@@ -102,3 +102,10 @@ class AppGames:
         self.set_party(party)
 
         self.app_settings.pfd = PartyFileData(game_uid, party_uid)
+
+    def save(self):
+        if self.party:
+            self.save_party()
+
+        for builder in self.builders.values():
+            builder.save_config()
