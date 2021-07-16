@@ -15,7 +15,7 @@ class AppSettings(JsonInterface):
     exes_fp: str = 'assets/exes/'
     sounds_fp: str = 'assets/sounds/'
     engines_fp: str = 'darts/base_engines/'
-    games_fp: str = f'{Path.home()}/darts/games/'
+    games_fp: str = f'{Path.home()}/Darts/games/'
     log_fp: str = 'darts_log'
     lang_IETF: str = 'fr-FR'
 
