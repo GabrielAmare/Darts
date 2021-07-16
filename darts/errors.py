@@ -54,8 +54,10 @@ class PlayerAlreadyExistsError(Exception):
 
 
 class InvalidScoreError(Exception):
-    def __init__(self, marks: int = None):
+    def __init__(self, marks: int = None, code: str = '', **config):
         self.marks: int = marks
+        self.code: str = code
+        self.config: dict = config
 
 
 class PartyConfigurationMissingError(Exception):
