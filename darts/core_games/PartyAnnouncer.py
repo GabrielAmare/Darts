@@ -31,5 +31,5 @@ class PartyAnnouncer(Generic[C, P, S], PartyActions[C, P, S], ABC):
         else:
             raise NotImplementedError  # TODO : implement end message with multiple winners
 
-    def announce_invalid_score(self) -> None:
-        self.announce('GLOBAL.INVALID_SCORE')
+    def announce_invalid_score(self, code: str = '', **config) -> None:
+        self.announce(code or 'GLOBAL.INVALID_SCORE', **config)
