@@ -49,6 +49,7 @@ STYLES = {
     # 'default': dict(bg='black'),
 
     'Main': dict(bg=STYLE['bg']['secondary']),
+    'Main.holder': dict(bg=STYLE['bg']['secondary']),
 
     'VoiceInterfaceIcon': dict(bg=STYLE['bg']['secondary']),
     'TextFeedBack': dict(bg=STYLE['bg']['secondary']),
@@ -56,7 +57,7 @@ STYLES = {
 
     'SettingsMenu': dict(bg=STYLE['bg']['secondary'], padx=8, pady=8),
     'CurrentParty': dict(bg=STYLE['bg']['secondary'], padx=8, pady=8),
-    'GameSettings': dict(bg=STYLE['bg']['secondary'], padx=8, pady=8),
+    'GameSettings': dict(bg=STYLE['bg']['secondary'], padx=8, pady=8, bd=2, relief=RIDGE),
     'GameMenu': dict(bg=STYLE['bg']['secondary'], padx=8, pady=8),
 
     'Body': dict(bg=STYLE['bg']['secondary']),
@@ -93,12 +94,12 @@ STYLES = {
     'TextFeedBack.WARNING': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['warning'], font=FONT.MD),
     'TextFeedBack.SUCCESS': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['success'], font=FONT.MD),
 
-    'SettingOption': dict(bg=STYLE['bg']['secondary']),
-    'SettingOption.label': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['secondary'], font=FONT.SM),
-    'SettingOption.button': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['primary'], font=FONT.SM, padx=5),
-    'SettingOption.button:selected': dict(bg=STYLE['bg']['selected'], fg=STYLE['fg']['selected'], font=FONT.SM, padx=5),
+    'GameSettings.label': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['secondary'], font=FONT.SM),
+    'GameSettings.options': dict(bg=STYLE['bg']['secondary']),
+    'GameSettings.options.button': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['primary'], font=FONT.SM, padx=5),
+    'GameSettings.options.button:selected': dict(bg=STYLE['bg']['selected'], fg=STYLE['fg']['selected'], font=FONT.SM, padx=5),
 
-    'ScoreBoard': dict(bg=STYLE['bg']['secondary'])
+    'ScoreBoard': dict(bg=STYLE['bg']['secondary']),
 }
 
 PACK_STYLES = {
@@ -107,8 +108,6 @@ PACK_STYLES = {
     'Main': dict(side=TOP, fill=BOTH, expand=True),
 
     'GameMenu.holder': dict(side=TOP),
-
-    'GameSettings': dict(side=TOP),
 
     'Body.menu': dict(side=TOP, fill=X),
     'Body.menu.button': dict(side=LEFT, fill=BOTH, expand=True, padx=4),
@@ -133,9 +132,8 @@ PACK_STYLES = {
     'GameBadge.start': dict(side=LEFT, anchor=CENTER, padx=0, pady=0),
     'GameBadge.settings': dict(side=LEFT, anchor=CENTER, padx=0, pady=0),
 
-    'SettingOption': dict(side=TOP, fill=X),
-    'SettingOption.label': dict(side=LEFT, fill=Y),
-    'SettingOption.button': dict(side=LEFT, fill=Y),
+    'GameSettings': dict(side=TOP, anchor=N, pady=10),
+    'GameSettings.options.button': dict(side=LEFT, fill=BOTH, expand=True),
 
     'CurrentParty': dict(side=TOP, fill=BOTH, expand=True),
     'ScoreBoard': dict(side=TOP),
@@ -157,6 +155,14 @@ STYLES_RTC = {
                                   relief=RAISED),
     'RTC.PlayerBadge.label:selected': dict(bg=STYLE['bg']['selected'], font=FONT.MD),
     'RTC.PlayerBadge.score': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['secondary'], font=FONT.XL, padx=15, pady=15),
+}
+STYLES_TRAINING = {
+    'TRAINING.PlayerBadge': dict(bg=STYLE['bg']['secondary'], bd=2, relief=RIDGE),
+    'TRAINING.PlayerBadge:selected': dict(bg=STYLE['bg']['secondary'], bd=2, relief=RIDGE),
+    'TRAINING.PlayerBadge.label': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['primary'], font=FONT.MD, bd=2,
+                                  relief=RAISED),
+    'TRAINING.PlayerBadge.label:selected': dict(bg=STYLE['bg']['selected'], font=FONT.MD),
+    'TRAINING.PlayerBadge.score': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['secondary'], font=FONT.XL, padx=15, pady=15),
 }
 STYLES_CRICKET = {
     'Cricket.ScoreBoard.DoorLabel': dict(
@@ -251,3 +257,4 @@ STYLES_CRICKET = {
 STYLES.update(STYLES_301)
 STYLES.update(STYLES_RTC)
 STYLES.update(STYLES_CRICKET)
+STYLES.update(STYLES_TRAINING)

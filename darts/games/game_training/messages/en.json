@@ -1,0 +1,19 @@
+{
+  "INFO": {
+    "NAME": "Training",
+    "DESCRIPTION": "Darts training where the application tells the user what is next target is."
+  },
+  "SETTINGS": {
+    "PRECISE": {
+      "TITLE": "Precision"
+    }
+  },
+  "ANNOUNCE_VALUE": "you aim for <value>",
+  "ANNOUNCE_FACTOR_VALUE": "you aim for <factor> <value>",
+  "PLAYER_IMPROVEMENT_INCENTIVES": [
+    "You can do it !",
+    "Keep on trying !",
+    "It's possible, a little more efforts.",
+    "Don't throw it."
+  ]
+}

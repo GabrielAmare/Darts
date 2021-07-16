@@ -1,0 +1,19 @@
+{
+  "INFO": {
+    "NAME": "Entrainement",
+    "DESCRIPTION": "Entrainement aux fléchettes où l'application décide de votre prochaine cible."
+  },
+  "SETTINGS": {
+    "PRECISE": {
+      "TITLE": "Précision"
+    }
+  },
+  "ANNOUNCE_VALUE": "vous visez le <value>",
+  "ANNOUNCE_FACTOR_VALUE": "vous visez le <factor> <value>",
+  "PLAYER_IMPROVEMENT_INCENTIVES": [
+    "Vous pouvez le faire !",
+    "Continuez de vous accrocher.",
+    "C'est possible, encore un peu d'efforts.",
+    "Il ne faut rien lâcher."
+  ]
+}

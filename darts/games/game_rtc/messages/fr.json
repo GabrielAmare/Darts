@@ -3,6 +3,15 @@
     "NAME": "Round The Clock",
     "DESCRIPTION": "Jeu de fléchettes où il faut toucher tous les secteurs de 1 à 20\nsans oublier le BULL"
   },
+  "SETTINGS": {
+    "ORDER": {
+      "TITLE": "Ordre",
+      "VALUE": {
+        "ASCENDING": "Montant : 1 → BULL",
+        "DESCENDING": "Descendant : BULL → 1"
+      }
+    }
+  },
   "ANNOUNCE_TARGET": [
     "vous visez le <target>",
     "on reprend au <target>"

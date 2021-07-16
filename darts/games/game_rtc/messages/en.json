@@ -3,6 +3,15 @@
     "NAME": "Round The Clock",
     "DESCRIPTION": "Darts game where you need to reach each sector from  1 to 20\nwithout forgetting the BULL"
   },
+  "SETTINGS": {
+    "ORDER": {
+      "TITLE": "Order",
+      "VALUE": {
+        "ASCENDING": "Ascending : 1 → BULL",
+        "DESCENDING": "Descending : BULL → 1"
+      }
+    }
+  },
   "ANNOUNCE_TARGET": [
     "you aim for <target>",
     "we resume at <target>"

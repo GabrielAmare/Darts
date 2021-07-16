@@ -4,7 +4,7 @@ from tkinter import *
 from typing import Optional, List, Dict, Tuple
 
 from darts.app_styles import app_styles
-from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game
+from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, IntegerOption, StringOption
 from darts.base_gui.Label import Label
 from darts.constants import PartyState
 from darts.core_commands import ScoreValue
@@ -13,22 +13,23 @@ from darts.core_gui.PlayerButton import PlayerButton
 from darts.core_gui.ScoreBoard import ScoreBoard as BaseScoreBoard
 from darts.errors import InvalidScoreError
 
+CLASSIC_DOORS: List[int] = [15, 16, 17, 18, 19, 20, 25]
+MINIMAL_DOORS: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+
 
 class Config(BaseConfig):
-    @classmethod
-    def from_dict(cls, data: dict) -> Config:
-        return cls(**data)
+    marks_to_open = IntegerOption(default=3, values=[1, 2, 3, 4, 5, 6])
+    marks_to_close = IntegerOption(default=3, values=[1, 2, 3, 4, 5, 6])
+    doors_type = StringOption(default='classic', values=['classic', 'minimal'])
 
-    def to_dict(self) -> dict:
-        return self.__dict__
-
-    def __init__(self, marks_to_open: int = 3, marks_to_close: int = 3, doors: List[int] = None):
-        self.marks_to_open: int = marks_to_open
-        self.marks_to_close: int = marks_to_close
-        self.doors: List[int] = doors or [15, 16, 17, 18, 19, 20, 25]
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.marks_to_open!r}, {self.marks_to_close!r}, {self.doors!r})"
+    @property
+    def doors(self) -> List[int]:
+        if self.doors_type == 'classic':
+            return CLASSIC_DOORS
+        elif self.doors_type == 'minimal':
+            return MINIMAL_DOORS
+        else:
+            raise ValueError(self.doors_type)
 
 
 class Score(BaseScore):

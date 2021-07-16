@@ -5,7 +5,7 @@ from darts.base_commands import Command
 from darts.base_games import BaseConfig, BaseScore, BasePlayer
 from darts.constants import PartyState
 from darts.core_commands import Undo, Redo, AddPlayer, AddPlayers, StartParty, AddScore
-from darts.errors import InvalidScoreError
+from darts.errors import InvalidScoreError, UnhandledCommand
 from .PartyLogic import PartyLogic
 
 C = TypeVar('C', bound=BaseConfig)
@@ -25,9 +25,9 @@ class PartyCommands(Generic[C, P, S], PartyLogic[C, P, S], ABC):
             else:
                 self.execute_always(command)
 
-        except InvalidScoreError as e:
+        except InvalidScoreError as error:
             self.stack.clear()
-            self.announce_invalid_score()
+            self.announce_invalid_score(error.code, **error.config)
             self.do()
 
     def execute_always(self, command: Command) -> None:
@@ -36,7 +36,7 @@ class PartyCommands(Generic[C, P, S], PartyLogic[C, P, S], ABC):
         elif isinstance(command, Redo):
             self.on_command_redo(command)
         else:
-            raise Exception
+            raise UnhandledCommand(command)
 
     def execute_before(self, command: Command) -> None:
         if isinstance(command, AddPlayer):

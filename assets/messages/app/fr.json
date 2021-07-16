@@ -25,5 +25,14 @@
   "SETTINGS": {
     "GAMES_FP": "Fichiers de jeu"
   },
-  "BROWSE": "Choisir"
+  "BROWSE": "Choisir",
+  "FACTORS": {
+    "SIMPLE": "simple",
+    "DOUBLE": "double",
+    "TRIPLE": "triple"
+  },
+  "ERRORS": {
+    "INVALID_VALUE": "<value> n'est pas autorisé.",
+    "INVALID_FACTOR_VALUE": "<factor> fois <value> n'est pas autorisé."
+  }
 }

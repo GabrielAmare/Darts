@@ -4,9 +4,15 @@
     "DESCRIPTION": "Darts game where you start with 301 points\nthe first to reach 0 points wins"
   },
   "SETTINGS": {
-    "DEFAULT_SCORE": "Default score",
-    "DOUBLE_IN": "Double-In",
-    "DOUBLE_OUT": "Double-Out"
+    "DEFAULT_SCORE": {
+      "TITLE": "Default score"
+    },
+    "DOUBLE_IN": {
+      "TITLE": "Double-In"
+    },
+    "DOUBLE_OUT": {
+      "TITLE": "Double-Out"
+    }
   },
   "ANNOUNCE_REMAINING_SCORE": [
     "you have <score> left",

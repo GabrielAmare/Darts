@@ -4,9 +4,15 @@
     "DESCRIPTION": "Jeu de fléchettes où l'on commence avec 301 points\nle premier qui arrive à 0 points a gagné"
   },
   "SETTINGS": {
-    "DEFAULT_SCORE": "Score de départ",
-    "DOUBLE_IN": "Double-In",
-    "DOUBLE_OUT": "Double-Out"
+    "DEFAULT_SCORE": {
+      "TITLE": "Score de départ"
+    },
+    "DOUBLE_IN": {
+      "TITLE": "Double-In"
+    },
+    "DOUBLE_OUT": {
+      "TITLE": "Double-Out"
+    }
   },
   "ANNOUNCE_REMAINING_SCORE": [
     "il vous reste <score>",

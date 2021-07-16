@@ -10,6 +10,7 @@ from darts.app_service import app_service
 from .Body import Body
 from .TextFeedBack import TextFeedBack
 from .VoiceInterfaceIcon import VoiceInterfaceIcon
+from .GameSettings import GameSettings
 
 
 class Main(Frame):
@@ -77,14 +78,20 @@ class Main(Frame):
             # create a new party
             self.create_party(game_uid)
 
-    def open_game_settings(self, key: str):
-        if key == '301':
-            from darts.games.game_301.settings import Settings
-            settings = Settings(self.menu, cfg=app_service.games.builders['301'].config)
-            self.menu.set_tab(GUI.TABS.GAME_SETTINGS, settings)
-            app_service.styles.build(settings, 'GameSettings')
-        else:
-            return self.close_game_settings()
+    def open_game_settings(self, game_uid: str):
+        if game_uid not in app_service.games.builders:
+            self.close_game_settings()
+            return
+
+        config = app_service.games.builders[game_uid].config
+
+        settings_holder = Frame(self.menu)
+        app_service.styles.config(settings_holder, 'Main.holder')
+
+        settings = GameSettings(settings_holder, game_uid, config)
+        app_service.styles.build(settings, 'GameSettings')
+
+        self.menu.set_tab(GUI.TABS.GAME_SETTINGS, settings_holder)
 
         self.menu.enable(GUI.TABS.GAME_SETTINGS)
         self.menu.select(GUI.TABS.GAME_SETTINGS)
@@ -157,9 +164,12 @@ class Main(Frame):
         if self.state is MainState.GAME_MENU:
             self._execute_game_menu(command)
         elif self.state is MainState.CURRENT_PARTY:
-            app_service.logger.info('Main.execute -> CurrentParty.execute')
-            party = app_service.games.party
-            party.execute(command)
+            try:
+                app_service.logger.info('Main.execute -> CurrentParty.execute')
+                party = app_service.games.party
+                party.execute(command)
+            except errors.UnhandledCommand:
+                self._execute_always(command)
         else:
             self._execute_always(command)
 

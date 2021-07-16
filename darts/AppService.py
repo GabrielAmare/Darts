@@ -41,6 +41,7 @@ class AppService:
             '301': game_301,
             'cricket': game_cricket,
             'rtc': game_rtc,
+            'training': game_training,
         }
 
         for game_uid, module in games.items():
@@ -53,7 +54,6 @@ class AppService:
             path = os.path.join(self.games.root, f'game_{game_uid}')
 
             builder.load_config(os.path.join(path, 'config.json'))
-            builder.save_config(os.path.join(path, 'config.json'))
 
             self.messages.load_directory(path=os.path.join(path, 'messages'), category=game_uid)
 
@@ -93,7 +93,6 @@ class AppService:
 
     def save(self):
         """Save the App before quitting."""
-        if self.games.party:
-            self.games.save_party()
+        self.games.save()
 
         self.settings.save()

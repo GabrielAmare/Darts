@@ -3,6 +3,21 @@
     "NAME": "Cricket",
     "DESCRIPTION": "Jeu de fléchettes où il faut viser 15, 16, ..., 20 et BULL\npour ouvrir les portes et marquer des points"
   },
+  "SETTINGS": {
+    "MARKS_TO_OPEN": {
+      "TITLE": "Marques pour ouvrir"
+    },
+    "MARKS_TO_CLOSE": {
+      "TITLE": "Marques pour fermer"
+    },
+    "DOORS_TYPE": {
+      "TITLE": "Portes",
+      "VALUE": {
+        "CLASSIC": "Classique : 15 → BULL",
+        "MINIMAL": "Minimal : 1 → 8"
+      }
+    }
+  },
   "DOOR_OPENED": [
     "le <door> a été ouvert"
   ],

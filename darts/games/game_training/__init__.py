@@ -1,54 +1,82 @@
 from __future__ import annotations
 
+import random
 from tkinter import *
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
+from darts.app_messages import app_messages
 from darts.app_styles import app_styles
-from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, StringOption
+from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, BooleanOption, IntegerOption
 from darts.constants import PartyState
 from darts.core_commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
 from darts.core_gui.PlayerButton import PlayerButton
 from darts.core_gui.ScoreBoard import ScoreBoard as BaseScoreBoard
 from darts.errors import InvalidScoreError
+from darts.functions import maximums_by
 
-ASCENDING = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25]
-DESCENDING = [0, 25, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+TARGETS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25]
+
+GAME_CODE = 'TRAINING'
+
+
+def get_value_factors(value: int) -> List[int]:
+    if 1 <= value <= 20:
+        return [1, 2, 3]
+    elif value == 25:
+        return [1, 2]
+    else:
+        raise ValueError(value)
 
 
 class Config(BaseConfig):
-    order = StringOption(default='ascending', values=['ascending', 'descending'])
-
-    @property
-    def targets(self) -> List[int]:
-        if self.order == 'ascending':
-            return ASCENDING
-        elif self.order == 'descending':
-            return DESCENDING
-        else:
-            raise ValueError(self.order)
+    precise = BooleanOption(default=False)
+    turns = IntegerOption(default=10, values=[5, 10, 20])
+    targets = TARGETS
 
 
 class Score(BaseScore):
     @classmethod
     def from_dict(cls, data: dict) -> Score:
-        return cls(value=data['value'], delta=data['delta'])
+        return cls(
+            target_value=data['target_value'],
+            target_factor=data['target_factor'],
+            marks=list(map(tuple, data['marks'])),
+            total=data['total'],
+            delta=data['delta'],
+        )
 
     def to_dict(self) -> dict:
-        return dict(value=self.value, delta=self.delta)
+        return dict(
+            target_value=self.target_value,
+            target_factor=self.target_factor,
+            marks=list(map(list, self.marks)),
+            total=self.total,
+            delta=self.delta,
+        )
 
-    def __init__(self, value: int = 0, delta: int = 0):
-        assert value in ASCENDING, value
-        assert delta in [0, 1, 2, 3], delta
+    def __init__(self, target_value: int, target_factor: int, marks: List[Tuple[int, int]] = None, total: int = 0,
+                 delta: int = 0):
+        assert target_value in TARGETS
+        assert target_factor in get_value_factors(target_value) or target_factor == -1
         super().__init__()
-        self.value: int = value
+        self.target_value: int = target_value
+        self.target_factor: int = target_factor
+        self.marks: List[Tuple[int, int]] = marks or []
+        self.total: int = total
         self.delta: int = delta
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.value!r}, {self.delta!r})"
+        return f"{self.__class__.__name__}({self.target_value!r}, {self.target_factor!r}, {self.marks!r}, {self.total!r}, {self.delta!r})"
 
     def copy(self) -> Score:
-        return Score(value=self.value, delta=self.delta)
+        return Score(
+            target_value=self.target_value,
+            target_factor=self.target_factor,
+            marks=self.marks.copy(),
+            total=self.total,
+            delta=self.delta,
+        )
 
 
 class Player(BasePlayer[Score]):
@@ -94,79 +122,115 @@ class Party(BaseParty[Config, Player, Score]):
         return f"Party(...)"
 
     def announce_score(self, player: Player, score: Score) -> None:
-        if score.delta == 3:
-            self.announce('GLOBAL.PLAYER_MARKED_PERFECT')
+        if len(score.marks) > 0:
+            if score.delta == len(score.marks):
+                self.announce('GLOBAL.PLAYER_MARKED_PERFECT')
+            elif score.delta == 0:
+                self.announce(f'{GAME_CODE}.PLAYER_IMPROVEMENT_INCENTIVES')
 
     def announce_player(self, player: Player):
         super().announce_player(player)
 
-        target = self.score_target(player.score)
+        target_value = player.score.target_value
+        target_factor = player.score.target_factor
 
-        self.announce('RTC.ANNOUNCE_TARGET', target='BULL' if target == 25 else target)
-
-    def index_to_value(self, index: int) -> int:
-        targets = self.config.targets
-        if 0 <= index < len(targets):
-            return targets[index]
-        elif index == len(targets):
-            return 0
+        if target_factor == -1:
+            self.announce(
+                f'{GAME_CODE}.ANNOUNCE_VALUE',
+                value='BULL' if target_value == 25 else target_value,
+            )
         else:
-            return -1
+            factor_code = {
+                1: 'SIMPLE',
+                2: 'DOUBLE',
+                3: 'TRIPLE'
+            }[target_factor]
 
-    def value_to_index(self, target: int) -> int:
-        targets = self.config.targets
-        if target in targets:
-            return targets.index(target)
+            self.announce(
+                f'{GAME_CODE}.ANNOUNCE_FACTOR_VALUE',
+                value='BULL' if target_value == 25 else target_value,
+                factor=app_messages.translate(f'APP.FACTORS.{factor_code}')
+            )
+
+    def new_target(self) -> Tuple[int, int]:
+        value = random.choice(self.config.targets)
+        if self.config.precise:
+            factor = random.choice(get_value_factors(value))
         else:
-            return -1
+            factor = -1
 
-    def score_target(self, score: Score) -> int:
-        """Return the next target of the score, 0 if there's no target, -1 if the origin is wrong."""
-        index = self.value_to_index(score.value)
-        value = self.index_to_value(index + 1)
-        return value
+        return value, factor
 
     def create_player(self, name: str) -> Player:
         return Player(name=name, scores=[])
 
     def initial_score(self, player: Player) -> Score:
-        return Score(value=self.config.targets[0], delta=0)
+        value, factor = self.new_target()
+
+        return Score(
+            target_value=value,
+            target_factor=factor,
+            marks=[],
+        )
 
     def update_score(self, player: Player, marks: List[ScoreValue]) -> Score:
         if len(marks) == 0:
             return player.score.copy()  # no update
 
-        if len(marks) > 1:
-            raise InvalidScoreError()  # there must always be one mark
-
-        mark = marks[0]
-
-        if mark.factor != 1:
-            raise InvalidScoreError()  # the factor must be 1
-
-        if not mark.value:
-            return player.score.copy()  # no update
-
-        origin = self.value_to_index(player.score.value)
-        target = self.value_to_index(mark.value)
-
-        if target == -1:  # the target area must be a valid one
+        if len(marks) > 3:
             raise InvalidScoreError()
 
-        delta = target - origin
+        score_marks = []
 
-        if not 0 <= delta <= 3:  # as we throw 3 darts the max delta must be
-            raise InvalidScoreError()
+        target_value = player.score.target_value
+        target_factor = player.score.target_factor
 
-        return Score(value=mark.value, delta=delta)
+        delta = 0
+
+        for mark in marks:
+            value, factor = mark.value, mark.factor
+
+            if value == 0:
+                continue
+
+            if value not in self.config.targets:
+                raise InvalidScoreError(
+                    code='APP.ERRORS.INVALID_VALUE',
+                    value=value
+                )
+
+            if factor not in get_value_factors(value):
+                raise InvalidScoreError(
+                    code='APP.ERRORS.INVALID_FACTOR_VALUE',
+                    value=value,
+                    factor='BULL' if factor == 25 else factor
+                )
+
+            score_marks.append((value, factor))
+
+            if mark.value == target_value:
+                if not self.config.precise or mark.factor == target_factor:
+                    delta += 1
+
+        if delta:
+            target_value, target_factor = self.new_target()
+
+        return Score(
+            target_value=target_value,
+            target_factor=target_factor,
+            total=player.score.total + delta,
+            delta=delta,
+            marks=score_marks,
+        )
 
     def check_winner(self) -> bool:
-        for player in self.players:
-            if player.score.value == self.config.targets[-1]:
-                self.set_winners([player])
-                return True
+        if all(len(player.scores) >= self.config.turns for player in self.players):
+            total, winners = maximums_by(self.players, lambda player: player.scores[self.config.turns - 1].total)
+            self.set_winners(winners)
+            return True
 
-        return False
+        else:
+            return False
 
 
 game = Game(config_cls=Config, party_cls=Party, player_cls=Player, score_cls=Score)
@@ -185,8 +249,8 @@ class PlayerBadge(Frame):
         self.button.pack(side=TOP, fill=X)
         self.score.pack(side=TOP, fill=X)
 
-        app_styles.config(self.button, 'RTC.PlayerBadge.label')
-        app_styles.config(self.score, 'RTC.PlayerBadge.score')
+        app_styles.config(self.button, f'{GAME_CODE}.PlayerBadge.label')
+        app_styles.config(self.score, f'{GAME_CODE}.PlayerBadge.score')
 
         self.player.on('scores.append', self.update)
         self.player.on('scores.remove', self.update)
@@ -196,26 +260,26 @@ class PlayerBadge(Frame):
 
         self.update()
 
-    def target_text(self, target: int) -> str:
-        if target == 0:
-            return ''
-        elif target == -1:
-            return '?'
-        elif target == 25:
-            return 'BULL'
-        else:
-            return str(target)
-
     def update(self, *_, **__):
         """This will update the widget."""
 
         self.button.update()
 
         if self.player.scores:
-            origin = self.player.score.value
-            target = self.party.score_target(self.player.score)
-            # ►
-            self.score.config(text=f"{self.target_text(origin)}  →  {self.target_text(target)}")
+            target_value = self.player.score.target_value
+            target_factor = self.player.score.target_factor
+            # →
+            if target_factor == -1:
+                text = str(target_value)
+            else:
+                factor_code = {
+                    1: 'SIMPLE',
+                    2: 'DOUBLE',
+                    3: 'TRIPLE'
+                }[target_factor]
+                text = f"{app_messages.translate(f'APP.FACTORS.{factor_code}')} {target_value}"
+
+            self.score.config(text=f"► {text}")
 
         self.button.update_idletasks()
         self.score.update_idletasks()
@@ -276,12 +340,12 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
                 self.grid_at(badge, row=0, column=index, padx=40, pady=40)
                 app_styles.config(
                     widget=badge,
-                    key='RTC.PlayerBadge',
+                    key=f'{GAME_CODE}.PlayerBadge',
                     tag='selected' if player is next_player else ''
                 )
                 app_styles.config(
                     widget=badge.button,
-                    key='RTC.PlayerBadge.label',
+                    key=f'{GAME_CODE}.PlayerBadge.label',
                     tag='selected' if player is next_player else ''
                 )
             else:

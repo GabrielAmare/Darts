@@ -25,5 +25,10 @@
   "SETTINGS": {
     "GAMES_FP": "Game files"
   },
-  "BROWSE": "Choose"
+  "BROWSE": "Choose",
+  "FACTORS": {
+    "SIMPLE": "simple",
+    "DOUBLE": "double",
+    "TRIPLE": "triple"
+  }
 }

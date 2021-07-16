@@ -5,6 +5,7 @@ from typing import List, Optional
 
 from darts.app_styles import app_styles
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game
+from darts.base_games import IntegerOption, BooleanOption
 from darts.constants import PartyState
 from darts.core_commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
@@ -14,30 +15,9 @@ from darts.errors import InvalidScoreError
 
 
 class Config(BaseConfig):
-    @classmethod
-    def from_dict(cls, data: dict) -> Config:
-        return cls(**data)
-
-    def to_dict(self) -> dict:
-        return self.__dict__
-
-    def copy(self):
-        return Config(
-            default_score=self.default_score,
-            double_in=self.double_in,
-            double_out=self.double_out
-        )
-
-    def __init__(self, default_score: int = 301, double_in: bool = False, double_out: bool = True):
-        assert default_score in [301, 501, 801]
-        assert double_in in [True, False]
-        assert double_out in [True, False]
-        self.default_score: int = default_score
-        self.double_in: bool = double_in
-        self.double_out: bool = double_out
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.default_score!r}, {self.double_in!r}, {self.double_out!r})"
+    default_score = IntegerOption(default=301, values=[301, 501, 801])
+    double_in = BooleanOption(default=False)
+    double_out = BooleanOption(default=True)
 
 
 class Score(BaseScore):

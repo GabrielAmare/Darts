@@ -3,6 +3,21 @@
     "NAME": "Cricket",
     "DESCRIPTION": "Darts game where you must aim for 15, 16, ..., 20 and BULL\nto open gates and score"
   },
+  "SETTINGS": {
+    "MARKS_TO_OPEN": {
+      "TITLE": "Marks to open"
+    },
+    "MARKS_TO_CLOSE": {
+      "TITLE": "Marks to close"
+    },
+    "DOORS_TYPE": {
+      "TITLE": "Doors",
+      "VALUE": {
+        "CLASSIC": "Classic : 15 → BULL",
+        "MINIMAL": "Minimal : 1 → 8"
+      }
+    }
+  },
   "DOOR_OPENED": [
     "the <door> has been opened"
   ],
