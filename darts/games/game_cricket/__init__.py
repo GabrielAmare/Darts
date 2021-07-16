@@ -7,7 +7,6 @@ from darts.app_messages import app_messages
 from darts.app_styles import app_styles
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, IntegerOption, StringOption
 from darts.base_gui.Label import Label
-from darts.constants import PartyState
 from darts.core_commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
 from darts.core_gui.PlayerButton import PlayerButton
@@ -72,49 +71,12 @@ class Score(BaseScore):
 
 
 class Player(BasePlayer[Score]):
-    @classmethod
-    def from_dict(cls, data: dict):
-        return cls(
-            name=data['name'],
-            scores=list(map(Score.from_dict, data['scores']))
-        )
-
-    def to_dict(self) -> dict:
-        return dict(
-            name=self.name,
-            scores=list(map(Score.to_dict, self.scores))
-        )
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.name!r}, {self.scores!r})"
+    score_cls = Score
 
 
 class Party(BaseParty[Config, Player, Score]):
-    @classmethod
-    def from_dict(cls, data: dict) -> Party:
-        return cls(
-            config=Config.from_dict(data['config']),
-            players=list(map(Player.from_dict, data['players'])),
-            latest=data['latest'],
-            state=data['state'],
-            winners=data['winners']
-        )
-
-    def to_dict(self) -> dict:
-        return dict(
-            config=self.config.to_dict(),
-            players=list(map(Player.to_dict, self.players)),
-            latest=self.latest.name if self.latest else '',
-            state={
-                PartyState.BEFORE: 'BEFORE',
-                PartyState.DURING: 'DURING',
-                PartyState.AFTER: 'AFTER',
-            }[self.state],
-            winners=[player.name for player in self.winners]
-        )
-
-    def __repr__(self):
-        return f"Party(...)"
+    config_cls = Config
+    player_cls = Player
 
     def opener(self, door: int) -> Optional[Player]:
         for player in self.players:

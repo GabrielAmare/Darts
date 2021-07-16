@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, List, Optional, Iterator
+from typing import TypeVar, Generic, List, Optional, Iterator, Type
 
 from darts import core_commands as cmd
 from darts.base import JsonInterface
@@ -19,8 +19,43 @@ P = TypeVar('P', bound=BasePlayer)
 
 
 class BaseParty(Generic[C, P, S], Emitter, JsonInterface, ABC):
-    def __init__(self, config: C, players: List[P] = None, latest: str = '', state: str = 'BEFORE', winners: List[str] = None):
+    config_cls: Type[C]
+    player_cls: Type[P]
+
+    @classmethod
+    def from_dict(cls, data: dict) -> BaseParty:
+        return cls(
+            uid=data['uid'],
+            config=cls.config_cls.from_dict(data['config']),
+            players=list(map(cls.player_cls.from_dict, data['players'])),
+            latest=data['latest'],
+            state=data['state'],
+            winners=data['winners']
+        )
+
+    def to_dict(self) -> dict:
+        return dict(
+            uid=self.uid,
+            config=self.config.to_dict(),
+            players=[player.to_dict() for player in self.players],
+            latest=self.latest.name if self.latest else '',
+            state={
+                PartyState.BEFORE: 'BEFORE',
+                PartyState.DURING: 'DURING',
+                PartyState.AFTER: 'AFTER',
+            }[self.state],
+            winners=[player.name for player in self.winners]
+        )
+
+    def __init__(self,
+                 uid: int,
+                 config: C,
+                 players: List[P] = None,
+                 latest: str = '',
+                 winners: List[str] = None,
+                 state: str = 'BEFORE'):
         Emitter.__init__(self)
+        self.uid: int = uid
         self.config: C = config
         self.players: EmitterList[P] = EmitterList(players)
         self.players.bind_to(emitter=self, prefix='players')
@@ -33,6 +68,9 @@ class BaseParty(Generic[C, P, S], Emitter, JsonInterface, ABC):
             'DURING': PartyState.DURING,
             'AFTER': PartyState.AFTER,
         }[state]
+
+    def __repr__(self):
+        return f"Party(...)"
 
     @property
     def state(self) -> PartyState:
