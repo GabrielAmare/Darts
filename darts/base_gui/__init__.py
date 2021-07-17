@@ -6,3 +6,6 @@ from .Label import Label
 from .LabelTextFlow import LabelTextFlow
 from .ScreenManager import ScreenManager
 from .SettingOption import SettingOption
+from .ButtonWrap import ButtonWrap
+from .WidgetWrap import WidgetWrap
+from .OptionSelector import OptionSelector

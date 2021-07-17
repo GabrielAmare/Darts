@@ -1,8 +1,9 @@
 from tkinter import *
 from typing import List
 
+from tools37.events import Emitter
+
 from darts.app_data import app_data
-from darts.base_events import Emitter
 from darts.constants import GUI
 from .GameBadge import GameBadge
 
@@ -18,7 +19,7 @@ class GameMenu(Frame, Emitter):
 
         app_data.styles.build(self.holder, 'GameMenu.holder')
 
-        for game_uid in app_data.games:
+        for game_uid in app_data.games.all_games_uid():
             self.add_game(game_uid)
 
     def add_game(self, game_uid):

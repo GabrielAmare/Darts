@@ -1,9 +1,4 @@
 {
-  "GAME_START": [
-    "et c'est parti",
-    "la partie peut commencer",
-    "que le meilleur gagne"
-  ],
   "ANNOUNCE_NEXT_PLAYER": [
     "c'est à <name>",
     "à <name> de jouer"

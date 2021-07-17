@@ -1,10 +1,9 @@
 from abc import ABC
 from typing import TypeVar, Generic
 
-from darts.base_commands import Command
 from darts.base_games import BaseConfig, BaseScore, BasePlayer
 from darts.constants import PartyState
-from darts.core_commands import Undo, Redo, AddPlayer, AddPlayers, StartParty, AddScore
+from darts.commands import Command, Undo, Redo, AddPlayer, AddPlayers, StartParty, AddScore
 from darts.errors import InvalidScoreError, UnhandledCommand
 from .PartyLogic import PartyLogic
 

@@ -3,10 +3,11 @@ from __future__ import annotations
 from tkinter import *
 from typing import List, Optional
 
+from darts.Profile import Profile
 from darts.app_data import app_data
-from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game
+from darts.base_games import BasePlayer, BaseScore, BaseConfig
 from darts.base_games import IntegerOption, BooleanOption
-from darts.core_commands import ScoreValue
+from darts.commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
 from darts.core_gui.PlayerButton import PlayerButton
 from darts.core_gui.ScoreBoard import ScoreBoard as BaseScoreBoard
@@ -74,8 +75,8 @@ class Party(BaseParty[Config, Player, Score]):
         elif total <= 40 and total % 2 == 0:  # double to WIN
             self.announce('301.ANNOUNCE_DOUBLE_TO_WIN', half_score=total // 2)
 
-    def create_player(self, name: str) -> Player:
-        return Player(name=name)
+    def create_player(self, profile: Profile) -> Player:
+        return Player(profile=profile)
 
     def initial_score(self, player: Player) -> Score:
         return Score(value=self.config.default_score, delta=0)
@@ -99,9 +100,6 @@ class Party(BaseParty[Config, Player, Score]):
                 return True
 
         return False
-
-
-game = Game(config_cls=Config, party_cls=Party, player_cls=Player, score_cls=Score)
 
 
 class PlayerBadge(Frame):
@@ -209,7 +207,7 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
         self.update_idletasks()
 
 
-app_data.register_game(
+app_data.games.register(
     game_uid='301',
     config_cls=Config,
     party_cls=Party,

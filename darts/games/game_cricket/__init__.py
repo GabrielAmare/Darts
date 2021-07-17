@@ -3,10 +3,11 @@ from __future__ import annotations
 from tkinter import *
 from typing import Optional, List, Dict, Tuple
 
+from darts.Profile import Profile
 from darts.app_data import app_data
-from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, IntegerOption, StringOption
+from darts.base_games import BasePlayer, BaseScore, BaseConfig, IntegerOption, StringOption
 from darts.base_gui.Label import Label
-from darts.core_commands import ScoreValue
+from darts.commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
 from darts.core_gui.PlayerButton import PlayerButton
 from darts.core_gui.ScoreBoard import ScoreBoard as BaseScoreBoard
@@ -121,8 +122,8 @@ class Party(BaseParty[Config, Player, Score]):
                 text = app_data.messages.translate('APP.UTILS.AND', left=doors, right=last)
                 self.announce("CRICKET.DOORS_CLOSED", doors=text)
 
-    def create_player(self, name: str) -> Player:
-        return Player(name=name)
+    def create_player(self, profile: Profile) -> Player:
+        return Player(profile=profile)
 
     def initial_score(self, player: Player) -> Score:
         return Score(
@@ -208,9 +209,6 @@ class Party(BaseParty[Config, Player, Score]):
 
         else:
             return False
-
-
-game = Game(config_cls=Config, party_cls=Party, player_cls=Player, score_cls=Score)
 
 
 class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
@@ -342,7 +340,7 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
         self.update_idletasks()
 
 
-app_data.register_game(
+app_data.games.register(
     game_uid='cricket',
     config_cls=Config,
     party_cls=Party,

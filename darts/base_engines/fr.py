@@ -1,103 +1,50 @@
 from text_engine import *
 
-from darts import core_commands as cmd
+from darts.commands import *
 from darts.constants import KW, CTX
+from .utils import set_parser_identifiers
 
-PNC = cmd.PlayerNameCompound.__name__
-PN = cmd.PlayerName.__name__
+PNC = PlayerNameCompound.__name__
+PN = PlayerName.__name__
 
 lexer, parser, astb, engine_fr = base(
     # COMMANDS
-    [cmd.Quit, match(KW.QUIT)],
-    [cmd.SaveParty, match(KW.SAVE_PARTY)],
-    [cmd.MainMenu, match(KW.MAIN_MENU)],
-    [cmd.StartParty, match(KW.OK)],
-    [cmd.SelectPartyType, match(f"{KW.GAME} in *")],
-    [cmd.SetLang, match(KW.PASS_TO) & match(f"{KW.LANG} as lang_IETF")],
+    [Quit, match(KW.QUIT)],
+    [SaveParty, match(KW.SAVE_PARTY)],
+    [MainMenu, match(KW.MAIN_MENU)],
+    [StartParty, match(KW.OK)],
+    [SelectPartyType, match(f"{KW.GAME} in *")],
+    [SetLang, match(KW.PASS_TO) & match(f"{KW.LANG} as lang_IETF")],
     [
-        cmd.AdjustMic,
+        AdjustMic,
         match(KW.ADJUST_MIC) & match(KW.DURING) & match("*.value as seconds") & match(KW.SECONDS),
         match(KW.ADJUST_MIC),
     ],
-    [cmd.OpenSettings, match(KW.OPEN_SETTINGS)],
-    [cmd.Redo, match(KW.REDO) & (match("*.value in *") & match(KW.TIMES)).optional],
-    [cmd.Undo, match(KW.UNDO) & (match("*.value in *") & match(KW.TIMES)).optional],
-    [cmd.AddPlayers, match(f"{PN} in players").and_repeat & match(KW.AND) & (
+    [OpenSettings, match(KW.OPEN_SETTINGS)],
+    [Redo, match(KW.REDO) & (match("*.value in *") & match(KW.TIMES)).optional],
+    [Undo, match(KW.UNDO) & (match("*.value in *") & match(KW.TIMES)).optional],
+    [AddPlayers, match(f"{PN} in players").and_repeat & match(KW.AND) & (
             match(f"{PNC} in players") | match(f"{PN} in players"))],
-    [cmd.AddPlayer, match(f"{PN} as player")],
+    [AddPlayer, match(f"{PN} as player")],
     [
-        cmd.AddScore,
+        AddScore,
         match("__scores__") & match(KW.FOR) & (match(f"{PNC} as player") | match(f"{PN} as player")),
         (match(f"{PNC} as player") | match(f"{PN} as player")) & match(KW.HAS_DONE) & match("__scores__"),
         match("__scores__"),
     ],
     # OBJECTS
-    [cmd.PlayerName, match("VAR as name")],
-    [cmd.PlayerNameCompound, match("VAR as name1") & match("VAR as name2")],
+    [PlayerName, match("VAR as name")],
+    [PlayerNameCompound, match("VAR as name1") & match("VAR as name2")],
     [
-        cmd.ScoreValue,
+        ScoreValue,
         match("*.value as factor") & match(KW.TIMES) & match("*.value as value") & match(KW.POINT).optional,
         match("*.value as value") & match(KW.POINT).optional,
         match("*.fact as factor") & match("*.value as value") & match(KW.POINT).optional,
     ],
     pattern_libs=[]
 )
-parser.add_routine(
-    CTX.__GLOBAL__,
-    match(cmd.Quit.__name__)
-    | match(cmd.MainMenu.__name__)
-    | match(cmd.AdjustMic.__name__)
-    | match(cmd.OpenSettings.__name__)
-)
-parser.add_routine(
-    CTX.__SETTINGS__,
-    match(cmd.SetLang.__name__)
-    | match(CTX.__GLOBAL__)
-)
-parser.add_routine(
-    CTX.__MAIN_MENU__,
-    match(cmd.SelectPartyType.__name__)
-    | match(CTX.__GLOBAL__)
-)
-parser.add_routine(
-    CTX.__GAME__,
-    match(cmd.Redo.__name__)
-    | match(cmd.Undo.__name__)
-    | match(cmd.SaveParty.__name__)
-    | match(CTX.__GLOBAL__)
-)
-parser.add_routine(
-    CTX.__PRE_GAME__,
-    match(cmd.AddPlayers.__name__)
-    | match(cmd.AddPlayer.__name__)
-    | match(cmd.StartParty.__name__)
-    | match(CTX.__GAME__)
-)
-parser.add_routine(
-    CTX.__IN_GAME__,
-    match(cmd.AddScore.__name__)
-    | match(CTX.__GAME__)
-)
-parser.add_routine(
-    CTX.__POST_GAME__,
-    match(CTX.__GAME__)
-)
 
-parser.add_routine(
-    "__scores__",
-    match(f"{cmd.ScoreValue.__name__} in scores").and_repeat
-    & match(KW.AND)
-    & match(f"{cmd.ScoreValue.__name__} in scores")
-)
-parser.add_routine(
-    "__scores__",
-    match(f"{cmd.ScoreValue.__name__} in scores")
-    & (match(KW.PLUS) & match(f"{cmd.ScoreValue.__name__} in scores")).and_repeat
-)
-parser.add_routine(
-    "__scores__",
-    match(f"{cmd.ScoreValue.__name__} in scores")
-)
+set_parser_identifiers(parser)
 
 # KWS
 lexer.add_pattern(KW.AND, mode="kw", expr="et")

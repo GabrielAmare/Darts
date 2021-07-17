@@ -3,7 +3,7 @@ from typing import TypeVar, Generic, Iterator, List
 
 from darts.base_actions import ActionHandler
 from darts.base_games import BaseConfig, BaseScore, BasePlayer, BaseParty
-from darts.core_actions import StartParty, AddScore, SetLastPlayer, AddPlayer, InitScore, SetWinners, EndParty, Announce
+from darts.actions import StartParty, AddScore, SetLastPlayer, AddPlayer, InitScore, SetWinners, EndParty, Announce
 
 C = TypeVar('C', bound=BaseConfig)
 P = TypeVar('P', bound=BasePlayer)

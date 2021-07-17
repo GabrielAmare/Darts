@@ -1,6 +1,7 @@
+import playsound
+
 from darts.errors import ListenError
 from tools import VoiceInterface
-import playsound
 
 
 class AppVoice:

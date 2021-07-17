@@ -1,11 +1,9 @@
 from tkinter import *
 
-from darts import core_commands as cmd
 from darts import errors
 from darts.app_data import app_data
-from darts.app_service import app_service
-from darts.base_commands import Command
 from darts.base_gui import Button
+from darts.commands import Command, Quit, AdjustMic, SelectPartyType
 from darts.constants import GUI, MainState
 from .Body import Body
 from .GameSettings import GameSettings
@@ -52,6 +50,10 @@ class Main(Frame):
             self.menu.enable(GUI.TABS.CURRENT_PARTY)
             self.create_party_scoreboard()
 
+        # from .DartResult import DartResult
+        # dr = DartResult(self.menu)
+        # dr.pack(side=LEFT, fill=BOTH, expand=True)
+
     @property
     def state(self) -> MainState:
         return self._state
@@ -82,11 +84,11 @@ class Main(Frame):
             self.create_party(game_uid)
 
     def open_game_settings(self, game_uid: str):
-        if game_uid not in app_data.games:
+        if game_uid not in app_data.games.all_games_uid():
             self.close_game_settings()
             return
 
-        config = app_data.games[game_uid].party_config
+        config = app_data.games.get(game_uid).config
 
         settings_holder = Frame(self.menu)
         app_data.styles.config(settings_holder, 'Main.holder')
@@ -177,21 +179,23 @@ class Main(Frame):
             self._execute_always(command)
 
     def _execute_always(self, command: Command) -> None:
-        if isinstance(command, cmd.Quit):
+        if isinstance(command, Quit):
             self.quit()
-        elif isinstance(command, cmd.AdjustMic):
+        elif isinstance(command, AdjustMic):
             app_data.voice.vi.adjust_mic(seconds=command.seconds)
         else:
             raise errors.UnhandledCommand(command)
 
     def _execute_game_menu(self, command: Command) -> None:
-        if isinstance(command, cmd.SelectPartyType):
+        if isinstance(command, SelectPartyType):
             self.create_party(command.name)
         else:
             return self._execute_always(command)
 
     def create_party_scoreboard(self):
-        scoreboard_cls = app_data.games[app_data.settings.pfd.game_uid].score_board_cls
+        game_uid = app_data.settings.loaded_game
+        game = app_data.games.get(game_uid)
+        scoreboard_cls = game.score_board_cls
         scoreboard = scoreboard_cls(self.menu, app_data.party)
         app_data.styles.config(scoreboard, 'ScoreBoard')
         self.menu.set_tab(GUI.TABS.CURRENT_PARTY, scoreboard)

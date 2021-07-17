@@ -1,18 +1,15 @@
 import os
 
 from darts.app_data import AppData
-from darts.base import AppRepository
-from darts.base import PartyFileData
-from darts.games import *
+
+import darts.games
 
 
 class AppService:
     def __init__(self,
                  data: AppData,
-                 repository: AppRepository,
                  ):
         self.data: AppData = data
-        self.repository: AppRepository = repository
 
         # load the default messages files
         if os.path.exists('assets/messages/'):
@@ -23,21 +20,26 @@ class AppService:
                 )
 
         # load the games messages
-        for game_uid in self.data.games:
+        for game_uid in self.data.games.all_games_uid():
             self.data.messages.load_directory(
                 path=os.path.join('darts', 'games', f'game_{game_uid}', 'messages'),
                 category=game_uid
             )
 
-        pfd = self.data.settings.pfd
-        if pfd.game_uid and pfd.party_uid:
+        if self.data.settings.loaded_game:
             try:
-                self.data.games[pfd.game_uid].load_party(pfd.party_uid)
+                game = self.data.games.get(self.data.settings.loaded_game)
 
-            except FileNotFoundError:
-                self.data.settings.pfd = PartyFileData()
+            except KeyError:
+                self.data.settings.loaded_game = ''
+
+            else:
+                try:
+                    game.load_party(self.data.settings.loaded_party)
+
+                except FileNotFoundError:
+                    self.data.settings.loaded_party = 0
 
     def save(self):
         """Save the App before quitting."""
         self.data.save()
-

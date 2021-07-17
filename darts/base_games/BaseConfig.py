@@ -1,13 +1,11 @@
 from abc import ABC
-from typing import TypeVar, Dict
+from typing import Dict
 
-from darts.base import DictInterface
+from darts.abstracts import AbstractConfig
 from .Option import Option
 
-C = TypeVar('C')
 
-
-class BaseConfig(DictInterface, ABC):
+class BaseConfig(AbstractConfig, ABC):
     options: Dict[str, Option]
 
     def __init_subclass__(cls, **kwargs):

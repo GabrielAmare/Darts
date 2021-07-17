@@ -1,7 +1,8 @@
 from tkinter import *
 from typing import Optional
 
-from darts.base import PngFile
+from tools37.files import PngFile
+
 from darts.functions import resize_image, rescale_image, is_int, memorize
 from .AppLogger import AppLogger
 
@@ -22,7 +23,7 @@ class AppImages:
             return None
 
         photo = PngFile.load(rfp)
-        self.logger.loaded(PngFile._parse_fp(fp))
+        self.logger.loaded(PngFile.parse_fp(fp))
 
         if scale:
             photo = rescale_image(photo, scale)

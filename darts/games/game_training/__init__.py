@@ -4,9 +4,10 @@ import random
 from tkinter import *
 from typing import Optional, List, Tuple
 
+from darts.Profile import Profile
 from darts.app_data import app_data
-from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, BooleanOption, IntegerOption
-from darts.core_commands import ScoreValue
+from darts.base_games import BasePlayer, BaseScore, BaseConfig, BooleanOption, IntegerOption
+from darts.commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
 from darts.core_gui.PlayerButton import PlayerButton
 from darts.core_gui.ScoreBoard import ScoreBoard as BaseScoreBoard
@@ -125,8 +126,8 @@ class Party(BaseParty[Config, Player, Score]):
 
         return value, factor
 
-    def create_player(self, name: str) -> Player:
-        return Player(name=name, scores=[])
+    def create_player(self, profile: Profile) -> Player:
+        return Player(profile=profile)
 
     def initial_score(self, player: Player) -> Score:
         value, factor = self.new_target()
@@ -195,9 +196,6 @@ class Party(BaseParty[Config, Player, Score]):
 
         else:
             return False
-
-
-game = Game(config_cls=Config, party_cls=Party, player_cls=Player, score_cls=Score)
 
 
 class PlayerBadge(Frame):
@@ -318,7 +316,7 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
         self.update_idletasks()
 
 
-app_data.register_game(
+app_data.games.register(
     game_uid='training',
     config_cls=Config,
     party_cls=Party,

@@ -1,12 +1,12 @@
+import importlib
 from typing import Dict, Tuple, Optional
 
 from text_engine import Engine
 
-from darts.base_commands import Command
+from darts.commands import Command
 from darts.constants import CTX, MainState, PartyState
 from darts.errors import CommandNotFoundError
-from darts.app_data.AppLogger import AppLogger
-import importlib
+from .AppLogger import AppLogger
 
 
 class AppEngines:

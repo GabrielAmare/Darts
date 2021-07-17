@@ -62,3 +62,7 @@ class InvalidScoreError(Exception):
 
 class PartyConfigurationMissingError(Exception):
     pass
+
+
+class ProfileNotFoundError(Exception):
+    pass

@@ -46,7 +46,7 @@ class FONT:
 
 
 STYLES = {
-    # 'default': dict(bg='black'),
+    'default': dict(bg='black'),
 
     'Main': dict(bg=STYLE['bg']['secondary']),
     'Main.holder': dict(bg=STYLE['bg']['secondary']),
@@ -98,6 +98,13 @@ STYLES = {
     'GameSettings.options': dict(bg=STYLE['bg']['secondary']),
     'GameSettings.options.button': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['primary'], font=FONT.SM, padx=5),
     'GameSettings.options.button:selected': dict(bg=STYLE['bg']['selected'], fg=STYLE['fg']['selected'], font=FONT.SM, padx=5),
+
+    'DartResult': dict(bg=STYLE['bg']['secondary'], bd=2, relief=RIDGE, padx=4, pady=4),
+    'DartResult.values': dict(bg=STYLE['bg']['secondary'], padx=4, pady=4),
+    'DartResult.factors': dict(bg=STYLE['bg']['secondary'], padx=4, pady=4),
+
+    'DartResult.button': dict(bg=STYLE['bg']['primary'], fg=STYLE['fg']['primary'], font=FONT.MD),
+    'DartResult.button:selected': dict(bg=STYLE['bg']['selected'], fg=STYLE['fg']['selected'], font=FONT.MD),
 
     'ScoreBoard': dict(bg=STYLE['bg']['secondary']),
 }

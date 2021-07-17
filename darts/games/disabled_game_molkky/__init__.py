@@ -1,7 +1,7 @@
 from __future__ import annotations
-from typing import List
 
-from darts import core_commands as cmd, base_games as bg, core_games as cg
+from darts import base_games as bg, core_games as cg
+from darts.commands import *
 from darts.errors import InvalidScoreError
 
 
@@ -33,7 +33,7 @@ class Player(bg.BasePlayer[Score]):
 
 
 class Party(cg.BaseParty[Config, Player, Score]):
-    def _announce_score(self, player: Player, marks: List[cmd.ScoreValue]) -> None:
+    def _announce_score(self, player: Player, marks: List[ScoreValue]) -> None:
         total = sum(mark.factor * mark.value for mark in marks)
 
         if total == 0:
@@ -71,7 +71,7 @@ class Party(cg.BaseParty[Config, Player, Score]):
     def initial_score(self, player: Player) -> Score:
         return Score(value=self.config.default_score)
 
-    def update_score(self, player: Player, marks: List[cmd.ScoreValue]) -> Score:
+    def update_score(self, player: Player, marks: List[ScoreValue]) -> Score:
         total = sum(mark.factor * mark.value for mark in marks)
         new_value = player.score.value - total
 

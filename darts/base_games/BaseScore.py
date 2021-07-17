@@ -1,8 +1,7 @@
 from abc import ABC
 
-from darts.base import DictInterface
-from darts.base_events import Emitter
+from darts.abstracts import AbstractScore
 
 
-class BaseScore(Emitter, DictInterface, ABC):
+class BaseScore(AbstractScore, ABC):
     pass

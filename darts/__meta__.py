@@ -1,3 +1,3 @@
 APP_NAME = "Darts"
-VERSION = (1, 1, 2)
+VERSION = (1, 1, 3)
 ENV = "DEV"

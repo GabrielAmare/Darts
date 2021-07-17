@@ -1,7 +1,8 @@
 from tkinter import *
 from typing import Type, Optional
 
-from darts.base_events import Emitter
+from tools37.events import Emitter
+
 from darts.app_data import app_data
 from .ButtonTabs import ButtonTabs
 

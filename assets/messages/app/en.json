@@ -32,6 +32,18 @@
     "TRIPLE": "triple"
   },
   "ANNOUNCES": {
+    "GAME_START": {
+      "ONE_PLAYER": [
+        "and here we go",
+        "the game can start",
+        "good luck"
+      ],
+      "MANY_PLAYERS": [
+        "and here we go",
+        "the game can start",
+        "may the best win"
+      ]
+    },
     "WINNERS": [
       "<names> won. congratulations !",
       "bien joué à <names>",

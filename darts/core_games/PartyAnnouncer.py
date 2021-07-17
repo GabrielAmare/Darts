@@ -3,7 +3,7 @@ from typing import TypeVar, Generic
 
 from darts.app_data import app_data
 from darts.base_games import BaseConfig, BaseScore, BasePlayer
-from darts.core_actions import PlaySound
+from darts.actions import PlaySound
 from .PartyActions import PartyActions
 from ..constants import TextMode
 
@@ -18,7 +18,10 @@ class PartyAnnouncer(Generic[C, P, S], PartyActions[C, P, S], ABC):
         app_data.voice.speak(message)
 
     def announce_start(self) -> None:
-        self.announce('GLOBAL.GAME_START')
+        if len(self.players) == 1:
+            self.announce('APP.ANNOUNCES.GAME_START.ONE_PLAYER')
+        else:
+            self.announce('APP.ANNOUNCES.GAME_START.MANY_PLAYERS')
 
     def announce_score(self, player: P, score: S) -> None:
         app_data.logger.warning(f"Unimplemented announce_score method")

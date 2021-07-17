@@ -3,7 +3,7 @@ from typing import TypeVar, Generic
 
 from darts import base_games as bg
 from darts.constants import PartyState
-from darts.core_commands import Undo, Redo, AddPlayer, StartParty, AddPlayers, AddScore
+from darts.commands import Undo, Redo, AddPlayer, StartParty, AddPlayers, AddScore
 from darts.errors import PartyAlreadyStartedError, PartyAlreadyOverError, PartyNotStartedError
 from .PartyAnnouncer import PartyAnnouncer
 

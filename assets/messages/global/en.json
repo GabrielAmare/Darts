@@ -1,9 +1,4 @@
 {
-  "GAME_START": [
-    "and here we go",
-    "the game can start",
-    "may the best win"
-  ],
   "ANNOUNCE_NEXT_PLAYER": [
     "it's <name> turn",
     "it's <name> to play"

@@ -36,6 +36,18 @@
     "INVALID_FACTOR_VALUE": "<factor> fois <value> n'est pas autorisé."
   },
   "ANNOUNCES": {
+    "GAME_START": {
+      "ONE_PLAYER": [
+        "et c'est parti",
+        "la partie peut commencer",
+        "bonne chance"
+      ],
+      "MANY_PLAYERS": [
+        "et c'est parti",
+        "la partie peut commencer",
+        "que le meilleur gagne"
+      ]
+    },
     "WINNERS": [
       "<names> ont gagné. bravo !",
       "bien joué à <names>",

@@ -1,6 +1,6 @@
 from tkinter import *
 
-from darts.base import OrderedHash
+from darts.OrderedHash import OrderedHash
 from darts.app_data import app_data
 from .Button import Button
 
