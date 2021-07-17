@@ -1,7 +1,7 @@
 from tkinter import *
 
 from darts.base import OrderedHash
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from .Button import Button
 
 
@@ -26,7 +26,7 @@ class ButtonList(Frame):
 
         button = self.buttons[key] = Button(self, **config)
 
-        app_styles.build(button, self.style)
+        app_data.styles.build(button, self.style)
 
         if enabled:
             button.enable()

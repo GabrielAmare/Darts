@@ -2,7 +2,7 @@ from darts.base_games.BasePlayer import BasePlayer
 from darts.base_gui.Button import Button
 from darts.core_games.BaseParty import BaseParty
 from darts.constants import PartyState
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 
 
 class PlayerButton(Button):
@@ -16,9 +16,9 @@ class PlayerButton(Button):
     def update(self, *_, **__):
         """Update the widget."""
         if self.player is self.party.get_next_player():
-            app_styles.config(self, tag='selected')
+            app_data.styles.config(self, tag='selected')
         else:
-            app_styles.config(self, tag='')
+            app_data.styles.config(self, tag='')
 
         self.update_idletasks()
 

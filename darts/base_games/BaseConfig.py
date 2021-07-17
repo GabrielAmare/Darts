@@ -1,11 +1,8 @@
-from abc import ABC, abstractmethod
-from typing import Type, TypeVar, Dict
-
-from tools37 import JsonFile
+from abc import ABC
+from typing import TypeVar, Dict
 
 from darts.base import DictInterface
 from .Option import Option
-from darts.app_logger import app_logger
 
 C = TypeVar('C')
 
@@ -38,28 +35,6 @@ class BaseConfig(DictInterface, ABC):
     @classmethod
     def from_dict(cls, data: dict):
         return cls(**data)
-
-    @classmethod
-    def load(cls: Type[C], fp: str) -> C:
-        """Load the config from a json file"""
-        if JsonFile.exists(fp):
-            data = JsonFile.load(fp)
-            app_logger.loaded(fp)
-        else:
-            data = {}
-        return cls.from_dict(data)
-
-    def save(self, fp: str) -> None:
-        """Save the config to a json file"""
-        data = self.to_dict()
-
-        exists = JsonFile.exists(fp)
-        JsonFile.save(fp, data)
-
-        if exists:
-            app_logger.saved(fp)
-        else:
-            app_logger.created(fp)
 
     def set(self, key: str, value):
         """Config parameter setter."""

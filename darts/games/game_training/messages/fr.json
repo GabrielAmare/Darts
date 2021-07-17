@@ -6,6 +6,9 @@
   "SETTINGS": {
     "PRECISE": {
       "TITLE": "Précision"
+    },
+    "TURNS": {
+      "TITLE": "Nombre de tours"
     }
   },
   "ANNOUNCE_VALUE": "vous visez le <value>",

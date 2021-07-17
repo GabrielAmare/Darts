@@ -1,6 +1,6 @@
 from darts.base import AppRepository
-from darts.app_settings import app_settings
+from darts.app_data import app_data
 
 app_repository = AppRepository(
-    root=app_settings.games_fp
+    root=app_data.games_fp
 )

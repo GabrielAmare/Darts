@@ -1,7 +1,7 @@
 from tkinter import *
 
 from darts.base_gui import ButtonTabs, Label
-from darts.app_service import app_service
+from darts.app_data import app_data
 
 
 class SelectLang(ButtonTabs):
@@ -9,7 +9,7 @@ class SelectLang(ButtonTabs):
         super().__init__(root, 'SelectLang.button')
 
         self.label = Label(self, code="APP.LANG")
-        app_service.styles.build(self.label, 'SelectLang.label')
+        app_data.styles.build(self.label, 'SelectLang.label')
 
         self.add_lang('fr-FR')
         self.add_lang('en-GB')
@@ -18,16 +18,16 @@ class SelectLang(ButtonTabs):
         self.disable('en-US')
 
         # default lang in configuration
-        self.select(app_service.lang_IETF)
+        self.select(app_data.lang_IETF)
 
     def select(self, lang_IETF: str):
         super().select(lang_IETF)
-        app_service.lang_IETF = lang_IETF
+        app_data.lang_IETF = lang_IETF
 
     def add_lang(self, lang_IETF: str, enabled: bool = True, **config) -> Button:
         country = lang_IETF.split('-', 1)[1]
 
-        flag_image = app_service.images.get(f"flag-{country}", scale=0.75)
+        flag_image = app_data.images.get(f"flag-{country}", scale=0.75)
 
         return self.add_button(
             key=lang_IETF,

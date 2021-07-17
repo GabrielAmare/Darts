@@ -1,5 +1,5 @@
 from darts.base_events import Emitter
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from .ButtonList import ButtonList
 from .ButtonMenu import ButtonMenu
 
@@ -18,10 +18,10 @@ class ButtonTabs(ButtonMenu, Emitter):
 
         for c_key, button in self.buttons.items():
             if c_key == key:
-                app_styles.config(button, tag='selected')
+                app_data.styles.config(button, tag='selected')
                 self.selected = key
             else:
-                app_styles.config(button, tag='')
+                app_data.styles.config(button, tag='')
 
         super().select(key)
 

@@ -1,3 +1,4 @@
+import os
 from enum import Enum, auto
 
 
@@ -87,3 +88,6 @@ class TextMode(Enum):
     NORMAL = auto()
     RANDOM = auto()
     MULTILINE = auto()
+
+
+HOME = os.path.expanduser('~')

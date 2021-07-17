@@ -1,8 +1,7 @@
 from tkinter import *
 from typing import Type
 
-from darts.app_service import app_service
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_gui import ScreenManager
 from darts.constants import GUI
 from .AppTabManager import AppTabManager
@@ -18,10 +17,10 @@ class Body(ScreenManager):
 
         self.new_tab(GUI.TABS.GAME_MENU, GameMenu, style='GameMenu', enabled=True)
         self.new_tab(GUI.TABS.APP_SETTINGS, SettingsMenu, style='SettingsMenu', enabled=True)
-        self.new_tab(GUI.TABS.CURRENT_PARTY, Frame, style='CurrentParty', enabled=app_service.games.has_party())
+        self.new_tab(GUI.TABS.CURRENT_PARTY, Frame, style='CurrentParty', enabled=app_data.has_party())
         self.new_tab(GUI.TABS.GAME_SETTINGS, Frame, style='GameSettings', enabled=False)
 
     def new_tab(self, key: str, cls: Type[Widget], style: str, enabled: bool = True, **cfg):
         widget = cls(self, **cfg)
         self.add_tab(key, widget, enabled=enabled)
-        app_styles.config(widget, style)
+        app_data.styles.config(widget, style)

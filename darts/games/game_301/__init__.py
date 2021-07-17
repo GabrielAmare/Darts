@@ -3,7 +3,7 @@ from __future__ import annotations
 from tkinter import *
 from typing import List, Optional
 
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game
 from darts.base_games import IntegerOption, BooleanOption
 from darts.core_commands import ScoreValue
@@ -117,8 +117,8 @@ class PlayerBadge(Frame):
         self.button.pack(side=TOP, fill=X)
         self.score.pack(side=TOP, fill=X)
 
-        app_styles.config(self.button, '301.PlayerBadge.label')
-        app_styles.config(self.score, '301.PlayerBadge.score')
+        app_data.styles.config(self.button, '301.PlayerBadge.label')
+        app_data.styles.config(self.score, '301.PlayerBadge.score')
 
         self.player.on('scores.append', self.update)
         self.player.on('scores.remove', self.update)
@@ -193,12 +193,12 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
             if player in self.party.players:
                 index = self.party.players.index(player)
                 self.grid_at(badge, row=0, column=index, padx=40, pady=40)
-                app_styles.config(
+                app_data.styles.config(
                     widget=badge,
                     key='301.PlayerBadge',
                     tag='selected' if player is next_player else ''
                 )
-                app_styles.config(
+                app_data.styles.config(
                     widget=badge.button,
                     key='301.PlayerBadge.label',
                     tag='selected' if player is next_player else ''
@@ -207,3 +207,13 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
                 badge.destroy()
 
         self.update_idletasks()
+
+
+app_data.register_game(
+    game_uid='301',
+    config_cls=Config,
+    party_cls=Party,
+    player_cls=Player,
+    score_cls=Score,
+    score_board_cls=ScoreBoard
+)

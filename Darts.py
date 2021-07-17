@@ -10,12 +10,13 @@
 # import darts.core_games
 # import darts.core_gui
 
-from darts.app_logger import app_logger
+from darts.app_data import app_data
+
 from darts.core_gui import App
 
 if __name__ == '__main__':
-    app_logger.info("creating session")
+    app_data.logger.info("creating session")
     app = App()
-    app_logger.info("starting session")
+    app_data.logger.info("starting session")
     app.mainloop()
-    app_logger.info("quitting session")
+    app_data.logger.info("quitting session")

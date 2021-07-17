@@ -1,6 +1,6 @@
 from typing import Optional
 
-from darts.app_logger import app_logger
+from darts.app_data import app_data
 from darts.base_actions import Action
 from darts.base_games import BaseParty, BasePlayer
 
@@ -18,12 +18,12 @@ class AddPlayer(Action):
     def do(self) -> None:
         self.player = self.party.create_player(self.name)
         self.party.players.append(self.player)
-        app_logger.do(self)
+        app_data.logger.do(self)
 
     def undo(self) -> None:
         self.party.players.remove(self.player)
-        app_logger.undo(self)
+        app_data.logger.undo(self)
 
     def redo(self) -> None:
         self.party.players.append(self.player)
-        app_logger.redo(self)
+        app_data.logger.redo(self)

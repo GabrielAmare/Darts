@@ -3,7 +3,7 @@ from __future__ import annotations
 from tkinter import *
 from typing import Optional, List
 
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, StringOption
 from darts.core_commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
@@ -57,7 +57,7 @@ class Player(BasePlayer[Score]):
 class Party(BaseParty[Config, Player, Score]):
     config_cls = Config
     player_cls = Player
-    
+
     def announce_score(self, player: Player, score: Score) -> None:
         if score.delta == 3:
             self.announce('GLOBAL.PLAYER_MARKED_PERFECT')
@@ -150,8 +150,8 @@ class PlayerBadge(Frame):
         self.button.pack(side=TOP, fill=X)
         self.score.pack(side=TOP, fill=X)
 
-        app_styles.config(self.button, 'RTC.PlayerBadge.label')
-        app_styles.config(self.score, 'RTC.PlayerBadge.score')
+        app_data.styles.config(self.button, 'RTC.PlayerBadge.label')
+        app_data.styles.config(self.score, 'RTC.PlayerBadge.score')
 
         self.player.on('scores.append', self.update)
         self.player.on('scores.remove', self.update)
@@ -239,12 +239,12 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
             if player in self.party.players:
                 index = self.party.players.index(player)
                 self.grid_at(badge, row=0, column=index, padx=40, pady=40)
-                app_styles.config(
+                app_data.styles.config(
                     widget=badge,
                     key='RTC.PlayerBadge',
                     tag='selected' if player is next_player else ''
                 )
-                app_styles.config(
+                app_data.styles.config(
                     widget=badge.button,
                     key='RTC.PlayerBadge.label',
                     tag='selected' if player is next_player else ''
@@ -253,3 +253,13 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
                 badge.destroy()
 
         self.update_idletasks()
+
+
+app_data.register_game(
+    game_uid='rtc',
+    config_cls=Config,
+    party_cls=Party,
+    player_cls=Player,
+    score_cls=Score,
+    score_board_cls=ScoreBoard
+)

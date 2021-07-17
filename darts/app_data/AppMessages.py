@@ -84,10 +84,6 @@ class AppMessages:
         if os.path.exists(path):
             self.ml.load_langs(path, category=category.upper())
 
-    def set_lang(self, lang_ISO_639_1: str) -> None:  # deprecated
-        """Change the current lang."""
-        self.lang_ISO_639_1 = lang_ISO_639_1
-
     def translate(self, __code: str, __mode: TextMode = TextMode.NORMAL, **config) -> str:
         """Translate the multi-lang code to the right text value."""
         try:

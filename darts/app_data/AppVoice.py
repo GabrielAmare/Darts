@@ -7,8 +7,13 @@ class AppVoice:
     def __init__(self, lang_IETF: str):
         self.vi: VoiceInterface = VoiceInterface(time_limit=2, lang_IETF=lang_IETF)
 
-    def set_lang_IETF(self, lang_IETF: str) -> None:
-        self.vi.lang_IETF = lang_IETF
+    @property
+    def lang_IETF(self) -> str:
+        return self.vi.lang_IETF
+
+    @lang_IETF.setter
+    def lang_IETF(self, value: str):
+        self.vi.lang_IETF = value
 
     def set_time_limit(self, time_limit: int):
         self.vi.time_limit = time_limit

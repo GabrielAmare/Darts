@@ -1,23 +1,16 @@
 from dataclasses import dataclass
-from pathlib import Path
 
-from .JsonInterface import JsonInterface
-from .PartyFileData import PartyFileData
+from darts.base.DictInterface import DictInterface
+from darts.base.PartyFileData import PartyFileData
+from darts.constants import HOME
 
 
 @dataclass
-class AppSettings(JsonInterface):
+class AppSettings(DictInterface):
     """Representation of the app settings."""
 
-    fp: str = 'app_settings.json'
-    messages_fp: str = 'assets/messages/'
-    images_fp: str = 'assets/images/'
-    exes_fp: str = 'assets/exes/'
-    sounds_fp: str = 'assets/sounds/'
-    engines_fp: str = 'darts/base_engines/'
-    games_fp: str = f'{Path.home()}/Darts/games/'
-    log_fp: str = 'darts_log'
     lang_IETF: str = 'fr-FR'
+    user_files: str = HOME
 
     pfd: PartyFileData = PartyFileData()
 

@@ -3,6 +3,7 @@ from tkinter import *
 from darts.__meta__ import APP_NAME, VERSION, ENV
 from .Main import Main
 from darts.app_service import app_service
+from darts.app_data import app_data
 
 
 class App(Tk):
@@ -13,10 +14,10 @@ class App(Tk):
         self.title(f'{APP_NAME} - {VERSION[0]}.{VERSION[1]}.{VERSION[2]}')
         self.geometry(f'{self.winfo_screenwidth()}x{self.winfo_screenheight()}+0+0')
 
-        self.tk.call('wm', 'iconphoto', self._w, app_service.images.get('app-logo'))
+        self.tk.call('wm', 'iconphoto', self._w, app_data.images.get('app-logo'))
 
         self.widget = Main(self)
-        app_service.styles.build(self.widget, 'Main')
+        app_data.styles.build(self.widget, 'Main')
 
         self.bind("<F11>", self.toggle_fullscreen)
         self.bind("<Escape>", self.quit_fullscreen)

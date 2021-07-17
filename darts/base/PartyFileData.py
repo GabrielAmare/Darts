@@ -23,3 +23,6 @@ class PartyFileData(DictInterface):
 
     def __str__(self):
         return f"{self.game_uid}:{self.party_uid}"
+
+    def __bool__(self):
+        return bool(self.game_uid) and bool(self.party_uid)

@@ -1,7 +1,7 @@
 from tkinter import *
 from typing import Dict
 
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from .ButtonTabs import ButtonTabs
 from .Label import Label
 
@@ -12,7 +12,7 @@ class SettingOption(ButtonTabs):
         assert key.isidentifier()
         super().__init__(root, style='SettingOption.button')
         self.label = Label(self, code=f"{game_uid.upper()}.SETTINGS.{key.upper()}")
-        app_styles.build(self.label, 'SettingOption.label')
+        app_data.styles.build(self.label, 'SettingOption.label')
 
         for key, cfg in options.items():
             self.add_button(key, **cfg)

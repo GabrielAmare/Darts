@@ -5,7 +5,7 @@ from text_engine import Engine
 from darts.base_commands import Command
 from darts.constants import CTX, MainState, PartyState
 from darts.errors import CommandNotFoundError
-from .AppLogger import AppLogger
+from darts.app_data.AppLogger import AppLogger
 import importlib
 
 

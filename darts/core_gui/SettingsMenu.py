@@ -1,6 +1,6 @@
 from tkinter import *
 
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from .SelectLang import SelectLang
 from .SelectPath import SelectPath
 
@@ -10,7 +10,7 @@ class SettingsMenu(Frame):
         super().__init__(root, **cfg)
 
         self.select_lang = SelectLang(self)
-        app_styles.build(self.select_lang, 'SelectLang')
+        app_data.styles.build(self.select_lang, 'SelectLang')
 
         self.select_path = SelectPath(self)
-        app_styles.build(self.select_path, 'SelectPath')
+        app_data.styles.build(self.select_path, 'SelectPath')

@@ -1,6 +1,15 @@
 import difflib
+import os
 from tkinter import PhotoImage
 from typing import List, TypeVar, Callable, Tuple, Iterator
+
+
+def create_dir_if_not_exists(path: str):
+    if os.path.exists(path):
+        return False
+    else:
+        os.mkdir(path)
+        return True
 
 
 def expr_match_ratio(expr1: str, expr2: str) -> float:

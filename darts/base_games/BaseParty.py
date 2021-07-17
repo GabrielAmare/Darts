@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import TypeVar, Generic, List, Optional, Iterator, Type
 
 from darts import core_commands as cmd
-from darts.base import JsonInterface
+from darts.base import DictInterface
 from darts.base_events import EmitterList, Emitter
 from darts.constants import PartyState
 from darts.errors import PlayerNotFoundError
@@ -18,7 +18,7 @@ S = TypeVar('S', bound=BaseScore)
 P = TypeVar('P', bound=BasePlayer)
 
 
-class BaseParty(Generic[C, P, S], Emitter, JsonInterface, ABC):
+class BaseParty(Generic[C, P, S], Emitter, DictInterface, ABC):
     config_cls: Type[C]
     player_cls: Type[P]
 

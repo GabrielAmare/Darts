@@ -4,8 +4,7 @@ import random
 from tkinter import *
 from typing import Optional, List, Tuple
 
-from darts.app_messages import app_messages
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, BooleanOption, IntegerOption
 from darts.core_commands import ScoreValue
 from darts.core_games import BaseParty as BaseParty
@@ -114,7 +113,7 @@ class Party(BaseParty[Config, Player, Score]):
             self.announce(
                 f'{GAME_CODE}.ANNOUNCE_FACTOR_VALUE',
                 value='BULL' if target_value == 25 else target_value,
-                factor=app_messages.translate(f'APP.FACTORS.{factor_code}')
+                factor=app_data.messages.translate(f'APP.FACTORS.{factor_code}')
             )
 
     def new_target(self) -> Tuple[int, int]:
@@ -214,8 +213,8 @@ class PlayerBadge(Frame):
         self.button.pack(side=TOP, fill=X)
         self.score.pack(side=TOP, fill=X)
 
-        app_styles.config(self.button, f'{GAME_CODE}.PlayerBadge.label')
-        app_styles.config(self.score, f'{GAME_CODE}.PlayerBadge.score')
+        app_data.styles.config(self.button, f'{GAME_CODE}.PlayerBadge.label')
+        app_data.styles.config(self.score, f'{GAME_CODE}.PlayerBadge.score')
 
         self.player.on('scores.append', self.update)
         self.player.on('scores.remove', self.update)
@@ -242,7 +241,7 @@ class PlayerBadge(Frame):
                     2: 'DOUBLE',
                     3: 'TRIPLE'
                 }[target_factor]
-                text = f"{app_messages.translate(f'APP.FACTORS.{factor_code}')} {target_value}"
+                text = f"{app_data.messages.translate(f'APP.FACTORS.{factor_code}')} {target_value}"
 
             self.score.config(text=f"► {text}")
 
@@ -303,12 +302,12 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
             if player in self.party.players:
                 index = self.party.players.index(player)
                 self.grid_at(badge, row=0, column=index, padx=40, pady=40)
-                app_styles.config(
+                app_data.styles.config(
                     widget=badge,
                     key=f'{GAME_CODE}.PlayerBadge',
                     tag='selected' if player is next_player else ''
                 )
-                app_styles.config(
+                app_data.styles.config(
                     widget=badge.button,
                     key=f'{GAME_CODE}.PlayerBadge.label',
                     tag='selected' if player is next_player else ''
@@ -317,3 +316,13 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
                 badge.destroy()
 
         self.update_idletasks()
+
+
+app_data.register_game(
+    game_uid='training',
+    config_cls=Config,
+    party_cls=Party,
+    player_cls=Player,
+    score_cls=Score,
+    score_board_cls=ScoreBoard
+)

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from darts.app_logger import app_logger
+from darts.app_data import app_data
 from darts.base_actions import Action
 from darts.base_games import BaseParty, BasePlayer
 
@@ -20,12 +20,12 @@ class SetLastPlayer(Action):
         self.last = self.party.latest
         self.player = self.party.get_player_by_name(self.name)
         self.party.latest = self.player
-        app_logger.do(self)
+        app_data.logger.do(self)
 
     def undo(self) -> None:
         self.party.latest = self.last
-        app_logger.undo(self)
+        app_data.logger.undo(self)
 
     def redo(self) -> None:
         self.party.latest = self.player
-        app_logger.redo(self)
+        app_data.logger.redo(self)

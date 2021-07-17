@@ -1,4 +1,4 @@
-from darts.app_logger import app_logger
+from darts.app_data import app_data
 from darts.base_actions import Action
 from darts.base_games import BaseParty
 from darts.constants import PartyState
@@ -13,12 +13,12 @@ class StartParty(Action):
 
     def do(self) -> None:
         self.party.state = PartyState.DURING
-        app_logger.do(self)
+        app_data.logger.do(self)
 
     def undo(self) -> None:
         self.party.state = PartyState.BEFORE
-        app_logger.undo(self)
+        app_data.logger.undo(self)
 
     def redo(self) -> None:
         self.party.state = PartyState.DURING
-        app_logger.redo(self)
+        app_data.logger.redo(self)

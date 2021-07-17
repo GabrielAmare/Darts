@@ -6,6 +6,9 @@
   "SETTINGS": {
     "PRECISE": {
       "TITLE": "Precision"
+    },
+    "TURNS": {
+      "TITLE": "Number of turns"
     }
   },
   "ANNOUNCE_VALUE": "you aim for <value>",

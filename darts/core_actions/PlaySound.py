@@ -1,8 +1,6 @@
-from darts.app_logger import app_logger
+from darts.app_data import app_data
 from darts.base_actions import Action
 from darts.base_games import BaseParty
-from darts.app_voice import app_voice
-from darts.app_settings import app_settings
 
 
 class PlaySound(Action):
@@ -14,11 +12,11 @@ class PlaySound(Action):
         return f"{self.__class__.__name__}({self.party!r}, {self.sound!r})"
 
     def do(self) -> None:
-        app_voice.play(app_settings.sounds_fp + self.sound + '.mp3')
-        app_logger.do(self)
+        app_data.voice.play(f"assets/sounds/{self.sound}.mp3")
+        app_data.logger.do(self)
 
     def undo(self) -> None:
-        app_logger.undo(self)
+        app_data.logger.undo(self)
 
     def redo(self) -> None:
-        app_logger.redo(self)
+        app_data.logger.redo(self)

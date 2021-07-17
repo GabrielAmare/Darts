@@ -1,6 +1,6 @@
 from tkinter import *
 
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_games import BaseConfig
 from darts.base_games import BooleanOption, IntegerOption, StringOption
 from darts.base_gui import Label, ButtonTabs
@@ -53,8 +53,8 @@ class GameSettings(Frame):
         else:
             raise ValueError(option)
 
-        app_styles.config(label, 'GameSettings.label')
-        app_styles.config(options, 'GameSettings.options')
+        app_data.styles.config(label, 'GameSettings.label')
+        app_data.styles.config(options, 'GameSettings.options')
 
         label.grid(row=len(self.labels), column=0, sticky=NSEW, padx=4, pady=4)
         options.grid(row=len(self.options), column=1, sticky=NSEW, padx=4, pady=4)

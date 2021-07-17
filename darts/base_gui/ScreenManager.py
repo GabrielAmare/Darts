@@ -2,7 +2,7 @@ from tkinter import *
 from typing import Type, Optional
 
 from darts.base_events import Emitter
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from .ButtonTabs import ButtonTabs
 
 
@@ -16,7 +16,7 @@ class ScreenManager(Frame, Emitter):
         Emitter.__init__(self)
 
         self.menu = self.menu_factory(self, style=style + '.menu.button')
-        app_styles.build(self.menu, style + '.menu')
+        app_data.styles.build(self.menu, style + '.menu')
 
         self.menu.on('select', self.on_select)
 

@@ -3,8 +3,7 @@ from __future__ import annotations
 from tkinter import *
 from typing import Optional, List, Dict, Tuple
 
-from darts.app_messages import app_messages
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_games import BasePlayer, BaseScore, BaseConfig, Game, IntegerOption, StringOption
 from darts.base_gui.Label import Label
 from darts.core_commands import ScoreValue
@@ -111,7 +110,7 @@ class Party(BaseParty[Config, Player, Score]):
                 self.announce("CRICKET.DOOR_OPENED", door=self.door_to_text(score.has_opened[0]))
             else:
                 doors, last = self.doors_to_text(score.has_opened)
-                text = app_messages.translate('APP.UTILS.AND', left=doors, right=last)
+                text = app_data.messages.translate('APP.UTILS.AND', left=doors, right=last)
                 self.announce("CRICKET.DOORS_OPENED", doors=text)
 
         if score.has_closed:
@@ -119,7 +118,7 @@ class Party(BaseParty[Config, Player, Score]):
                 self.announce("CRICKET.DOOR_CLOSED", door=self.door_to_text(score.has_closed[0]))
             else:
                 doors, last = self.doors_to_text(score.has_closed)
-                text = app_messages.translate('APP.UTILS.AND', left=doors, right=last)
+                text = app_data.messages.translate('APP.UTILS.AND', left=doors, right=last)
                 self.announce("CRICKET.DOORS_CLOSED", doors=text)
 
     def create_player(self, name: str) -> Player:
@@ -275,34 +274,34 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
         opener = {door: self.party.opener(door) for door in self.party.config.doors}
         closer = {door: self.party.closer(door) for door in self.party.config.doors}
 
-        app_styles.config(self.door_column[0], 'Cricket.ScoreBoard.DoorLabel', '')
+        app_data.styles.config(self.door_column[0], 'Cricket.ScoreBoard.DoorLabel', '')
 
         for door, widget in zip(self.party.config.doors, self.door_column[1:-1]):
             if closer[door]:
-                app_styles.config(widget, 'Cricket.ScoreBoard.DoorLabel', 'closed')
+                app_data.styles.config(widget, 'Cricket.ScoreBoard.DoorLabel', 'closed')
             elif opener[door]:
-                app_styles.config(widget, 'Cricket.ScoreBoard.DoorLabel', 'opened')
+                app_data.styles.config(widget, 'Cricket.ScoreBoard.DoorLabel', 'opened')
             else:
-                app_styles.config(widget, 'Cricket.ScoreBoard.DoorLabel', '')
+                app_data.styles.config(widget, 'Cricket.ScoreBoard.DoorLabel', '')
 
-        app_styles.config(self.door_column[-1], 'Cricket.ScoreBoard.DoorLabel', '')
+        app_data.styles.config(self.door_column[-1], 'Cricket.ScoreBoard.DoorLabel', '')
 
         for player, widgets in zip(self.party.players, self.player_columns):
-            app_styles.config(widgets[0], 'Cricket.ScoreBoard.PlayerName')
+            app_data.styles.config(widgets[0], 'Cricket.ScoreBoard.PlayerName')
             widgets[0].update()
 
             for door, widget in zip(self.party.config.doors, widgets[1:-1]):
                 if closer[door]:
                     if player is opener[door]:
-                        app_styles.config(widget, 'Cricket.ScoreBoard.Player', 'opener-closed')
+                        app_data.styles.config(widget, 'Cricket.ScoreBoard.Player', 'opener-closed')
                     else:
-                        app_styles.config(widget, 'Cricket.ScoreBoard.Player', 'closed')
+                        app_data.styles.config(widget, 'Cricket.ScoreBoard.Player', 'closed')
                 elif player is opener[door]:
-                    app_styles.config(widget, 'Cricket.ScoreBoard.Player', 'opener')
+                    app_data.styles.config(widget, 'Cricket.ScoreBoard.Player', 'opener')
                 else:
-                    app_styles.config(widget, 'Cricket.ScoreBoard.Player', '')
+                    app_data.styles.config(widget, 'Cricket.ScoreBoard.Player', '')
 
-            app_styles.config(widgets[-1], 'Cricket.ScoreBoard.PlayerTotal')
+            app_data.styles.config(widgets[-1], 'Cricket.ScoreBoard.PlayerTotal')
 
     def update(self, *_, **__):
         for column in range(len(self.party.players) + 1):
@@ -341,3 +340,13 @@ class ScoreBoard(BaseScoreBoard[Config, Party, Player, Score]):
                     widgets[-1].config(text='0')
 
         self.update_idletasks()
+
+
+app_data.register_game(
+    game_uid='cricket',
+    config_cls=Config,
+    party_cls=Party,
+    player_cls=Player,
+    score_cls=Score,
+    score_board_cls=ScoreBoard
+)

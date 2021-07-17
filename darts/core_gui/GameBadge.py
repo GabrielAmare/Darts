@@ -1,7 +1,6 @@
 from tkinter import *
 
-from darts.app_images import app_images
-from darts.app_styles import app_styles
+from darts.app_data import app_data
 from darts.base_events import Emitter
 from darts.base_gui import Label, Button
 from darts.constants import GUI
@@ -15,8 +14,8 @@ class GameBadge(Frame, Emitter):
         Frame.__init__(self, root)
         Emitter.__init__(self)
 
-        settings_image = app_images.get("game-settings", size=self.SETTINGS_SIZE)
-        start_image = app_images.get("game-start", size=self.PLAY_SIZE)
+        settings_image = app_data.images.get("game-settings", size=self.SETTINGS_SIZE)
+        start_image = app_data.images.get("game-start", size=self.PLAY_SIZE)
 
         self.top = Frame(self)
         self.bot = Frame(self)
@@ -27,12 +26,12 @@ class GameBadge(Frame, Emitter):
         self.description = Label(self.bot, code=f"{game_uid.upper()}.INFO.DESCRIPTION")
         self.start = Button(self.bot, image=start_image, command=self.ask_start)
 
-        app_styles.build(self.top, 'GameBadge.top')
-        app_styles.build(self.bot, 'GameBadge.bot')
-        app_styles.build(self.name, 'GameBadge.name')
-        app_styles.build(self.settings, 'GameBadge.settings')
-        app_styles.build(self.description, 'GameBadge.description')
-        app_styles.build(self.start, 'GameBadge.start')
+        app_data.styles.build(self.top, 'GameBadge.top')
+        app_data.styles.build(self.bot, 'GameBadge.bot')
+        app_data.styles.build(self.name, 'GameBadge.name')
+        app_data.styles.build(self.settings, 'GameBadge.settings')
+        app_data.styles.build(self.description, 'GameBadge.description')
+        app_data.styles.build(self.start, 'GameBadge.start')
 
     def ask_start(self):
         self.emit(GUI.EVENTS.GAME.START)
