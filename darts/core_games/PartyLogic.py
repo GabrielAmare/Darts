@@ -2,8 +2,8 @@ from abc import ABC
 from typing import TypeVar, Generic
 
 from darts import base_games as bg
-from darts.constants import PartyState
 from darts.commands import Undo, Redo, AddPlayer, StartParty, AddPlayers, AddScore
+from darts.constants import PartyState
 from darts.errors import PartyAlreadyStartedError, PartyAlreadyOverError, PartyNotStartedError
 from .PartyAnnouncer import PartyAnnouncer
 
@@ -25,13 +25,27 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
 
         self.do()
 
+    def check_party_state(self, state: PartyState):
+        if state is PartyState.BEFORE:
+            if self is PartyState.DURING:
+                raise PartyAlreadyStartedError()
+
+            if self is PartyState.AFTER:
+                raise PartyAlreadyOverError()
+
+        elif state is PartyState.DURING:
+            if self.state is PartyState.BEFORE:
+                raise PartyNotStartedError()
+
+            if self.state is PartyState.AFTER:
+                raise PartyAlreadyOverError()
+
+        else:
+            raise NotImplementedError
+
     def on_command_add_player(self, command: AddPlayer) -> None:
         """Add a player."""
-        if self is PartyState.DURING:
-            raise PartyAlreadyStartedError()
-
-        if self is PartyState.AFTER:
-            raise PartyAlreadyOverError()
+        self.check_party_state(PartyState.BEFORE)
 
         self.add_player(command.player.name)
 
@@ -39,11 +53,7 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
 
     def on_command_start_party(self, _command: StartParty) -> None:
         """Start the party."""
-        if self.state is PartyState.DURING:
-            raise PartyAlreadyStartedError()
-
-        if self.state is PartyState.AFTER:
-            raise PartyAlreadyOverError()
+        self.check_party_state(PartyState.BEFORE)
 
         self.start_party()
 
@@ -53,11 +63,7 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
 
     def on_command_add_players(self, command: AddPlayers) -> None:
         """Add players and start the party."""
-        if self.state is PartyState.DURING:
-            raise PartyAlreadyStartedError()
-
-        if self.state is PartyState.AFTER:
-            raise PartyAlreadyOverError()
+        self.check_party_state(PartyState.BEFORE)
 
         self.add_players(player.name for player in command.players)
 
@@ -67,11 +73,7 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
 
     def on_command_add_score(self, command: AddScore) -> None:
         """Update party state with a new Score entry."""
-        if self.state is PartyState.BEFORE:
-            raise PartyNotStartedError()
-
-        if self.state is PartyState.AFTER:
-            raise PartyAlreadyOverError()
+        self.check_party_state(PartyState.DURING)
 
         # acquire the targeted player
         if command.player is None:
