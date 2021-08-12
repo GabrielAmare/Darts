@@ -8,12 +8,18 @@ from .ActionStack import ActionStack
 
 class ActionHandler(ActionSequence, Action):
     def __init__(self, *actions: Action):
+        """
+
+        :param actions: The list of actions that are done (and can be undone)
+        :var stash: The list of undone actions (and can be redone)
+        :var stack: The list of actions that are yet to do
+        """
         super().__init__(*actions)
         self.stash: List[Action] = []
         self.stack: ActionStack = ActionStack()
 
     def do(self) -> None:
-        """Do a new action."""
+        """Do all the stacked actions in order all as a single action."""
         action = self.stack.merge()
         action.do()
         self.actions.append(action)
