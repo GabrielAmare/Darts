@@ -66,7 +66,7 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
         self.do()
 
     def on_command_add_score(self, command: AddScore) -> None:
-        """"""
+        """Update party state with a new Score entry."""
         if self.state is PartyState.BEFORE:
             raise PartyNotStartedError()
 
