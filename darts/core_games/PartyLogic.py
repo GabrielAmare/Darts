@@ -17,13 +17,9 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
         """Undo actions."""
         self.undo_times(command.times)
 
-        self.do()
-
     def on_command_redo(self, command: Redo) -> None:
         """Redo actions."""
         self.redo_times(command.times)
-
-        self.do()
 
     def check_party_state(self, state: PartyState):
         if state is PartyState.BEFORE:
@@ -94,11 +90,11 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
         # check if the game have been won
         is_over = self.check_winner()
 
-        self.do()
+        self.do_merge()
 
         if is_over:
             self.announce_end()
         else:
             self.announce_player(self.get_player_after(player))
 
-        self.do()
+        self.do_merge()
