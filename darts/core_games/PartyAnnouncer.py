@@ -13,10 +13,6 @@ S = TypeVar('S', bound=BaseScore)
 
 
 class PartyAnnouncer(Generic[C, P, S], PartyActions[C, P, S], ABC):
-    def announce(self, code, **config):
-        message = app_data.messages.translate(code, TextMode.RANDOM, **config)
-        app_data.voice.speak(message)
-
     def announce_start(self) -> None:
         if len(self.players) == 1:
             self.announce('APP.ANNOUNCES.GAME_START.ONE_PLAYER')

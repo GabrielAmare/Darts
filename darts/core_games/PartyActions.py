@@ -1,9 +1,10 @@
 from abc import ABC
 from typing import TypeVar, Generic, Iterator, List
 
+from darts.actions import StartParty, AddScore, SetLastPlayer, AddPlayer, InitScore, SetWinners, EndParty, Announce
 from darts.base_actions import ActionHandler
 from darts.base_games import BaseConfig, BaseScore, BasePlayer, BaseParty
-from darts.actions import StartParty, AddScore, SetLastPlayer, AddPlayer, InitScore, SetWinners, EndParty, Announce
+from darts.constants import TextMode
 
 C = TypeVar('C', bound=BaseConfig)
 P = TypeVar('P', bound=BasePlayer)
@@ -17,7 +18,7 @@ class PartyActions(Generic[C, P, S], BaseParty[C, P, S], ActionHandler, ABC):
 
     def announce(self, code: str, **config) -> None:
         """Set up the actions to announce something."""
-        self.stack.append(Announce(party=self, code=code, config=config))
+        self.stack.append(Announce(party=self, code=code, mode=TextMode.RANDOM, config=config))
 
     def start_party(self) -> None:
         """Set up the actions to start a party."""

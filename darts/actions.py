@@ -4,7 +4,7 @@ from darts.Profile import Profile
 from darts.app_data import app_data
 from darts.base_actions import Action
 from darts.base_games import BaseParty, BasePlayer, BaseScore
-from darts.constants import PartyState
+from darts.constants import PartyState, TextMode
 from darts.errors import ProfileNotFoundError
 
 
@@ -62,22 +62,26 @@ class AddScore(Action):
 
 
 class Announce(Action):
-    def __init__(self, party: BaseParty, code: str, config: dict):
+    def __init__(self, party: BaseParty, code: str, mode: TextMode, config: dict):
         self.party: BaseParty = party
         self.code: str = code
+        self.mode: TextMode = mode
         self.config: dict = config
+        self.message: str = ''
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.party!r}, {self.code!r}, {self.config!r})"
 
     def do(self) -> None:
-        self.party.emit('announce', self.code, **self.config)
+        self.message = app_data.messages.translate(self.code, self.mode, **self.config)
+        app_data.voice.speak(self.message)
         app_data.logger.do(self)
 
     def undo(self) -> None:
         app_data.logger.undo(self)
 
     def redo(self) -> None:
+        app_data.voice.speak(self.message)
         app_data.logger.redo(self)
 
 
