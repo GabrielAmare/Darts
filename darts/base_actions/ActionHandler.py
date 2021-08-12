@@ -1,6 +1,7 @@
 from typing import List
 
 from darts.errors import NothingToUndoError, NothingToRedoError
+from . import ActionList
 from .Action import Action
 from .ActionSequence import ActionSequence
 from .ActionStack import ActionStack
@@ -25,6 +26,18 @@ class ActionHandler(ActionSequence, Action):
         self.actions.append(action)
         self.stash = []
 
+    def do_merge(self) -> None:
+        """
+            Do all the stacked actions in order all as a single action
+            and merge it with the last done action if there's one.
+        """
+        self.do()
+        if len(self.actions) >= 2:
+            B = self.actions.pop(-1)
+            A = self.actions.pop(-1)
+            action = ActionList(A, B)
+            self.actions.append(action)
+    
     def undo(self):
         """Undo the last action."""
         try:
