@@ -17,7 +17,7 @@ class AbstractConfig(DictInterface, ABC):
 
 
 class AbstractParty(Emitter, DictInterface, ABC):
-    pass
+    uid: int
 
 
 class AbstractPlayer(Emitter, DictInterface, ABC):
