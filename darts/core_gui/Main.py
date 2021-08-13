@@ -7,6 +7,7 @@ from darts.commands import Command, Quit, AdjustMic, SelectPartyType
 from darts.constants import GUI, MainState
 from .Body import Body
 from .GameSettings import GameSettings
+from .ScoreBoardHandler import ScoreBoardHandler
 from .TextFeedBack import TextFeedBack
 from .VoiceInterfaceIcon import VoiceInterfaceIcon
 
@@ -194,10 +195,8 @@ class Main(Frame):
 
     def create_party_scoreboard(self):
         """Load and configure the scoreboard for the currently loaded party."""
-        game = app_data.get_current_game()
-        scoreboard = game.score_board_cls(self.menu, app_data.party)
-        app_data.styles.config(scoreboard, 'ScoreBoard')
-        self.menu.set_tab(GUI.TABS.CURRENT_PARTY, scoreboard)
+        scoreboard_handler = ScoreBoardHandler(self.menu, command_callback=self.execute)
+        self.menu.set_tab(GUI.TABS.CURRENT_PARTY, scoreboard_handler)
         self.menu.enable(GUI.TABS.CURRENT_PARTY)
 
     def create_party(self, game_uid: str):
