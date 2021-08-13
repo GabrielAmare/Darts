@@ -107,6 +107,7 @@ STYLES = {
     'DartResult.button:selected': dict(bg=STYLE['bg']['selected'], fg=STYLE['fg']['selected'], font=FONT.MD),
 
     'ScoreBoard': dict(bg=STYLE['bg']['secondary']),
+    'ScoreBoardHandler.entry': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['secondary']),
 }
 
 PACK_STYLES = {
@@ -143,7 +144,8 @@ PACK_STYLES = {
     'GameSettings.options.button': dict(side=LEFT, fill=BOTH, expand=True),
 
     'CurrentParty': dict(side=TOP, fill=BOTH, expand=True),
-    'ScoreBoard': dict(side=TOP),
+    'ScoreBoard': dict(side=TOP, fill=BOTH, expand=True),
+    'ScoreBoardHandler.entry': dict(side=TOP, fill=X)
 }
 
 STYLES_301 = {
