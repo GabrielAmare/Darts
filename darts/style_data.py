@@ -107,7 +107,7 @@ STYLES = {
     'DartResult.button:selected': dict(bg=STYLE['bg']['selected'], fg=STYLE['fg']['selected'], font=FONT.MD),
 
     'ScoreBoard': dict(bg=STYLE['bg']['secondary']),
-    'ScoreBoardHandler.entry': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['secondary']),
+    'ScoreBoardHandler.entry': dict(bg=STYLE['bg']['secondary'], fg=STYLE['fg']['secondary'], font=FONT.MD, padx=5, pady=5),
 }
 
 PACK_STYLES = {
