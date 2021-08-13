@@ -9,7 +9,6 @@ from .Body import Body
 from .GameSettings import GameSettings
 from .TextFeedBack import TextFeedBack
 from .VoiceInterfaceIcon import VoiceInterfaceIcon
-from .ScoreBoard import ScoreBoard
 
 
 class Main(Frame):
