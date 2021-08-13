@@ -9,6 +9,7 @@ from .Body import Body
 from .GameSettings import GameSettings
 from .TextFeedBack import TextFeedBack
 from .VoiceInterfaceIcon import VoiceInterfaceIcon
+from .ScoreBoard import ScoreBoard
 
 
 class Main(Frame):
@@ -193,10 +194,9 @@ class Main(Frame):
             return self._execute_always(command)
 
     def create_party_scoreboard(self):
-        game_uid = app_data.settings.loaded_game
-        game = app_data.games.get(game_uid)
-        scoreboard_cls = game.score_board_cls
-        scoreboard = scoreboard_cls(self.menu, app_data.party)
+        """Load and configure the scoreboard for the currently loaded party."""
+        game = app_data.get_current_game()
+        scoreboard = game.score_board_cls(self.menu, app_data.party)
         app_data.styles.config(scoreboard, 'ScoreBoard')
         self.menu.set_tab(GUI.TABS.CURRENT_PARTY, scoreboard)
         self.menu.enable(GUI.TABS.CURRENT_PARTY)
