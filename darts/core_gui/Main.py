@@ -42,6 +42,7 @@ class Main(Frame):
         self.menu.select(GUI.TABS.GAME_MENU)
 
         self.bind_all('<KeyPress-Control_L>', self.on_control)
+        self.bind_all('<Any-KeyPress>', self.handle_keypress, add=True)
 
         self.state = MainState.GAME_MENU
 
@@ -205,3 +206,9 @@ class Main(Frame):
         self.create_party_scoreboard()
 
         self.menu.select(GUI.TABS.CURRENT_PARTY)
+
+    def handle_keypress(self, evt):
+        """Handle the keys pressed."""
+        scoreboard_handler = self.menu.get_tab(GUI.TABS.CURRENT_PARTY)
+        if isinstance(scoreboard_handler, ScoreBoardHandler):
+            scoreboard_handler.handle_keypress(evt)

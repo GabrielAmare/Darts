@@ -19,15 +19,6 @@ class ScoreBoardHandler(Frame):
         self.entry = Label(self, text=self.text)
         app_data.styles.build(self.entry, 'ScoreBoardHandler.entry')
 
-        self.bind_all('<Any-KeyPress>', self.handle_keypress, add=True)
-
-    def confirm_text_input(self):
-        """This will use the current value of self.text as an AddScore command."""
-        command = self.text.as_command()
-        self.text.reset()
-        self.update()
-        self.command_callback(command)
-
     def handle_keypress(self, evt):
         """Handle the keys pressed."""
         if evt.char in '0123456789':
@@ -46,6 +37,13 @@ class ScoreBoardHandler(Frame):
             self.text.add_digit('5')
 
         self.update()
+
+    def confirm_text_input(self):
+        """This will use the current value of self.text as an AddScore command."""
+        command = self.text.as_command()
+        self.text.reset()
+        self.update()
+        self.command_callback(command)
 
     def update(self):
         self.entry.config(text=str(self.text))
