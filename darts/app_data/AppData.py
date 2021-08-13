@@ -118,3 +118,9 @@ class AppData(DirView):
         super().save()
 
         self.save_current_party()
+
+    def get_current_game(self):
+        """Return the currently selected game."""
+        game_uid = self.settings.loaded_game
+        game = self.games.get(game_uid)
+        return game
