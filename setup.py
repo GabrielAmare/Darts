@@ -13,6 +13,13 @@ sys.argv.append('py2exe')
 ASSETS_PATH = "assets\\"
 
 
+def set_meta(name: str, major: int, minor: int, patch: int, env: str):
+    with open("darts\\__meta__.py", mode="w", encoding="utf-8") as file:
+        file.write(f"APP_NAME = {name!r}\n"
+                   f"VERSION = ({major}, {minor}, {patch})\n"
+                   f"ENV = {env!r}")
+
+
 def images():
     root = os.path.abspath(ASSETS_PATH + "images")
     return [os.path.join(root, fn) for fn in os.listdir(root)]
@@ -49,11 +56,7 @@ data_files = [
 ]
 
 # SET THE ENVIRONMENT TO PRODUCTION
-with open("darts\\__meta__.py", mode="w", encoding="utf-8") as file:
-    file.write(f"""APP_NAME = "{APP_NAME}"
-VERSION = ({VERSION[0]}, {VERSION[1]}, {VERSION[2]})
-ENV = "PROD"
-""")
+set_meta(APP_NAME, VERSION[0], VERSION[1], VERSION[2], 'PROD')
 
 output_dirname = f"{APP_NAME}_v{VERSION[0]}.{VERSION[1]}.{VERSION[2]}"
 
@@ -74,11 +77,7 @@ shutil.make_archive(output_dirname, 'zip', root_dir=os.curdir, base_dir=output_d
 zip_filename = output_dirname + ".zip"
 
 # AUTO UPGRADE THE VERSION EACH TIME THE APPLICATION IS COMPILED
-with open("darts\\__meta__.py", mode="w", encoding="utf-8") as file:
-    file.write(f"""APP_NAME = "{APP_NAME}"
-VERSION = ({VERSION[0]}, {VERSION[1]}, {VERSION[2] + 1})
-ENV = "DEV"
-""")
+set_meta(APP_NAME, VERSION[0], VERSION[1], VERSION[2] + 1, 'DEV')
 
 ########################################################################################################################
 # SAVE FILE ON DRIVE
