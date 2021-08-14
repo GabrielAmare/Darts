@@ -1,8 +1,9 @@
+import os
 import unittest
 
-from darts.core.engines import ENGINES
-from darts.core.commands import *
-import os
+from darts.base_engines import ENGINES
+from darts.commands import *
+from darts.constants import CTX
 
 os.chdir('..')
 
@@ -28,16 +29,19 @@ class TestEngineFr(unittest.TestCase):
             'X 7': AddScore(scores=[ScoreValue(value=17, factor=1)], player=None),
             '238 points': AddScore(scores=[ScoreValue(value=238, factor=1)], player=None),
             'triple 19': AddScore(scores=[ScoreValue(value=19, factor=3)], player=None),
-            '301': SelectPartyType(name='301'),
-            '501': SelectPartyType(name='501'),
-            '801': SelectPartyType(name='801'),
+            ('301', CTX.__MAIN_MENU__): SelectPartyType(name='301'),
             'cricket': SelectPartyType(name='cricket'),
             'molkky': SelectPartyType(name='molkky'),
-            'around the clock': SelectPartyType(name='around the clock'),
+            'around the clock': SelectPartyType(name='rtc'),
         }
 
-        for text, command in COMMANDS.items():
-            result_command = ENGINES['fr'].read(text)
+        for item, command in COMMANDS.items():
+            if isinstance(item, tuple):
+                text, identifier = item
+            else:
+                text = item
+                identifier = '*'
+            result_command = ENGINES['fr'].read(text, identifier=identifier)
             self.assertEqual(command, result_command)
 
 
