@@ -7,8 +7,9 @@ PIP = f"{PYTHON_EXECUTABLE_PATH} -m pip install {{}}"
 
 commands = [
     PIP.format("--upgrade pip"),
-    PIP.format("-i https://test.pypi.org/simple/ TextEngine"),
+    PIP.format("-i https://test.pypi.org/simple/ TextEngine==1.0.3"),
     PIP.format("-i https://test.pypi.org/simple/ tklib37"),
+    PIP.format("-i https://test.pypi.org/simple/ tools37"),
     PIP.format("-i https://test.pypi.org/simple/ PyAudio")
 ]
 
