@@ -4,5 +4,7 @@ gtts
 pyaudio>=0.2.11
 TextEngine==1.0.3 # PARSE TEXT TO AST
 tklib37
+tools37
 pydrive  # TO STORE PROGRAM ONLINE ON GOOGLE DRIVE
 yagmail  # TO SEND EMAIL
+py2exe
