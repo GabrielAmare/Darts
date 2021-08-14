@@ -6,7 +6,11 @@ from tools import VoiceInterface
 
 class AppVoice:
     def __init__(self, lang_IETF: str):
-        self.vi: VoiceInterface = VoiceInterface(time_limit=2, lang_IETF=lang_IETF)
+        self.vi: VoiceInterface = VoiceInterface(
+            time_limit=2,
+            temp_file='temp.mp3',
+            lang_IETF=lang_IETF
+        )
 
     @property
     def lang_IETF(self) -> str:
