@@ -67,7 +67,7 @@ class VoiceInterface:
                 parsed_audio,
                 language=self.lang_IETF,
                 show_all=show_all,
-                base_path=os.path.curdir + "\\assets\\exes"
+                flac_converter=os.path.curdir + "\\assets\\exes\\flac-win32.exe"  # /!\ this is NOT cross-platform /!\
             )
             if show_all:
                 return [data["transcript"] for data in result['alternative']]
