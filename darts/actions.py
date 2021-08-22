@@ -39,6 +39,29 @@ class AddPlayer(Action):
         app_data.logger.redo(self)
 
 
+class RemovePlayer(Action):
+    def __init__(self, party: BaseParty, player: BasePlayer):
+        self.party: BaseParty = party
+        self.player: BasePlayer = player
+        self.index: Optional[int] = None
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.party!r}, {self.player!r})"
+
+    def do(self) -> None:
+        self.index = self.party.players.index(self.player)
+        self.party.players.remove(self.player)
+        app_data.logger.do(self)
+
+    def undo(self) -> None:
+        self.party.players.insert(self.index, self.player)
+        app_data.logger.undo(self)
+
+    def redo(self) -> None:
+        self.party.players.remove(self.player)
+        app_data.logger.redo(self)
+
+
 class AddScore(Action):
     def __init__(self, party: BaseParty, player: BasePlayer, score: BaseScore):
         self.party: BaseParty = party
