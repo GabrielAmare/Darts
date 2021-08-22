@@ -1,0 +1,48 @@
+{
+  "INFO": {
+    "NAME": "Mölkky",
+    "DESCRIPTION": "Le Mölkky est un jeu d'adresse inventé en Finlande. Se pratiquant en plein air,\nl'objectif du mölkky est de marquer exactement cinquante points en renversant\ndes quilles numérotées de 1 à 12, en lançant une fois par tour un bâton de bois."
+  },
+  "SETTINGS": {
+    "KILLER": {
+      "TITLE": "Killer",
+      "VALUE": {
+        "KILLER": "Killer",
+        "NO-KILLER": "No Killer",
+        "AUTO-KILLER": "Auto Killer",
+        "KAMIKAZE": "Kamikaze"
+      }
+    },
+    "DROP_DOWN": {
+      "TITLE": "Retombée",
+      "VALUE": {
+        "LEVEL-25": "Au palier 25",
+        "LEVEL-0": "Directement à 0"
+      }
+    },
+    "ELIMINATION": {
+      "TITLE": "Elimination",
+      "VALUE": {
+        "NO-ELIMINATION": "Sans élimination",
+        "ELIMINATION": "Avec élimination"
+      }
+    }
+  },
+  "ANNOUNCE_TOTAL_SCORE": [
+    "Vous êtes à <score>"
+  ],
+  "ANNOUNCE_DROPDOWN": [
+    "Vous êtes redescendu à <value>",
+    "Retour à <value>",
+    "Et on chute vers <value>"
+  ],
+  "ANNOUNCE_KILL": [
+    "<name> est redescendu à <value>",
+    "<name> retombes à <value>",
+    "<name> est retombé à <value>",
+    "<name> se retrouve à <value>",
+    "<name> redescend <value>"
+  ],
+  "ZINEDINE": "pas comme ça zinedine, pas après tout ce que tu as fait",
+  "NO_PRESSURE": "je ne veux pas te mettre la pression, mais si tu rates encore, tu meures !"
+}

@@ -1,0 +1,46 @@
+{
+  "INFO": {
+    "NAME": "Mölkky",
+    "DESCRIPTION": "Mölkky is a game of skill invented in Finland. Being practiced in the open air,\nthe goal of the mölkky is to score exactly fifty points by knocking down\nskittles numbered 1 to 12, throwing a wooden stick once per turn."
+  },
+  "SETTINGS": {
+    "KILLER": {
+      "TITLE": "Killer",
+      "VALUE": {
+        "KILLER": "Killer",
+        "NO-KILLER": "No Killer",
+        "AUTO-KILLER": "Auto Killer",
+        "KAMIKAZE": "Kamikaze"
+      }
+    },
+    "DROP_DOWN": {
+      "TITLE": "Drop-down",
+      "VALUE": {
+        "LEVEL-25": "On level 25",
+        "LEVEL-0": "Directly to 0"
+      }
+    },
+    "ELIMINATION": {
+      "TITLE": "Elimination",
+      "VALUE": {
+        "NO-ELIMINATION": "No elimination",
+        "ELIMINATION": "With Elimination"
+      }
+    }
+  },
+  "ANNOUNCE_TOTAL_SCORE": [
+    "You are at <score>"
+  ],
+  "ANNOUNCE_DROPDOWN": [
+    "You have gone down to <value>",
+    "Return to <value>",
+    "And we fall to <value>\n\n"
+  ],
+  "ANNOUNCE_KILL": [
+    "<name> has gone down to <value>",
+    "<name> drops to <value>",
+    "<name> has fallen back to <value>",
+    "<name> ends up at <value>",
+    "<name> go down <value>"
+  ]
+}
