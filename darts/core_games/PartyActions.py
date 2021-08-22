@@ -1,7 +1,8 @@
 from abc import ABC
 from typing import TypeVar, Generic, Iterator, List
 
-from darts.actions import StartParty, AddScore, SetLastPlayer, AddPlayer, InitScore, SetWinners, EndParty, Announce
+from darts.actions import StartParty, AddScore, SetLastPlayer, AddPlayer, InitScore, SetWinners, EndParty, Announce, \
+    RemovePlayer
 from darts.base_actions import ActionHandler
 from darts.base_games import BaseConfig, BaseScore, BasePlayer, BaseParty
 from darts.constants import TextMode
@@ -42,6 +43,10 @@ class PartyActions(Generic[C, P, S], BaseParty[C, P, S], ActionHandler, ABC):
     def set_latest_player(self, name: str) -> None:
         """Set up the actions to set the latest player."""
         self.stack.append(SetLastPlayer(party=self, name=name))
+
+    def remove_player(self, player: P) -> None:
+        """Remove a player from the list of players."""
+        self.stack.append(RemovePlayer(party=self, player=player))
 
     def add_player(self, name: str) -> None:
         """Set up the actions to add a new player."""
