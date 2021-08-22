@@ -1,6 +1,10 @@
 from typing import List
 
 
+class PlayerEliminationException(Exception):
+    pass
+
+
 class NothingToUndoError(Exception):
     pass
 
