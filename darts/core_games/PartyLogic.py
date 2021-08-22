@@ -4,7 +4,8 @@ from typing import TypeVar, Generic
 from darts import base_games as bg
 from darts.commands import Undo, Redo, AddPlayer, StartParty, AddPlayers, AddScore
 from darts.constants import PartyState
-from darts.errors import PartyAlreadyStartedError, PartyAlreadyOverError, PartyNotStartedError
+from darts.errors import PartyAlreadyStartedError, PartyAlreadyOverError, PartyNotStartedError, \
+    PlayerEliminationException
 from .PartyAnnouncer import PartyAnnouncer
 
 C = TypeVar('C', bound=bg.BaseConfig)
@@ -77,13 +78,17 @@ class PartyLogic(Generic[C, P, S], PartyAnnouncer[C, P, S], ABC):
         else:
             player = self.get_player_by_name(command.player.name)
 
-        # calculate the new score
-        new_score = self.update_score(player, command.scores)
+        try:
+            # calculate the new score
+            new_score = self.update_score(player, command.scores)
 
-        # append the score to the player scores
-        self.add_score(player, new_score)
+            # append the score to the player scores
+            self.add_score(player, new_score)
 
-        self.announce_score(player, new_score)
+            self.announce_score(player, new_score)
+
+        except PlayerEliminationException:
+            self.remove_player(player)
 
         self.do()
 
